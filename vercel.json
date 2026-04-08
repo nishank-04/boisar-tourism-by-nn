@@ -21,28 +21,7 @@
       "dest": "/$1"
     }
   ],
-  "env": {
-    "NODE_ENV": "production",
-    "MONGODB_URI": "@mongodb_uri",
-    "JWT_SECRET": "@jwt_secret",
-    "JWT_EXPIRE": "7d",
-    "EMAIL_HOST": "@email_host",
-    "EMAIL_PORT": "587",
-    "EMAIL_USER": "@email_user",
-    "EMAIL_PASS": "@email_pass",
-    "EMAIL_FROM": "@email_from",
-    "CLOUDINARY_CLOUD_NAME": "@cloudinary_cloud_name",
-    "CLOUDINARY_API_KEY": "@cloudinary_api_key",
-    "CLOUDINARY_API_SECRET": "@cloudinary_api_secret",
-    "STRIPE_SECRET_KEY": "@stripe_secret_key",
-    "STRIPE_PUBLISHABLE_KEY": "@stripe_publishable_key",
-    "STRIPE_WEBHOOK_SECRET": "@stripe_webhook_secret",
-    "FRONTEND_URL": "@frontend_url",
-    "ADMIN_EMAIL": "@admin_email",
-    "ADMIN_PASSWORD": "@admin_password",
-    "RATE_LIMIT_WINDOW_MS": "900000",
-    "RATE_LIMIT_MAX_REQUESTS": "100"
-  },
+
   "headers": [
     {
       "source": "/(.*)",
