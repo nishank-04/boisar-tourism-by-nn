@@ -1,0 +1,1307 @@
+/* ═══════════════════════════════════════════════════════════════
+   INDEX PAGE CSS IMPROVEMENTS — visual polish only, no theme changes
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── GLOBAL TYPOGRAPHY & BODY ── */
+body {
+    font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── SMOOTH SELECTION ── */
+::selection {
+    background: rgba(45, 90, 39, 0.2);
+    color: #1e3d1a;
+}
+
+/* ══════════════════════════════════════════════════
+   NAVBAR — FULL REDESIGN (pre-login + post-login)
+   ══════════════════════════════════════════════════ */
+
+/* ── Base navbar ── */
+.navbar {
+    padding: 0;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 1px 0 rgba(45, 90, 39, 0.08), 0 4px 24px rgba(0, 0, 0, 0.06);
+    border-bottom: none;
+}
+
+.nav-container {
+    height: 100%;
+    align-items: center;
+    gap: 0;
+}
+
+/* ── Logo ── */
+.nav-logo {
+    white-space: nowrap;
+    gap: 10px;
+    font-size: 1.3rem;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    color: #1e3d1a;
+    flex-shrink: 0;
+    text-decoration: none;
+}
+
+.nav-logo i {
+    font-size: 1.5rem;
+    color: #2d5a27;
+    filter: drop-shadow(0 2px 6px rgba(45, 90, 39, 0.35));
+}
+
+/* ── Nav links ── */
+.nav-menu {
+    gap: 0;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.nav-menu li {
+    list-style: none;
+}
+
+.nav-menu a {
+    white-space: nowrap;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #444;
+    padding: 6px 14px;
+    border-radius: 8px;
+    transition: color 0.2s ease, background 0.2s ease;
+    letter-spacing: 0.01em;
+    display: block;
+}
+
+.nav-menu a:hover {
+    color: #2d5a27;
+    background: rgba(45, 90, 39, 0.07);
+}
+
+.nav-menu a::after {
+    display: none; /* replaced by background hover */
+}
+
+.nav-menu a.active-link {
+    color: #2d5a27;
+    background: rgba(45, 90, 39, 0.09);
+    font-weight: 600;
+}
+
+/* ── PRE-LOGIN auth buttons ── */
+.nav-auth {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.btn-login {
+    padding: 8px 18px;
+    border-radius: 8px;
+    border: 1.5px solid rgba(45, 90, 39, 0.4);
+    color: #2d5a27;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    letter-spacing: 0.01em;
+}
+
+.btn-login:hover {
+    background: rgba(45, 90, 39, 0.08);
+    border-color: #2d5a27;
+    color: #2d5a27;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-register {
+    padding: 8px 18px;
+    border-radius: 8px;
+    background: #2d5a27;
+    color: white;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(45, 90, 39, 0.3);
+    letter-spacing: 0.01em;
+    border: 1.5px solid transparent;
+}
+
+.btn-register:hover {
+    background: #1e3d1a;
+    box-shadow: 0 4px 14px rgba(45, 90, 39, 0.4);
+    transform: none;
+}
+
+/* Blockchain nav button */
+.nav-auth .btn-blockchain {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    background: linear-gradient(135deg, #5b48c0, #7c5cbf);
+    color: white;
+    border: none;
+    box-shadow: 0 2px 8px rgba(91, 72, 192, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.nav-auth .btn-blockchain:hover {
+    background: linear-gradient(135deg, #4a39aa, #6b4daa);
+    box-shadow: 0 4px 14px rgba(91, 72, 192, 0.4);
+    transform: none;
+    color: white;
+}
+
+/* ── POST-LOGIN user dropdown ── */
+.nav-user {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.user-dropdown {
+    position: relative;
+}
+
+/* The trigger button */
+.user-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px 6px 8px;
+    background: rgba(45, 90, 39, 0.07);
+    border: 1.5px solid rgba(45, 90, 39, 0.15);
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #2d5a27;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.user-btn:hover {
+    background: rgba(45, 90, 39, 0.13);
+    border-color: rgba(45, 90, 39, 0.3);
+    box-shadow: 0 2px 10px rgba(45, 90, 39, 0.12);
+}
+
+.user-btn .fa-user-circle {
+    font-size: 1.4rem;
+    color: #2d5a27;
+}
+
+.user-btn #userName {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-btn .fa-chevron-down {
+    font-size: 0.7rem;
+    color: #4a7c59;
+    transition: transform 0.25s ease;
+    margin-left: 2px;
+}
+
+.user-btn[aria-expanded="true"] .fa-chevron-down,
+.dropdown-menu.show ~ .user-btn .fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+/* Dropdown card */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 220px;
+    background: white;
+    border-radius: 14px;
+    border: 1px solid rgba(45, 90, 39, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    z-index: 2000;
+    transform-origin: top right;
+    transform: scale(0.96) translateY(-4px);
+    opacity: 0;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    pointer-events: none;
+}
+
+.dropdown-menu.show {
+    display: block;
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: all;
+    animation: dropdownIn 0.18s ease both;
+}
+
+@keyframes dropdownIn {
+    from { opacity: 0; transform: scale(0.95) translateY(-6px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Dropdown header strip */
+.dropdown-menu::before {
+    content: '';
+    display: block;
+    height: 4px;
+    background: linear-gradient(90deg, #2d5a27, #4a7c59);
+}
+
+/* Each link item */
+.dropdown-menu a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 16px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.dropdown-menu a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu a i {
+    width: 18px;
+    text-align: center;
+    color: #4a7c59;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.dropdown-menu a:hover {
+    background: rgba(45, 90, 39, 0.07);
+    color: #2d5a27;
+}
+
+.dropdown-menu a:hover i {
+    color: #2d5a27;
+}
+
+/* Logout item separate style */
+.dropdown-menu a:last-child {
+    color: #c0392b;
+    margin-top: 2px;
+}
+
+.dropdown-menu a:last-child i {
+    color: #c0392b;
+}
+
+.dropdown-menu a:last-child:hover {
+    background: rgba(192, 57, 43, 0.07);
+    color: #c0392b;
+}
+
+/* ── HERO CONTENT IMPROVEMENTS ── */
+.hero-title {
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    margin-bottom: 0.6rem;
+}
+
+.byline {
+    font-size: 0.8rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.byline::before,
+.byline::after {
+    content: '';
+    display: inline-block;
+    width: 30px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.hero-subtitle {
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    font-weight: 400;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.hero-description {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2.2rem;
+}
+
+/* Hero button polish */
+.btn-primary.btn-glow {
+    padding: 15px 38px;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    font-weight: 700;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #2d5a27, #4a7c59);
+    box-shadow: 0 8px 28px rgba(45, 90, 39, 0.45), inset 0 1px 0 rgba(255,255,255,0.15);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-primary.btn-glow:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 14px 36px rgba(45, 90, 39, 0.55);
+}
+
+/* ── CAROUSEL ENHANCEMENTS ── */
+.carousel-slide img {
+    transform: scale(1.04);
+    transition: transform 8s ease-out;
+}
+
+.carousel-slide.active img {
+    transform: scale(1);
+}
+
+.carousel-overlay {
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.15) 0%,
+        rgba(0, 0, 0, 0.05) 30%,
+        rgba(0, 0, 0, 0.35) 100%
+    ),
+    linear-gradient(135deg, rgba(45, 90, 39, 0.35) 0%, transparent 60%);
+}
+
+/* Carousel nav buttons improved */
+.carousel-btn {
+    width: 46px;
+    height: 46px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.2s ease;
+}
+
+.carousel-btn:hover {
+    background: rgba(255, 255, 255, 0.28);
+    border-color: rgba(255, 255, 255, 0.55);
+}
+
+/* Indicator lines instead of circles */
+.carousel-indicators {
+    gap: 6px;
+    bottom: 28px;
+}
+
+.indicator {
+    width: 24px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.35);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    width: 40px;
+    background: white;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+.indicator:hover {
+    background: rgba(255, 255, 255, 0.65);
+}
+
+/* ── SECTION HEADINGS ── */
+.section-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    text-align: center;
+    width: 100%;
+    display: block;
+}
+
+/* Underline accent on section titles */
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #2d5a27, #4a7c59);
+    border-radius: 2px;
+    margin: 12px auto 0;
+}
+
+.section-subtitle {
+    font-size: 1.05rem;
+    color: #777;
+    max-width: 520px;
+    line-height: 1.7;
+    margin-top: 8px;
+}
+
+/* ── ECO TOURISM SECTION ── */
+.eco-tourism {
+    padding: 96px 0;
+    background: #f7faf7;
+}
+
+/* Destination cards */
+.destination-card {
+    border-radius: 20px;
+    padding: 2.2rem 1.8rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+    border: 1px solid rgba(45, 90, 39, 0.07);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.destination-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #2d5a27, #4a7c59);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s ease;
+    border-radius: 20px 20px 0 0;
+}
+
+.destination-card:hover::before {
+    transform: scaleX(1);
+}
+
+.destination-card:hover {
+    transform: translateY(-10px) !important;
+    box-shadow: 0 20px 48px rgba(45, 90, 39, 0.15) !important;
+    border-color: rgba(45, 90, 39, 0.12);
+}
+
+.card-image {
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, #2d5a27, #4a7c59);
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(45, 90, 39, 0.3);
+    margin-bottom: 1.2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.destination-card:hover .card-image {
+    transform: scale(1.08) rotate(-3deg);
+    box-shadow: 0 12px 28px rgba(45, 90, 39, 0.4);
+}
+
+.card-image i {
+    font-size: 1.8rem;
+}
+
+.destination-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    margin-bottom: 0.7rem;
+}
+
+.destination-card p {
+    font-size: 0.93rem;
+    color: #666;
+    line-height: 1.7;
+    margin-bottom: 1.2rem;
+}
+
+.card-features span {
+    font-size: 0.8rem;
+    padding: 5px 12px;
+    border-radius: 30px;
+    background: #edf7ed;
+    color: #2d5a27;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    gap: 5px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-card {
+    padding: 10px 26px;
+    border-radius: 30px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    background: linear-gradient(135deg, #2d5a27, #4a7c59);
+    box-shadow: 0 4px 14px rgba(45, 90, 39, 0.22);
+    transition: all 0.25s ease;
+}
+
+.btn-card:hover {
+    background: linear-gradient(135deg, #1e3d1a, #2d5a27);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(45, 90, 39, 0.33);
+}
+
+/* Explore All Locations button */
+.btn-more-locations {
+    padding: 15px 44px;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    box-shadow: 0 8px 24px rgba(45, 90, 39, 0.25);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-more-locations:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 14px 36px rgba(45, 90, 39, 0.38);
+}
+
+/* ── CULTURAL HERITAGE SECTION ── */
+.cultural-heritage {
+    padding: 96px 0;
+    background: white;
+}
+
+.cultural-card {
+    background: #f7faf7;
+    border: 1px solid rgba(45, 90, 39, 0.08);
+    border-radius: 20px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.cultural-card:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 16px 40px rgba(45, 90, 39, 0.12) !important;
+    background: #eef7ee;
+}
+
+.cultural-image {
+    width: 90px;
+    height: 90px;
+    border-radius: 22px;
+    box-shadow: 0 8px 24px rgba(255, 107, 107, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.cultural-card:hover .cultural-image {
+    transform: scale(1.07) rotate(-4deg);
+}
+
+.cultural-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.2px;
+}
+
+.cultural-card p {
+    font-size: 0.93rem;
+    line-height: 1.75;
+}
+
+/* ── MAP SECTION ── */
+.map-section {
+    padding: 96px 0;
+}
+
+.search-bar {
+    border-radius: 50px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1.5px solid rgba(45, 90, 39, 0.1);
+    overflow: hidden;
+}
+
+.search-input {
+    padding: 16px 22px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+}
+
+.search-btn {
+    padding: 16px 22px;
+    font-size: 1.1rem;
+}
+
+.map-container {
+    border-radius: 24px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+.google-map {
+    border-radius: 24px;
+}
+
+.map-legend {
+    border-radius: 16px;
+    padding: 20px 28px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(45, 90, 39, 0.08);
+    background: white;
+    margin-top: 16px;
+}
+
+.map-legend h4 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #555;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+}
+
+/* Prevent section-title::after from leaking into h4 */
+.map-legend h4::after {
+    display: none;
+}
+
+.legend-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 24px;
+    align-items: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.875rem;
+    color: #444;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Base dot style */
+.legend-icon {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Per-type colours — dot- prefix avoids collision with section class names */
+.legend-icon.dot-eco        { background-color: #4CAF50; }
+.legend-icon.dot-cultural   { background-color: #FF9800; }
+.legend-icon.dot-nature     { background-color: #2196F3; }
+.legend-icon.dot-historical { background-color: #9C27B0; }
+.legend-icon.dot-industrial { background-color: #607D8B; }
+
+
+
+/* ── PLAN TRIP SECTION ── */
+.plan-trip {
+    padding: 96px 0;
+}
+
+.tool-card {
+    background: #f7faf7;
+    border-radius: 20px;
+    padding: 2.2rem 1.8rem;
+    border: 1.5px solid transparent;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+
+.tool-card:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 16px 40px rgba(45, 90, 39, 0.12) !important;
+    border-color: rgba(45, 90, 39, 0.25);
+}
+
+.tool-card i {
+    font-size: 2.5rem;
+    margin-bottom: 1.2rem;
+    display: block;
+    filter: drop-shadow(0 4px 8px rgba(45, 90, 39, 0.2));
+    transition: transform 0.3s ease;
+}
+
+.tool-card:hover i {
+    transform: scale(1.12) translateY(-2px);
+}
+
+.tool-card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+}
+
+.btn-tool {
+    padding: 10px 26px;
+    border-radius: 30px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    background: linear-gradient(135deg, #2d5a27, #4a7c59);
+    color: white;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 14px rgba(45, 90, 39, 0.22);
+    transition: all 0.25s ease;
+}
+
+.btn-tool:hover {
+    box-shadow: 0 6px 18px rgba(45, 90, 39, 0.33);
+    transform: translateY(-2px);
+}
+
+/* ── BLOCKCHAIN SECTION ── */
+.blockchain-features {
+    padding: 96px 0;
+}
+
+.blockchain-card {
+    border-radius: 22px;
+    padding: 44px 32px;
+    transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blockchain-card:hover {
+    transform: translateY(-12px) !important;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* ── SUSTAINABLE TOURISM SECTION ── */
+.sustainable {
+    padding: 96px 0;
+}
+
+.sustain-card {
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
+    border: 1.5px solid rgba(45, 90, 39, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sustain-card:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 16px 40px rgba(45, 90, 39, 0.13) !important;
+}
+
+.sustain-card i {
+    font-size: 2rem;
+    color: #2d5a27;
+    margin-bottom: 14px;
+    display: block;
+    filter: drop-shadow(0 2px 6px rgba(45, 90, 39, 0.25));
+    transition: transform 0.3s ease;
+}
+
+.sustain-card:hover i {
+    transform: scale(1.15) rotate(-5deg);
+}
+
+.sustain-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #2d5a27;
+    margin-bottom: 10px;
+    letter-spacing: -0.2px;
+}
+
+.sustain-card p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.7;
+}
+
+/* ── TESTIMONIALS SECTION ── */
+.testimonials {
+    padding: 96px 0;
+}
+
+.testimonial-card {
+    border-radius: 20px;
+    padding: 28px 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(45, 90, 39, 0.06);
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card::before {
+    content: '\201C';
+    position: absolute;
+    top: 12px;
+    right: 20px;
+    font-size: 4rem;
+    line-height: 1;
+    color: rgba(45, 90, 39, 0.1);
+    font-family: Georgia, serif;
+    font-weight: 700;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 36px rgba(45, 90, 39, 0.12);
+}
+
+.testimonial-card .avatar {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #2d5a27, #4a7c59);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 12px rgba(45, 90, 39, 0.3);
+    margin-bottom: 14px;
+}
+
+.testimonial-card .quote {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: #444;
+    font-style: italic;
+    margin: 14px 0 12px;
+}
+
+.testimonial-card .author {
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+/* ── HANDICRAFTS SECTION ── */
+.handicrafts {
+    padding: 96px 0;
+}
+
+.craft-card {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.09);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.craft-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 42px rgba(0, 0, 0, 0.14);
+}
+
+.craft-card h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #2d5a27;
+    padding: 14px 16px 4px;
+    letter-spacing: -0.2px;
+}
+
+.price-rating {
+    padding: 0 16px;
+    margin-bottom: 8px;
+    align-items: center;
+}
+
+.price {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #2d5a27;
+}
+
+.craft-card .btn-tool {
+    margin: 0 16px 16px;
+    font-size: 0.83rem;
+    padding: 8px 22px;
+}
+
+/* ── FESTIVALS SECTION ── */
+.festivals {
+    padding: 96px 0;
+}
+
+.calendar {
+    border-radius: 20px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(45, 90, 39, 0.08);
+    overflow: hidden;
+}
+
+.calendar-header {
+    background: linear-gradient(135deg, #2d5a27, #4a7c59);
+    color: white;
+    padding: 16px 22px;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+}
+
+.calendar-list li {
+    padding: 12px 0;
+    font-size: 0.9rem;
+    gap: 12px;
+    transition: color 0.2s ease;
+}
+
+.calendar-list li:hover {
+    color: #2d5a27;
+}
+
+.calendar-list .date {
+    font-size: 0.8rem;
+    border-radius: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    white-space: nowrap;
+}
+
+/* Festival map fallback */
+.map-fallback {
+    border-radius: 20px;
+    border: 1.5px dashed rgba(45, 90, 39, 0.2);
+    background: linear-gradient(135deg, #f0f7f0 0%, #e8f5e8 100%);
+}
+
+.fallback-content h3 {
+    color: #2d5a27;
+    font-weight: 700;
+}
+
+/* ── ADVENTURE SECTION ── */
+.adventure {
+    padding: 96px 0;
+}
+
+.adventure-card {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.09);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.adventure-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.14);
+}
+
+.adventure-card img {
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.adventure-card:hover img {
+    transform: scale(1.06);
+}
+
+.adventure-card h3 {
+    color: #2d5a27;
+    padding: 16px 18px 4px;
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.2px;
+}
+
+.adventure-card p {
+    color: #666;
+    padding: 6px 18px 18px;
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+/* ── CONTACT SECTION ── */
+.contact {
+    padding: 96px 0;
+}
+
+.contact-info {
+    border-radius: 20px;
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(45, 90, 39, 0.07);
+}
+
+.contact-form {
+    border-radius: 20px;
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(45, 90, 39, 0.07);
+}
+
+.contact-item {
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.contact-item i {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #2d5a27, #4a7c59);
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(45, 90, 39, 0.25);
+    flex-shrink: 0;
+}
+
+.contact-item h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.contact-item p {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* Fix invisible contact links (styles.css set them to near-white #f3f3f3) */
+.contact-link {
+    color: #2d5a27;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.contact-link:hover {
+    color: #1e3d1a;
+    text-decoration: underline;
+}
+
+/* Keep footer contact links white (dark background there) */
+.footer .contact-link {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.footer .contact-link:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.contact-form input,
+.contact-form textarea {
+    border-radius: 12px;
+    padding: 13px 18px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.92rem;
+    border: 1.5px solid #e5e5e5;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #4a7c59;
+    box-shadow: 0 0 0 3px rgba(45, 90, 39, 0.08);
+}
+
+.contact-form button.btn-primary {
+    padding: 13px 32px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    background: linear-gradient(135deg, #2d5a27, #4a7c59);
+    border-radius: 30px;
+    box-shadow: 0 6px 18px rgba(45, 90, 39, 0.28);
+    transition: all 0.25s ease;
+}
+
+.contact-form button.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(45, 90, 39, 0.38);
+}
+
+/* ── FOOTER IMPROVEMENTS ── */
+.footer {
+    background: linear-gradient(160deg, #1e3d1a 0%, #2d5a27 100%);
+    padding: 60px 0 24px;
+}
+
+.footer-section h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.2px;
+}
+
+.footer-section h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+.footer-section ul li a {
+    font-size: 0.9rem;
+    transition: color 0.2s ease, padding-left 0.2s ease;
+    display: inline-block;
+}
+
+.footer-section ul li a:hover {
+    color: white;
+    padding-left: 4px;
+}
+
+.social-links a {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.25s ease;
+}
+
+.social-links a:hover {
+    background: white;
+    color: #2d5a27;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.footer-bottom {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ── ANIMATION IMPROVEMENTS ── */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounceIn {
+    0% { opacity: 0; transform: scale(0.85); }
+    60% { opacity: 1; transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-bounce-in {
+    animation: bounceIn 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.delay-1 { animation-delay: 0.15s; }
+.delay-2 { animation-delay: 0.3s; }
+.delay-3 { animation-delay: 0.45s; }
+
+/* Scroll reveal */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ── SCROLL BAR POLISH ── */
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(45, 90, 39, 0.35);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(45, 90, 39, 0.55);
+}
+
+/* ── RESPONSIVE POLISH ── */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: clamp(2.2rem, 8vw, 3.2rem);
+    }
+    .section-title {
+        font-size: 1.8rem;
+    }
+    .destination-card,
+    .cultural-card,
+    .tool-card,
+    .sustain-card {
+        border-radius: 16px;
+    }
+    .contact-content {
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+        letter-spacing: -0.5px;
+    }
+    .btn-primary.btn-glow {
+        padding: 13px 30px;
+    }
+    .indicator {
+        width: 18px;
+        height: 3px;
+    }
+    .indicator.active {
+        width: 32px;
+    }
+}

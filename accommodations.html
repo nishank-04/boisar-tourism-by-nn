@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accommodations - Boisar Tourism</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ── RESET & BASE ── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #f4f6f4;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            padding: 0;
+            box-shadow: 0 2px 16px rgba(45, 90, 39, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 4px;
+        }
+
+        .nav-menu a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 400;
+            padding: 7px 14px;
+            border-radius: 99px;
+            transition: all 0.2s;
+        }
+
+        .nav-menu a:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        /* ── PAGE LAYOUT ── */
+        .page-wrapper {
+            padding: 40px 0 70px;
+            min-height: calc(100vh - 64px);
+        }
+
+        .page-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── PAGE HEADER ── */
+        .page-header {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            border-radius: 20px;
+            padding: 40px 36px;
+            margin-bottom: 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            pointer-events: none;
+        }
+
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .page-header p {
+            opacity: 0.82;
+            font-size: 1rem;
+            font-weight: 300;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        /* ── CATEGORY SECTION ── */
+        .accommodation-category {
+            margin-bottom: 50px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #2d5a27;
+        }
+
+        .category-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1a3320;
+            margin: 0;
+        }
+
+        .category-icon {
+            font-size: 1.75rem;
+            color: #4a7c59;
+        }
+
+        /* ── ACCOMMODATION CARD GRID ── */
+        .accommodations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+
+        .accommodation-card {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #e8f0e6;
+            box-shadow: 0 2px 12px rgba(45, 90, 39, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .accommodation-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(45, 90, 39, 0.15);
+            border-color: #4a7c59;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #f0f5f0, #e8f0e6);
+            padding: 20px;
+            border-bottom: 1px solid #e0e8e0;
+        }
+
+        .card-location {
+            font-size: 0.8rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a3320;
+            margin: 0;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-details {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .detail-item i {
+            color: #4a7c59;
+            margin-top: 2px;
+            flex-shrink: 0;
+            min-width: 16px;
+        }
+
+        .amenities-tag {
+            display: inline-block;
+            background: #e8f5e8;
+            color: #2d5a27;
+            padding: 4px 10px;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin: 4px 4px 4px 0;
+        }
+
+        .amenities-section {
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid #e8f0e6;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .accommodations-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .category-header h2 {
+                font-size: 1.3rem;
+            }
+
+            .page-container {
+                padding: 0 16px;
+            }
+        }
+
+        /* ── FOOTER ── */
+        .footer-spacing {
+            height: 40px;
+        }
+    </style>
+    <link rel="stylesheet" href="theme.css">`n</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-mountain"></i>
+                <span>Boisar Tourism</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#eco-tourism">Eco Tourism</a></li>
+                <li><a href="index.html#destinations">Destinations</a></li>
+                <li><a href="all-locations.html">All Locations</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="page-wrapper">
+        <div class="page-container">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1><i class="fas fa-bed" style="margin-right:12px;"></i>Accommodations in Boisar</h1>
+                <p>Discover comfortable and convenient staying options across the Boisar region. From luxury resorts to
+                    eco-friendly retreats and budget-friendly lodges, find the perfect place to rest after your
+                    adventures.</p>
+            </div>
+
+            <!-- Hotels & Resorts -->
+            <div class="accommodation-category">
+                <div class="category-header">
+                    <i class="fas fa-building category-icon"></i>
+                    <h2>Hotels & Resorts</h2>
+                </div>
+                <div class="accommodations-grid">
+                    <!-- Shanti Sagar Resort -->
+                    <div class="accommodation-card">
+                        <div class="card-header">
+                            <div class="card-location">🏖️ Kelva Beach</div>
+                            <h3 class="card-title">Shanti Sagar Resort</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Right on Kelva Beach with ocean views</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-star"></i>
+                                    <span>4-star premium beachfront resort</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Multi-cuisine restaurant & beach cafe</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Free Wi-Fi, AC Rooms, Pool</span>
+                                </div>
+                            </div>
+                            <div class="amenities-section">
+                                <span class="amenities-tag">Beach Access</span>
+                                <span class="amenities-tag">Restaurant</span>
+                                <span class="amenities-tag">Wi-Fi</span>
+                                <span class="amenities-tag">Pool</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Anand Resort Kelva -->
+                    <div class="accommodation-card">
+                        <div class="card-header">
+                            <div class="card-location">🏖️ Kelva Beach</div>
+                            <h3 class="card-title">Anand Resort Kelva</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Coastal beachfront property</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-star"></i>
+                                    <span>3-star comfort resort</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>In-house restaurant with sea view</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Modern rooms, Water sports facilities</span>
+                                </div>
+                            </div>
+                            <div class="amenities-section">
+                                <span class="amenities-tag">Beach</span>
+                                <span class="amenities-tag">Water Sports</span>
+                                <span class="amenities-tag">Restaurant</span>
+                                <span class="amenities-tag">Modern Rooms</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dahanu Beach Resort -->
+                    <div class="accommodation-card">
+                        <div class="card-header">
+                            <div class="card-location">🏖️ Dahanu Beach</div>
+                            <h3 class="card-title">Dahanu Beach Resort</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Scenic Dahanu coastal area</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-star"></i>
+                                    <span>4-star luxury beachside resort</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Multi-cuisine & seafood dining</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Spa, Pool, Conference facilities</span>
+                                </div>
+                            </div>
+                            <div class="amenities-section">
+                                <span class="amenities-tag">Luxury Beachfront</span>
+                                <span class="amenities-tag">Spa</span>
+                                <span class="amenities-tag">Pool</span>
+                                <span class="amenities-tag">Seafood Restaurant</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Umbergaon Club Resort -->
+                    <div class="accommodation-card">
+                        <div class="card-header">
+                            <div class="card-location">🏞️ Umbergaon Area</div>
+                            <h3 class="card-title">Umbergaon Club Resort</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Scenic resort property</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-star"></i>
+                                    <span>3-star comfort stay</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Club restaurant with traditional cuisine</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Lawn activities, Garden area</span>
+                                </div>
+                            </div>
+                            <div class="amenities-section">
+                                <span class="amenities-tag">Club Resort</span>
+                                <span class="amenities-tag">Garden</span>
+                                <span class="amenities-tag">Traditional Food</span>
+                                <span class="amenities-tag">Lawn Activities</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hotel Express Inn -->
+                    <div class="accommodation-card">
+                        <div class="card-header">
+                            <div class="card-location">🏙️ Palghar Town</div>
+                            <h3 class="card-title">Hotel Express Inn</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Central Palghar location</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-star"></i>
+                                    <span>3-star business hotel</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>In-house restaurant</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Close to railway station, Free Wi-Fi</span>
+                                </div>
+                            </div>
+                            <div class="amenities-section">
+                                <span class="amenities-tag">City Center</span>
+                                <span class="amenities-tag">Business Hotel</span>
+                                <span class="amenities-tag">Railway Convenient</span>
+                                <span class="amenities-tag">Wi-Fi</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Anand Resort Virar -->
+                    <div class="accommodation-card">
+                        <div class="card-header">
+                            <div class="card-location">🏞️ Virar</div>
+                            <h3 class="card-title">Anand Resort Virar</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Scenic Virar region</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-star"></i>
+                                    <span>3-star comfort resort</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>In-house dining facilities</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Nature trails, Garden, Parking</span>
+                                </div>
+                            </div>
+                            <div class="amenities-section">
+                                <span class="amenities-tag">Nature Trails</span>
+                                <span class="amenities-tag">Garden</span>
+                                <span class="amenities-tag">Parking</span>
+                                <span class="amenities-tag">Restaurant</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nature / Hill / Eco Stays -->
+            <div class="accommodation-category">
+                <div class="category-header">
+                    <i class="fas fa-tree category-icon"></i>
+                    <h2>Nature & Eco Stays</h2>
+                </div>
+                <div class="accommodations-grid">
+                    <!-- Jai Vilas Palace Heritage Stay -->
+                    <div class="accommodation-card">
+                        <div class="card-header">
+                            <div class="card-location">🏰 Jawhar (Hill Station)</div>
+                            <h3 class="card-title">Jai Vilas Palace Heritage Stay</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Historic palace property in Jawhar hills</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-crown"></i>
+                                    <span>Heritage stay experience</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Traditional cuisine dining</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Panoramic views, Heritage architecture</span>
+                                </div>
+                            </div>
+                            <div class="amenities-section">
+                                <span class="amenities-tag">Heritage</span>
+                                <span class="amenities-tag">Hill Station</span>
+                                <span class="amenities-tag">Palace Stay</span>
+                                <span class="amenities-tag">Mountain Views</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Jawhar Hill Resort -->
+                    <div class="accommodation-card">
+                        <div class="card-header">
+                            <div class="card-location">🏔️ Jawhar Hills</div>
+                            <h3 class="card-title">Jawhar Hill Resort</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Hill station resort with nature views</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-tree"></i>
+                                    <span>Eco-friendly resort environment</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Organic & local cuisine</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Trekking, Nature walks, Bonfire</span>
+                                </div>
+                            </div>
+                            <div class="amenities-section">
+                                <span class="amenities-tag">Eco-Friendly</span>
+                                <span class="amenities-tag">Trekking</span>
+                                <span class="amenities-tag">Nature Walks</span>
+                                <span class="amenities-tag">Bonfire</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Forest Eco Resorts -->
+                    <div class="accommodation-card">
+                        <div class="card-header">
+                            <div class="card-location">🌲 Jawhar Forest Region</div>
+                            <h3 class="card-title">Forest Eco Resorts</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Deep in forest surrounded by nature</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-leaf"></i>
+                                    <span>Sustainable eco-tourism resort</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Farm-to-table organic meals</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Bird watching, Nature photography, Minimal electricity</span>
+                                </div>
+                            </div>
+                            <div class="amenities-section">
+                                <span class="amenities-tag">Eco-Tourism</span>
+                                <span class="amenities-tag">Wildlife</span>
+                                <span class="amenities-tag">Bird Watching</span>
+                                <span class="amenities-tag">Organic Food</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Homestays & Local Stays -->
+            <div class="accommodation-category">
+                <div class="category-header">
+                    <i class="fas fa-home category-icon"></i>
+                    <h2>Homestays & Local Stays</h2>
+                </div>
+                <div class="accommodations-grid">
+                    <!-- Kelva Beach Homestays -->
+                    <div class="accommodation-card">
+                        <div class="card-header">
+                            <div class="card-location">🏖️ Kelva Beach</div>
+                            <h3 class="card-title">Kelva Beach Homestays</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Beach-facing family homestays</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-home"></i>
+                                    <span>Authentic local family experience</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Home-cooked seafood meals</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Personalised hospitality, Beach access</span>
+                                </div>
+                            </div>
+                            <div class="amenities-section">
+                                <span class="amenities-tag">Homestay</span>
+                                <span class="amenities-tag">Beach</span>
+                                <span class="amenities-tag">Home Cooked Meals</span>
+                                <span class="amenities-tag">Local Experience</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dahanu Chikoo Farm Stays -->
+                    <div class="accommodation-card">
+                        <div class="card-header">
+                            <div class="card-location">🌾 Dahanu</div>
+                            <h3 class="card-title">Dahanu Chikoo Farm Stays</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Chikoo orchards in rural Dahanu</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-leaf"></i>
+                                    <span>Agri-tourism farm stay</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Farm-fresh organic food</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Farm activities, Fruit picking, Village tours</span>
+                                </div>
+                            </div>
+                            <div class="amenities-section">
+                                <span class="amenities-tag">Farm Stay</span>
+                                <span class="amenities-tag">Agri-Tourism</span>
+                                <span class="amenities-tag">Organic Food</span>
+                                <span class="amenities-tag">Village Experience</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bordi Beach Homestays -->
+                    <div class="accommodation-card">
+                        <div class="card-header">
+                            <div class="card-location">🏖️ Bordi Beach</div>
+                            <h3 class="card-title">Bordi Beach Homestays</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Cozy homestays at Bordi coastal area</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-home"></i>
+                                    <span>Warm family-run accommodations</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Traditional coastal cuisine</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Beach walks, Fishing tours available</span>
+                                </div>
+                            </div>
+                            <div class="amenities-section">
+                                <span class="amenities-tag">Homestay</span>
+                                <span class="amenities-tag">Coastal</span>
+                                <span class="amenities-tag">Fishing Tours</span>
+                                <span class="amenities-tag">Beach Access</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gholvad Farm Stays -->
+                    <div class="accommodation-card">
+                        <div class="card-header">
+                            <div class="card-location">🌾 Gholvad (Villages)</div>
+                            <h3 class="card-title">Gholvad Farm Stays</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Traditional farming village area</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-leaf"></i>
+                                    <span>Authentic rural living experience</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Traditional Warli & local cuisine</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Farm work participation, Village crafts</span>
+                                </div>
+                            </div>
+                            <div class="amenities-section">
+                                <span class="amenities-tag">Village Farm</span>
+                                <span class="amenities-tag">Cultural Exchange</span>
+                                <span class="amenities-tag">Traditional Food</span>
+                                <span class="amenities-tag">Local Crafts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Budget Hotels -->
+            <div class="accommodation-category">
+                <div class="category-header">
+                    <i class="fas fa-wallet category-icon"></i>
+                    <h2>Budget Hotels & Lodges</h2>
+                </div>
+                <div class="accommodations-grid">
+                    <!-- Hotel Sai Residency -->
+                    <div class="accommodation-card">
+                        <div class="card-header">
+                            <div class="card-location">🏙️ Palghar Town</div>
+                            <h3 class="card-title">Hotel Sai Residency</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Central Palghar location</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-tag"></i>
+                                    <span>Budget-friendly 2-star hotel</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Basic restaurant facilities</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Clean rooms, 24/7 service, Parking</span>
+                                </div>
+                            </div>
+                            <div class="amenities-section">
+                                <span class="amenities-tag">Budget</span>
+                                <span class="amenities-tag">Central Location</span>
+                                <span class="amenities-tag">24/7 Service</span>
+                                <span class="amenities-tag">Parking</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hotel Rajhans -->
+                    <div class="accommodation-card">
+                        <div class="card-header">
+                            <div class="card-location">🏙️ Palghar Town</div>
+                            <h3 class="card-title">Hotel Rajhans</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Main market area Palghar</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-tag"></i>
+                                    <span>Economical 2-star lodge</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>In-house vegetarian meals available</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Simple comfortable rooms, Basic amenities</span>
+                                </div>
+                            </div>
+                            <div class="amenities-section">
+                                <span class="amenities-tag">Budget</span>
+                                <span class="amenities-tag">Vegetarian Food</span>
+                                <span class="amenities-tag">Market Area</span>
+                                <span class="amenities-tag">Simple Rooms</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Local Lodges near Boisar Station -->
+                    <div class="accommodation-card">
+                        <div class="card-header">
+                            <div class="card-location">🚂 Boisar Railway Station</div>
+                            <h3 class="card-title">Local Lodges near Boisar Station</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Walking distance from railway station</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-tag"></i>
+                                    <span>Ultra-budget (₹500–1500/night)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Local dhabas & eateries nearby</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>Basic rooms, Ground floor access</span>
+                                </div>
+                            </div>
+                            <div class="amenities-section">
+                                <span class="amenities-tag">Ultra Budget</span>
+                                <span class="amenities-tag">Railway Access</span>
+                                <span class="amenities-tag">Local Dhabas</span>
+                                <span class="amenities-tag">Convenient</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="footer-spacing"></div>
+
+</body>
+
+</html>

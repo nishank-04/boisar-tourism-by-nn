@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Boisar Tourism</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --g-dark: #1e4620; --g-mid: #2d5a27; --g-light: #4a7c59; --g-pale: #e8f5e8;
+            --bg: #f0f4f0; --white: #fff; --border: #e2ece2; --text: #1a2e1a;
+            --muted: #6b8a6b; --shadow: 0 2px 20px rgba(45,90,39,.08); --shadow-h: 0 8px 32px rgba(45,90,39,.15);
+        }
+        body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+        /* HEADER */
+        .hdr { background: linear-gradient(135deg, var(--g-dark), var(--g-light)); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(30,70,32,.25); }
+        .nav { max-width: 1280px; margin: 0 auto; padding: 0 28px; display: flex; justify-content: space-between; align-items: center; height: 66px; }
+        .logo { display: flex; align-items: center; gap: 10px; font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: #fff; text-decoration: none; }
+        .umenu { display: flex; align-items: center; gap: 6px; }
+        .uchip { display: flex; align-items: center; gap: 9px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); border-radius: 99px; padding: 5px 14px 5px 6px; margin-right: 6px; }
+        .uav { width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,.25); display: flex; align-items: center; justify-content: center; font-size: .875rem; color: #fff; overflow: hidden; flex-shrink: 0; }
+        .uav img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .uname { font-size: .875rem; font-weight: 500; color: rgba(255,255,255,.95); }
+        .nb { display: flex; align-items: center; gap: 6px; padding: 8px 15px; border-radius: 99px; font-family: 'DM Sans', sans-serif; font-size: .85rem; font-weight: 500; cursor: pointer; text-decoration: none; transition: all .2s; border: 1.5px solid transparent; white-space: nowrap; }
+        .ghost { background: rgba(255,255,255,.1); color: #fff; border-color: rgba(255,255,255,.18); }
+        .ghost:hover { background: rgba(255,255,255,.22); }
+        .danger { background: rgba(220,53,69,.15); color: #ffb3ae; border-color: rgba(220,53,69,.28); }
+        .danger:hover { background: rgba(220,53,69,.3); color: #fff; }
+
+        /* CONTENT */
+        .content { max-width: 1280px; margin: 0 auto; padding: 28px 28px 60px; }
+
+        /* BANNER */
+        .banner { background: linear-gradient(135deg, var(--g-dark) 0%, var(--g-light) 100%); border-radius: 20px; padding: 30px 36px; margin-bottom: 24px; color: #fff; display: flex; align-items: center; justify-content: space-between; gap: 20px; position: relative; overflow: hidden; animation: fadeUp .4s ease both; }
+        .banner::before { content: ''; position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; border-radius: 50%; background: rgba(255,255,255,.05); }
+        .banner::after { content: ''; position: absolute; bottom: -40px; left: -30px; width: 160px; height: 160px; border-radius: 50%; background: rgba(255,255,255,.04); }
+        .btxt { position: relative; z-index: 1; }
+        .btitle { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-weight: 700; margin-bottom: 6px; }
+        .bsub { opacity: .75; font-size: .95rem; font-weight: 300; }
+        .bacts { display: flex; gap: 10px; position: relative; z-index: 1; flex-shrink: 0; }
+        .bbtn { display: inline-flex; align-items: center; gap: 7px; padding: 10px 22px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .875rem; font-weight: 500; text-decoration: none; transition: all .25s; cursor: pointer; border: none; }
+        .bwhite { background: #fff; color: var(--g-dark); }
+        .bwhite:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.15); }
+        .bghost { background: rgba(255,255,255,.15); color: #fff; border: 1.5px solid rgba(255,255,255,.25); }
+        .bghost:hover { background: rgba(255,255,255,.25); }
+
+        /* STATS */
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; animation: fadeUp .4s ease both .06s; }
+        .sc { background: var(--white); border-radius: 16px; padding: 20px 22px; box-shadow: var(--shadow); border: 1px solid var(--border); display: flex; align-items: center; gap: 16px; transition: transform .25s, box-shadow .25s; cursor: default; }
+        .sc:hover { transform: translateY(-3px); box-shadow: var(--shadow-h); }
+        .si { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #fff; flex-shrink: 0; }
+        .si.a { background: linear-gradient(135deg,#667eea,#764ba2); }
+        .si.b { background: linear-gradient(135deg,#f093fb,#f5576c); }
+        .si.c { background: linear-gradient(135deg,#4facfe,#00f2fe); }
+        .si.d { background: linear-gradient(135deg,#43e97b,#38f9d7); }
+        .sinfo { flex: 1; min-width: 0; }
+        .snum { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 700; color: var(--text); line-height: 1; margin-bottom: 4px; }
+        .slbl { font-size: .77rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-weight: 500; }
+
+        /* GRID */
+        .grid { display: grid; grid-template-columns: 1fr 300px; gap: 20px; animation: fadeUp .4s ease both .1s; }
+        .mcol { display: flex; flex-direction: column; gap: 20px; }
+        .scol { display: flex; flex-direction: column; gap: 16px; }
+
+        /* CARDS */
+        .card { background: var(--white); border-radius: 18px; padding: 24px 26px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+        .ch { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid #f0f4f0; }
+        .ct { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 9px; }
+        .ct i { color: var(--g-light); font-size: .95rem; }
+        .cbdg { background: var(--g-pale); color: var(--g-mid); font-size: .72rem; font-weight: 600; padding: 3px 10px; border-radius: 99px; text-transform: uppercase; letter-spacing: .05em; }
+        .clnk { font-size: .8rem; color: var(--g-mid); text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+        .clnk:hover { color: var(--g-dark); }
+
+        /* TRIP ROW */
+        .tr { display: flex; align-items: center; gap: 14px; padding: 13px 0; border-bottom: 1px solid #f5f8f5; cursor: pointer; transition: background .15s; }
+        .tr:last-child { border-bottom: none; padding-bottom: 0; }
+        .tr:first-child { padding-top: 0; }
+        .tr:hover { background: #f8fbf8; margin: 0 -8px; padding-left: 8px; padding-right: 8px; border-radius: 8px; }
+        .tico { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+        .tico.up { background: #fff1f5; color: #f5576c; }
+        .tico.past { background: #f0f4ff; color: #667eea; }
+        .tico.ongoing { background: #fff8e1; color: #f39c12; }
+        .tdet { flex: 1; min-width: 0; }
+        .tname { font-size: .95rem; font-weight: 600; color: var(--text); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .tmeta { font-size: .78rem; color: var(--muted); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .tmeta span { display: flex; align-items: center; gap: 4px; }
+        .tbdg { padding: 3px 10px; border-radius: 99px; font-size: .72rem; font-weight: 600; text-transform: capitalize; flex-shrink: 0; }
+        .sp { background: #e8f0fe; color: #3949ab; } .sd { background: #fff8e1; color: #f57c00; }
+        .sc2 { background: #e8f5e9; color: #2e7d32; } .so { background: #fff3e0; color: #e65100; }
+        .sx { background: #ffebee; color: #c62828; } .sb { background: #e8f5e9; color: #1b5e20; }
+
+        /* EMPTY */
+        .empty { text-align: center; padding: 32px 20px; }
+        .eico { width: 64px; height: 64px; border-radius: 50%; background: var(--g-pale); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 1.5rem; color: var(--g-light); }
+        .empty p { font-size: .9rem; color: var(--muted); margin-bottom: 14px; }
+        .empty h4 { font-size: 1rem; color: var(--text); margin-bottom: 6px; }
+        .abtn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 20px; background: linear-gradient(135deg, var(--g-mid), var(--g-light)); color: #fff; border-radius: 10px; text-decoration: none; font-size: .85rem; font-weight: 500; transition: all .25s; border: none; cursor: pointer; }
+        .abtn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(45,90,39,.3); }
+
+        /* QUICK ACTIONS */
+        .qas { display: flex; flex-direction: column; gap: 7px; }
+        .qa { display: flex; align-items: center; gap: 12px; padding: 11px 14px; background: #f8fbf8; border: 1.5px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--text); font-size: .875rem; transition: all .2s; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+        .qaico { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: .8rem; flex-shrink: 0; background: var(--g-pale); color: var(--g-mid); }
+        .qa:hover { background: var(--g-pale); border-color: var(--g-light); color: var(--g-dark); }
+        .qa:hover .qaico { background: var(--g-mid); color: #fff; }
+
+        /* LOADING */
+        .spin { display: inline-block; width: 18px; height: 18px; border: 2px solid var(--border); border-top-color: var(--g-mid); border-radius: 50%; animation: spin .8s linear infinite; }
+        .ldr { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 28px; color: var(--muted); font-size: .875rem; }
+
+        /* MODAL */
+        .moverlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; backdrop-filter: blur(2px); }
+        .modal { background: #fff; border-radius: 20px; max-width: 620px; width: 100%; max-height: 85vh; overflow-y: auto; animation: fadeUp .3s ease; }
+        .mhdr { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: #fff; border-radius: 20px 20px 0 0; z-index: 1; }
+        .mtitle { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--text); }
+        .mclose { width: 32px; height: 32px; border-radius: 50%; border: none; background: #f0f4f0; color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: .875rem; transition: all .2s; }
+        .mclose:hover { background: #e0e8e0; color: var(--text); }
+        .mbody { padding: 20px 24px; }
+        .drow { display: flex; gap: 8px; margin-bottom: 10px; font-size: .875rem; }
+        .dlbl { font-weight: 600; color: var(--text); min-width: 90px; }
+        .dval { color: var(--muted); }
+        .dayb { background: #f8fbf8; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
+        .dayb h5 { font-family: 'Playfair Display', serif; font-size: .95rem; color: var(--g-mid); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .dayh-date { font-size: .78rem; color: var(--muted); font-family: 'DM Sans', sans-serif; font-weight: 400; }
+        .loc-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 11px 14px; margin-bottom: 8px; display: flex; gap: 12px; align-items: flex-start; }
+        .loc-card:last-child { margin-bottom: 0; }
+        .loc-slot { min-width: 78px; }
+        .loc-slot-label { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; padding: 2px 8px; border-radius: 99px; display: inline-block; }
+        .slot-morning { background: #fff8e1; color: #f57c00; }
+        .slot-afternoon { background: #e8f5e9; color: #2e7d32; }
+        .slot-evening { background: #ede7f6; color: #5e35b1; }
+        .slot-visit { background: var(--g-pale); color: var(--g-mid); }
+        .loc-time { font-size: .72rem; color: var(--muted); margin-top: 3px; }
+        .loc-info { flex: 1; min-width: 0; }
+        .loc-name { font-size: .9rem; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+        .loc-meta { font-size: .74rem; color: var(--muted); line-height: 1.7; }
+        .loc-meta span { display: inline-flex; align-items: center; gap: 4px; margin-right: 8px; }
+        .rest-day { font-size: .85rem; color: var(--muted); font-style: italic; padding: 4px 0; }
+        .no-itin { background: #f8fbf8; border: 1px dashed var(--border); border-radius: 12px; padding: 20px; text-align: center; }
+        .no-itin p { font-size: .875rem; color: var(--muted); margin-bottom: 10px; }
+
+        /* RESPONSIVE */
+        @media (max-width: 1100px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 860px) { .grid { grid-template-columns: 1fr; } .bacts { display: none; } }
+        @media (max-width: 600px) { .stats { grid-template-columns: repeat(2, 1fr); gap: 12px; } .content { padding: 16px 16px 40px; } .banner { padding: 22px; } .btitle { font-size: 1.4rem; } .uname { display: none; } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+    <link rel="stylesheet" href="theme.css">`n</head>
+<body>
+
+    <!-- HEADER -->
+    <div class="hdr">
+        <div class="nav">
+            <a href="index.html" class="logo"><i class="fas fa-mountain"></i><span>Boisar Tourism</span></a>
+            <div class="umenu">
+                <div class="uchip">
+                    <div class="uav" id="userAvatar"><i class="fas fa-user"></i></div>
+                    <span class="uname" id="userName">Loading...</span>
+                </div>
+                <a href="index.html" class="nb ghost"><i class="fas fa-home"></i><span>Home</span></a>
+                <a href="profile.html" class="nb ghost"><i class="fas fa-user-circle"></i><span>Profile</span></a>
+                <button class="nb danger" onclick="logout()"><i class="fas fa-sign-out-alt"></i><span>Logout</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <!-- Welcome Banner -->
+        <div class="banner">
+            <div class="btxt">
+                <h1 class="btitle">Welcome back, <span id="welcomeName">Explorer</span>! &#x1F44B;</h1>
+                <p class="bsub">Here is an overview of your Boisar adventures.</p>
+            </div>
+            <div class="bacts">
+                <a href="features/trip-planner.html" class="bbtn bwhite"><i class="fas fa-plus"></i> Plan New Trip</a>
+                <a href="all-locations.html" class="bbtn bghost"><i class="fas fa-search"></i> Explore</a>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="sc"><div class="si a"><i class="fas fa-route"></i></div><div class="sinfo"><div class="snum" id="totalTrips">-</div><div class="slbl">Total Trips</div></div></div>
+            <div class="sc"><div class="si b"><i class="fas fa-calendar-alt"></i></div><div class="sinfo"><div class="snum" id="upcomingTrips">-</div><div class="slbl">Upcoming</div></div></div>
+            <div class="sc"><div class="si c"><i class="fas fa-check-circle"></i></div><div class="sinfo"><div class="snum" id="completedTrips">-</div><div class="slbl">Completed</div></div></div>
+            <div class="sc"><div class="si d"><i class="fas fa-sun"></i></div><div class="sinfo"><div class="snum" id="totalDays">-</div><div class="slbl">Days Planned</div></div></div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid">
+            <div class="mcol">
+
+                <!-- Upcoming Trips -->
+                <div class="card">
+                    <div class="ch">
+                        <h2 class="ct"><i class="fas fa-calendar-alt"></i>Upcoming Trips</h2>
+                        <a href="features/trip-planner.html" class="clnk"><i class="fas fa-plus"></i> Plan New</a>
+                    </div>
+                    <div id="upcomingList"><div class="ldr"><div class="spin"></div> Loading...</div></div>
+                </div>
+
+                <!-- Recent Trips (past) -->
+                <div class="card">
+                    <div class="ch">
+                        <h2 class="ct"><i class="fas fa-history"></i>Recent Trips</h2>
+                        <span class="cbdg">Completed</span>
+                    </div>
+                    <div id="recentList"><div class="ldr"><div class="spin"></div> Loading...</div></div>
+                </div>
+
+            </div>
+            <div class="scol">
+
+                <!-- Quick Actions -->
+                <div class="card">
+                    <div class="ch"><h2 class="ct"><i class="fas fa-bolt"></i>Quick Actions</h2></div>
+                    <div class="qas">
+                        <a href="features/trip-planner.html" class="qa"><div class="qaico"><i class="fas fa-map-marked-alt"></i></div><span>Plan New Trip</span></a>
+                        <a href="all-locations.html" class="qa"><div class="qaico"><i class="fas fa-search"></i></div><span>Explore Destinations</span></a>
+                        <a href="accommodations.html" class="qa"><div class="qaico"><i class="fas fa-bed"></i></div><span>Book Accommodation</span></a>
+                        <a href="verified-guides.html" class="qa"><div class="qaico"><i class="fas fa-user-tie"></i></div><span>Find a Guide</span></a>
+                        <a href="profile.html" class="qa"><div class="qaico"><i class="fas fa-user-edit"></i></div><span>Edit Profile</span></a>
+                    </div>
+                </div>
+
+                <!-- Last Planned Trip (sidebar hint) -->
+                <div class="card" id="lastTripCard" style="display:none;">
+                    <div class="ch"><h2 class="ct"><i class="fas fa-star"></i>Last Planned</h2></div>
+                    <div id="lastTripSummary"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Trip Detail Modal -->
+    <div class="moverlay" id="tripModal" style="display:none;" onclick="closeModal(event)">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="mhdr">
+                <span class="mtitle" id="modalTitle">Trip Details</span>
+                <button class="mclose" onclick="document.getElementById('tripModal').style.display='none'"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="mbody" id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const API = 'http://localhost:5000/api';
+        let allTrips = [];
+
+        /* AUTH */
+        function checkAuth() {
+            const token = localStorage.getItem('authToken');
+            const userData = localStorage.getItem('userData');
+            if (!token || !userData) { window.location.href = 'login.html'; return; }
+            try {
+                const user = JSON.parse(userData);
+                setUserInfo(user);
+                loadDashboard();
+            } catch { localStorage.clear(); window.location.href = 'login.html'; }
+        }
+
+        function setUserInfo(user) {
+            const firstName = (user.name || 'Explorer').split(' ')[0];
+            document.getElementById('userName').textContent = user.name || 'Explorer';
+            document.getElementById('welcomeName').textContent = firstName;
+            const av = document.getElementById('userAvatar');
+            if (user.avatar && user.avatar.url) {
+                av.innerHTML = '<img src="' + user.avatar.url + '" alt="' + (user.name || '') + '">';
+            }
+        }
+
+        /* LOAD */
+        /* Returns a stable key suffix for the current user */
+        function getUserId() {
+            try {
+                var ud = localStorage.getItem('userData');
+                if (ud) {
+                    var u = JSON.parse(ud);
+                    return u._id || u.id || 'guest';
+                }
+            } catch(e) {}
+            return 'guest';
+        }
+
+        async function loadDashboard() {
+            var uid = getUserId();
+            var tripsKey    = 'userTrips_'    + uid;
+            var lastPlanKey = 'lastTripPlan_' + uid;
+
+            const token = localStorage.getItem('authToken');
+            let trips = [];
+
+            if (token) {
+                try {
+                    const res = await fetch(API + '/trips?limit=50', {
+                        headers: { 'Authorization': 'Bearer ' + token }
+                    });
+                    if (res.ok) {
+                        const d = await res.json();
+                        trips = d.data || [];
+                    }
+                } catch(e) { console.warn('Backend unavailable, using localStorage.'); }
+            }
+
+            // Merge only THIS user's local trips
+            const localTrips = JSON.parse(localStorage.getItem(tripsKey) || '[]');
+            const backendIds = new Set(trips.map(function(t) { return t._id; }));
+            localTrips.forEach(function(lt) {
+                if (lt.tripId && backendIds.has(lt.tripId)) return;
+                trips.push(normalizeLocal(lt));
+            });
+
+            // Also include this user's lastTripPlan if not already present
+            const lastStr = localStorage.getItem(lastPlanKey);
+            if (lastStr) {
+                const lt = JSON.parse(lastStr);
+                const already = trips.some(function(t) {
+                    return t._id === lt.tripId || (t._local && t.title === lt.title);
+                });
+                if (!already) trips.unshift(normalizeLocal(lt));
+            }
+
+            allTrips = trips;
+            renderStats(trips);
+            renderUpcoming(trips);
+            renderRecent(trips);
+            renderLastCard();
+        }
+
+        function normalizeLocal(lt) {
+            const dur = lt.duration || {};
+            const isObj = typeof dur === 'object';
+            const startDate = (isObj ? dur.startDate : null) || lt.date || new Date().toISOString();
+            const days = parseInt(isObj ? dur.days : dur) || 1;
+            const endDate = (isObj ? dur.endDate : null) || startDate;
+            return {
+                _id: lt.tripId || ('local_' + Math.random().toString(36).substr(2, 8)),
+                title: lt.title || (days + '-Day Boisar Adventure'),
+                status: lt.status || 'draft',
+                duration: { days: days, startDate: startDate, endDate: endDate },
+                budget: lt.budget || '',
+                interests: lt.interests || [],
+                itinerary: lt.itinerary || [],
+                _local: true
+            };
+        }
+
+        /* STATS */
+        function renderStats(trips) {
+            var now = new Date();
+            var upcoming = trips.filter(function(t) {
+                if (t.status === 'completed' || t.status === 'cancelled') return false;
+                return new Date(t.duration.startDate) >= now;
+            });
+            var completed = trips.filter(function(t) {
+                return t.status === 'completed' || new Date(t.duration.endDate || t.duration.startDate) < now;
+            });
+            var days = trips.reduce(function(s, t) { return s + (parseInt(t.duration.days) || 0); }, 0);
+            animNum('totalTrips', trips.length);
+            animNum('upcomingTrips', upcoming.length);
+            animNum('completedTrips', completed.length);
+            animNum('totalDays', days);
+        }
+
+        function animNum(id, target) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            var cur = 0;
+            var inc = Math.max(1, Math.ceil(target / 20));
+            var t = setInterval(function() {
+                cur = Math.min(cur + inc, target);
+                el.textContent = cur;
+                if (cur >= target) clearInterval(t);
+            }, 40);
+        }
+
+        /* UPCOMING */
+        function renderUpcoming(trips) {
+            var now = new Date();
+            var up = trips.filter(function(t) {
+                if (t.status === 'completed' || t.status === 'cancelled') return false;
+                var s = new Date(t.duration.startDate);
+                return s >= now || t.status === 'planned' || t.status === 'draft' || t.status === 'booked';
+            }).sort(function(a, b) {
+                return new Date(a.duration.startDate) - new Date(b.duration.startDate);
+            }).slice(0, 5);
+
+            var el = document.getElementById('upcomingList');
+            if (up.length === 0) {
+                el.innerHTML = '<div class="empty"><div class="eico"><i class="fas fa-calendar-plus"></i></div><h4>No upcoming trips</h4><p>Start planning your next adventure!</p><a href="features/trip-planner.html" class="abtn"><i class="fas fa-plus"></i> Plan a Trip</a></div>';
+                return;
+            }
+            el.innerHTML = up.map(function(t) { return tripRow(t, false); }).join('');
+        }
+
+        /* RECENT (past) */
+        function renderRecent(trips) {
+            var now = new Date();
+            var past = trips.filter(function(t) {
+                if (t.status === 'cancelled') return false;
+                var e = new Date(t.duration.endDate || t.duration.startDate);
+                return e < now || t.status === 'completed';
+            }).sort(function(a, b) {
+                return new Date(b.duration.startDate) - new Date(a.duration.startDate);
+            }).slice(0, 5);
+
+            var el = document.getElementById('recentList');
+            if (past.length === 0) {
+                el.innerHTML = '<div class="empty"><div class="eico"><i class="fas fa-history"></i></div><h4>No past trips yet</h4><p>Your completed trips will appear here once their dates have passed.</p></div>';
+                return;
+            }
+            el.innerHTML = past.map(function(t) { return tripRow(t, true); }).join('');
+        }
+
+        /* TRIP ROW */
+        function tripRow(trip, isPast) {
+            var start = trip.duration.startDate ? new Date(trip.duration.startDate) : null;
+            var dateStr = start ? start.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Date TBD';
+            var days = trip.duration.days || '?';
+            var st = (trip.status || 'draft').toLowerCase();
+            var label = trip._local ? (st === 'draft' ? 'Draft' : cap(st)) : cap(st);
+            var icoCls = isPast ? 'past' : (st === 'ongoing' ? 'ongoing' : 'up');
+            var ico = isPast ? 'flag-checkered' : 'map-marked-alt';
+            var stClass = {planned:'sp',draft:'sd',completed:'sc2',ongoing:'so',cancelled:'sx',booked:'sb'}[st] || 'sd';
+            return '<div class="tr" onclick="openModal(\'' + trip._id + '\')">' +
+                '<div class="tico ' + icoCls + '"><i class="fas fa-' + ico + '"></i></div>' +
+                '<div class="tdet"><div class="tname">' + (trip.title || 'Boisar Adventure') + '</div>' +
+                '<div class="tmeta">' +
+                '<span><i class="fas fa-calendar"></i> ' + dateStr + '</span>' +
+                '<span><i class="fas fa-sun"></i> ' + days + ' day' + (days != 1 ? 's' : '') + '</span>' +
+                (trip.budget ? '<span><i class="fas fa-wallet"></i> ' + cap(trip.budget) + '</span>' : '') +
+                '</div></div>' +
+                '<span class="tbdg ' + stClass + '">' + label + '</span>' +
+                '</div>';
+        }
+
+        /* LAST CARD */
+        function renderLastCard() {
+            var s = localStorage.getItem('lastTripPlan_' + getUserId());
+            if (!s) return;
+            var t = JSON.parse(s);
+            document.getElementById('lastTripCard').style.display = '';
+            var dur = t.duration || {};
+            var days = typeof dur === 'object' ? (dur.days || '?') : (dur || '?');
+            var startRaw = typeof dur === 'object' ? dur.startDate : t.date;
+            var startStr = startRaw ? new Date(startRaw).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' }) : '—';
+            document.getElementById('lastTripSummary').innerHTML =
+                '<div style="font-size:.875rem;color:var(--muted);line-height:1.9;">' +
+                '<div><strong style="color:var(--text);">' + (t.title || 'Boisar Adventure') + '</strong></div>' +
+                '<div><i class="fas fa-calendar" style="width:16px;margin-right:4px;"></i>' + startStr + '</div>' +
+                '<div><i class="fas fa-sun" style="width:16px;margin-right:4px;"></i>' + days + ' days</div>' +
+                (t.budget ? '<div><i class="fas fa-wallet" style="width:16px;margin-right:4px;"></i>' + cap(t.budget) + '</div>' : '') +
+                '</div>' +
+                '<a href="features/trip-planner.html" class="abtn" style="margin-top:12px;font-size:.8rem;padding:8px 14px;">' +
+                '<i class="fas fa-edit"></i> Plan Again</a>';
+        }
+
+        /* MODAL */
+        function openModal(id) {
+            var trip = null;
+            for (var i = 0; i < allTrips.length; i++) {
+                if (allTrips[i]._id === id) { trip = allTrips[i]; break; }
+            }
+            if (!trip) return;
+            document.getElementById('modalTitle').textContent = trip.title || 'Trip Details';
+
+            var startDate = trip.duration.startDate ? new Date(trip.duration.startDate) : null;
+            var endDate = trip.duration.endDate ? new Date(trip.duration.endDate) : null;
+            var start = startDate ? startDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : '—';
+            var end = endDate ? endDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }) : '—';
+
+            // Trip summary info
+            var html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);">' +
+                '<div class="drow"><span class="dlbl">&#x1F4C5; Start</span><span class="dval">' + start + '</span></div>' +
+                '<div class="drow"><span class="dlbl">&#x1F3C1; End</span><span class="dval">' + end + '</span></div>' +
+                '<div class="drow"><span class="dlbl">&#x2600;&#xFE0F; Duration</span><span class="dval">' + (trip.duration.days || '?') + ' days</span></div>' +
+                '<div class="drow"><span class="dlbl">&#x1F4B0; Budget</span><span class="dval">' + cap(trip.budget || '—') + '</span></div>' +
+                '<div class="drow"><span class="dlbl">&#x1F4CB; Status</span><span class="dval"><span class="tbdg ' + ({planned:'sp',draft:'sd',completed:'sc2',ongoing:'so',cancelled:'sx',booked:'sb'}[(trip.status||'draft').toLowerCase()]||'sd') + '">' + cap(trip.status || 'Draft') + '</span></span></div>' +
+                (trip.interests && trip.interests.length ? '<div class="drow" style="grid-column:1/-1;"><span class="dlbl">&#x2764;&#xFE0F; Interests</span><span class="dval">' + trip.interests.join(', ') + '</span></div>' : '') +
+                '</div>';
+
+            // Day-by-day itinerary with location details
+            if (trip.itinerary && trip.itinerary.length > 0) {
+                html += '<h4 style="font-family:\'Playfair Display\',serif;font-size:1rem;margin-bottom:14px;color:var(--text);">&#x1F5FA;&#xFE0F; Day-by-Day Itinerary</h4>';
+
+                trip.itinerary.forEach(function(day) {
+                    var dayDate = day.date ? new Date(day.date) : null;
+                    var dateLabel = dayDate ? dayDate.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' }) : '';
+                    html += '<div class="dayb"><h5>Day ' + day.day +
+                        (dateLabel ? '<span class="dayh-date">' + dateLabel + '</span>' : '') +
+                        '</h5>';
+
+                    var activities = day.activities || [];
+                    if (activities.length === 0) {
+                        html += '<div class="rest-day">&#x1F634; Rest day / Free time — no scheduled locations</div>';
+                    } else {
+                        activities.forEach(function(a) {
+                            var slotLabel = a.timeLabel || 'Visit';
+                            var slotClass = slotLabel === 'Morning' ? 'slot-morning' : slotLabel === 'Afternoon' ? 'slot-afternoon' : slotLabel === 'Evening' ? 'slot-evening' : 'slot-visit';
+                            var slotEmoji = slotLabel === 'Morning' ? '&#x1F305;' : slotLabel === 'Afternoon' ? '&#x1F31E;' : slotLabel === 'Evening' ? '&#x1F306;' : '&#x1F4CD;';
+
+                            html += '<div class="loc-card">' +
+                                '<div class="loc-slot">' +
+                                    '<span class="loc-slot-label ' + slotClass + '">' + slotEmoji + ' ' + slotLabel + '</span>' +
+                                    '<div class="loc-time">' + (a.time || '') + '</div>' +
+                                '</div>' +
+                                '<div class="loc-info">' +
+                                    '<div class="loc-name">&#x1F4CD; ' + (a.location || 'Location') + '</div>' +
+                                    '<div class="loc-meta">' +
+                                        (a.category ? '<span>&#x1F3F7;&#xFE0F; ' + a.category + '</span>' : '') +
+                                        (a.area ? '<span>&#x1F4CC; ' + a.area + '</span>' : '') +
+                                        (a.rating ? '<span>&#x2B50; ' + a.rating + '/5</span>' : '') +
+                                        (a.entryFee && a.entryFee !== 'Free' ? '<span>&#x1F3AB; Entry: ' + a.entryFee + '</span>' : '<span>&#x2705; Free entry</span>') +
+                                        (a.bestTime ? '<br><span>&#x1F55B; Best visit: ' + a.bestTime + '</span>' : '') +
+                                    '</div>' +
+                                '</div>' +
+                                '</div>';
+                        });
+                    }
+                    html += '</div>';
+                });
+            } else {
+                html += '<div class="no-itin">' +
+                    '<p>No location-by-day details saved for this trip.</p>' +
+                    '<a href="features/trip-planner.html" class="abtn" style="font-size:.8rem;padding:8px 16px;">' +
+                    '<i class="fas fa-plus"></i> Plan a new trip with itinerary</a></div>';
+            }
+
+            document.getElementById('modalBody').innerHTML = html;
+            document.getElementById('tripModal').style.display = 'flex';
+        }
+
+        function closeModal(e) {
+            if (e.target === e.currentTarget) document.getElementById('tripModal').style.display = 'none';
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('userData');
+                // userTrips_<id> and lastTripPlan_<id> are intentionally kept
+                // so the same user's data persists when they log back in.
+                window.location.href = 'index.html';
+            }
+        }
+
+        function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : ''; }
+
+        document.addEventListener('DOMContentLoaded', checkAuth);
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') loadDashboard();
+        });
+    </script>
+</body>
+</html>

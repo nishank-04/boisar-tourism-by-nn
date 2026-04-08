@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Boisar Tourism</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+
+        /* ── RESET & BASE ── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --primary: #123524;
+            --primary-light: #2c5c43;
+            --accent: #5e8b7e;
+            --bg-color: #f0f4f0;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-main: #1a2e1a;
+            --text-muted: #6b8a6b;
+            --grad: linear-gradient(135deg, #0f2e1f 0%, #224a35 100%);
+            --shadow: 0 8px 32px rgba(18, 53, 36, 0.08);
+            --shadow-hover: 0 12px 40px rgba(18, 53, 36, 0.15);
+            --border: rgba(255, 255, 255, 0.4);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(94, 139, 126, 0.05) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(44, 92, 67, 0.05) 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── HEADER ── */
+        .profile-container {
+            width: 100%;
+            flex: 1;
+        }
+
+        .profile-header {
+            background: var(--grad);
+            color: white;
+            padding: 30px 0 100px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .profile-header::before, .profile-header::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .profile-header::before { top: -80px; right: -50px; width: 300px; height: 300px; }
+        .profile-header::after { bottom: -60px; left: -40px; width: 200px; height: 200px; }
+
+        .profile-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-nav h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            padding: 10px 20px;
+            border-radius: 99px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-4px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        /* ── CONTENT GRID ── */
+        .profile-content {
+            max-width: 1200px;
+            margin: -70px auto 40px;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+            align-items: start;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ── SIDEBAR ── */
+        .profile-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .glass-panel {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .glass-panel:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        /* ── PROFILE CARD ── */
+        .profile-card {
+            padding: 35px 25px 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-bg-gradient {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100px;
+            background: linear-gradient(135deg, rgba(44,92,67,0.1), rgba(94,139,126,0.02));
+            z-index: 0;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--grad);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 3rem;
+            color: white;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 8px 24px rgba(44, 92, 67, 0.25);
+            border: 4px solid white;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        .profile-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .avatar-upload {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            background: var(--primary);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            z-index: 2;
+        }
+
+        .avatar-upload:hover {
+            background: var(--primary-light);
+            transform: scale(1.1);
+        }
+
+        .profile-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-email {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Stats */
+        .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stat-item {
+            background: rgba(255,255,255,0.6);
+            border-radius: 14px;
+            padding: 16px 12px;
+            text-align: center;
+            border: 1px solid rgba(44, 92, 67, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border-color: rgba(44, 92, 67, 0.2);
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+
+        /* ── SIDEBAR MENU ── */
+        .profile-menu {
+            padding: 10px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 4px;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; height: 100%; width: 3px;
+            background: var(--primary);
+            opacity: 0;
+            transition: opacity 0.2s;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .menu-item:hover {
+            background: rgba(44, 92, 67, 0.04);
+            color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .menu-item i {
+            width: 20px;
+            text-align: center;
+            font-size: 1rem;
+            color: inherit;
+            transition: transform 0.3s;
+        }
+        
+        .menu-item:hover i {
+            transform: scale(1.1);
+        }
+
+        .menu-item.active {
+            background: rgba(44, 92, 67, 0.08);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .menu-item.active::before {
+            opacity: 1;
+        }
+
+        /* ── MAIN PANEL ── */
+        .profile-main {
+            padding: 40px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            position: relative;
+        }
+
+        .section-title i {
+            color: var(--accent);
+            font-size: 1.2rem;
+            background: rgba(94, 139, 126, 0.1);
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; left: 0; width: 60px; height: 3px;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+
+        /* Form Controls */
+        .form-group { margin-bottom: 24px; position: relative; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: 0.02em;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1.5px solid rgba(0,0,0,0.1);
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            background: rgba(255,255,255,0.7);
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--primary-light);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(44, 92, 67, 0.1);
+            transform: translateY(-1px);
+        }
+
+        /* Buttons */
+        .form-actions {
+            display: flex; gap: 14px; justify-content: flex-end;
+            margin-top: 35px; padding-top: 25px;
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none; border-radius: 12px;
+            font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--grad); color: white;
+            box-shadow: 0 4px 14px rgba(18, 53, 36, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(18, 53, 36, 0.3);
+        }
+
+        .btn-secondary {
+            background: rgba(0,0,0,0.04); color: var(--text-muted);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0,0,0,0.08); color: var(--text-main);
+        }
+
+        /* Preferences Grid */
+        .preferences-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px; margin-bottom: 25px;
+        }
+
+        .preference-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 16px; background: rgba(255,255,255,0.6);
+            border: 1.5px solid rgba(0,0,0,0.08); border-radius: 14px;
+            cursor: pointer; transition: all 0.2s ease;
+            font-size: 0.9rem; color: var(--text-muted); font-weight: 500;
+        }
+
+        .preference-item:hover {
+            background: white; border-color: var(--accent);
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .preference-item.selected {
+            background: rgba(94, 139, 126, 0.1); border-color: var(--primary);
+            color: var(--primary); font-weight: 600;
+        }
+
+        .preference-item i { font-size: 1.1rem; color: var(--accent); transition: transform 0.3s; }
+        .preference-item:hover i { transform: scale(1.15); }
+        .preference-item.selected i { color: var(--primary); }
+
+        .preference-item input[type="checkbox"] { display: none; }
+        
+        .form-group label:has(input[type="checkbox"]) {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            text-transform: none;
+            letter-spacing: 0;
+            color: var(--text-main);
+            font-weight: 500;
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.6);
+            border: 1.5px solid rgba(0,0,0,0.08);
+            border-radius: 12px;
+            transition: all 0.2s;
+        }
+
+        .form-group label:has(input[type="checkbox"]):hover {
+            background: white;
+            border-color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .form-group label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            padding: 0;
+            margin: 0;
+            flex-shrink: 0;
+            accent-color: var(--primary);
+            border-radius: 4px;
+        }
+
+        /* Messages */
+        .error-message, .success-message {
+            padding: 16px 20px; border-radius: 12px; font-weight: 500;
+            margin-bottom: 25px; display: none; align-items: center; gap: 12px;
+            animation: slideDown 0.3s ease;
+        }
+        
+        .error-message { background: #feebeb; color: #d32f2f; border-left: 4px solid #d32f2f; }
+        .success-message { background: #edf7ed; color: #2e7d32; border-left: 4px solid #2e7d32; }
+
+        @keyframes slideDown { 
+            from { opacity: 0; transform: translateY(-10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .profile-content { grid-template-columns: 1fr; margin-top: -30px; }
+            .profile-sidebar { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+            .profile-card { margin-bottom: 0; }
+        }
+        @media (max-width: 700px) {
+            .profile-sidebar { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; gap: 0; }
+            .profile-main { padding: 25px 20px; }
+        }
+
+        .profile-card, .profile-menu, .profile-main { animation: fadeUp 0.5s ease both; }
+        .profile-card { background: var(--card-bg); }
+        .profile-card::before { content:''; position:absolute; top:0; left:0; right:0; height:120px; background:linear-gradient(135deg, rgba(44,92,67,0.1), rgba(94,139,126,0.02)); z-index:0; }
+        .profile-menu { animation-delay: 0.1s; }
+        .profile-main { animation-delay: 0.2s; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    </style>
+    <link rel="stylesheet" href="theme.css">`n</head>
+
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-nav">
+                <a href="dashboard.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Dashboard
+                </a>
+                <h1>Profile Settings</h1>
+                <div></div>
+            </div>
+        </div>
+
+        <div class="profile-content">
+            <div class="profile-sidebar">
+                <div class="profile-card glass-panel">
+                    <div class="profile-avatar" id="profileAvatar">
+                        <i class="fas fa-user"></i>
+                        <button class="avatar-upload" onclick="document.getElementById('avatarInput').click()">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                    <input type="file" id="avatarInput" accept="image/*" style="display: none;"
+                        onchange="uploadAvatar(this)">
+                    <div class="profile-name" id="profileName">Loading...</div>
+                    <div class="profile-email" id="profileEmail">Loading...</div>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <div class="stat-number" id="totalBookings">0</div>
+                            <div class="stat-label">Upcoming</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="totalTrips">0</div>
+                            <div class="stat-label">Recent</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="memberSince">0</div>
+                            <div class="stat-label">Days Planned</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="totalReviews">0</div>
+                            <div class="stat-label">Completed</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-menu glass-panel">
+                    <div class="menu-item active" onclick="showSection('personal')">
+                        <i class="fas fa-user"></i>
+                        <span>Personal Info</span>
+                    </div>
+                    <div class="menu-item" onclick="showSection('preferences')">
+                        <i class="fas fa-cog"></i>
+                        <span>Preferences</span>
+                    </div>
+                    <div class="menu-item" onclick="showSection('security')">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Security</span>
+                    </div>
+                    <div class="menu-item" onclick="showSection('notifications')">
+                        <i class="fas fa-bell"></i>
+                        <span>Notifications</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-main glass-panel">
+                <div class="error-message" id="errorMessage"></div>
+                <div class="success-message" id="successMessage"></div>
+
+                <!-- Personal Information Section -->
+                <div id="personalSection" class="profile-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-user"></i>
+                        Personal Information
+                    </h2>
+                    <form id="personalForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" id="city" name="city">
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State</label>
+                                <input type="text" id="state" name="state">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary"
+                                onclick="resetForm('personalForm')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Preferences Section -->
+                <div id="preferencesSection" class="profile-section" style="display: none;">
+                    <h2 class="section-title">
+                        <i class="fas fa-cog"></i>
+                        Travel Preferences
+                    </h2>
+                    <form id="preferencesForm">
+                        <div class="form-group">
+                            <label>Travel Interests</label>
+                            <div class="preferences-grid">
+                                <div class="preference-item" onclick="togglePreference(this)">
+                                    <input type="checkbox" name="interests" value="wildlife">
+                                    <i class="fas fa-paw"></i>
+                                    <span>Wildlife & Nature</span>
+                                </div>
+                                <div class="preference-item" onclick="togglePreference(this)">
+                                    <input type="checkbox" name="interests" value="tribal">
+                                    <i class="fas fa-music"></i>
+                                    <span>Cultural Heritage</span>
+                                </div>
+                                <div class="preference-item" onclick="togglePreference(this)">
+                                    <input type="checkbox" name="interests" value="camping">
+                                    <i class="fas fa-mountain"></i>
+                                    <span>Adventure Sports</span>
+                                </div>
+                                <div class="preference-item" onclick="togglePreference(this)">
+                                    <input type="checkbox" name="interests" value="photography">
+                                    <i class="fas fa-camera"></i>
+                                    <span>Photography</span>
+                                </div>
+                                <div class="preference-item" onclick="togglePreference(this)">
+                                    <input type="checkbox" name="interests" value="trekking">
+                                    <i class="fas fa-hiking"></i>
+                                    <span>Trekking & Hiking</span>
+                                </div>
+                                <div class="preference-item" onclick="togglePreference(this)">
+                                    <input type="checkbox" name="interests" value="cuisine">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Local Cuisine</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="budget">Budget Range</label>
+                                <select id="budget" name="budget">
+                                    <option value="low">Low (₹1000-5000)</option>
+                                    <option value="medium">Medium (₹5000-15000)</option>
+                                    <option value="high">High (₹15000+)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="accommodation">Preferred Accommodation</label>
+                                <select id="accommodation" name="accommodation">
+                                    <option value="homestay">Homestay</option>
+                                    <option value="hotel">Hotel</option>
+                                    <option value="resort">Resort</option>
+                                    <option value="camping">Camping</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary"
+                                onclick="resetForm('preferencesForm')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Preferences</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Security Section -->
+                <div id="securitySection" class="profile-section" style="display: none;">
+                    <h2 class="section-title">
+                        <i class="fas fa-shield-alt"></i>
+                        Security Settings
+                    </h2>
+                    <form id="passwordForm">
+                        <div class="form-group">
+                            <label for="currentPassword">Current Password</label>
+                            <input type="password" id="currentPassword" name="currentPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <input type="password" id="newPassword" name="newPassword" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm New Password</label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary"
+                                onclick="resetForm('passwordForm')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Change Password</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Notifications Section -->
+                <div id="notificationsSection" class="profile-section" style="display: none;">
+                    <h2 class="section-title">
+                        <i class="fas fa-bell"></i>
+                        Notification Preferences
+                    </h2>
+                    <form id="notificationsForm">
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="emailNotifications" checked>
+                                Email Notifications
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="bookingUpdates" checked>
+                                Booking Updates
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="promotionalEmails" checked>
+                                Promotional Emails
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" name="newsletter" checked>
+                                Newsletter
+                            </label>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary"
+                                onclick="resetForm('notificationsForm')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Settings</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        const API_BASE_URL = 'http://localhost:5000/api';
+
+        // Check authentication
+        function checkAuth() {
+            const token = localStorage.getItem('authToken');
+            const userData = localStorage.getItem('userData');
+
+            if (!token || !userData) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                currentUser = JSON.parse(userData);
+                loadUserProfile();
+            } catch (error) {
+                console.error('Error parsing user data:', error);
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('userData');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Load user profile
+        async function loadUserProfile() {
+            try {
+                // Get user data from localStorage
+                const userData = localStorage.getItem('userData');
+                if (userData) {
+                    currentUser = JSON.parse(userData);
+                    displayUserInfo();
+                    loadUserStats();
+                }
+            } catch (error) {
+                console.error('Error loading user profile:', error);
+            }
+        }
+
+        // Display user information
+        function displayUserInfo() {
+            document.getElementById('profileName').textContent = currentUser.name;
+            document.getElementById('profileEmail').textContent = currentUser.email;
+
+            // Set avatar
+            const avatar = document.getElementById('profileAvatar');
+            if (currentUser.avatar && currentUser.avatar.url) {
+                avatar.innerHTML = `
+                    <img src="${currentUser.avatar.url}" alt="${currentUser.name}">
+                    <button class="avatar-upload" onclick="document.getElementById('avatarInput').click()">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                `;
+            }
+
+            // Populate forms
+            const nameParts = currentUser.name.split(' ');
+            document.getElementById('firstName').value = nameParts[0] || '';
+            document.getElementById('lastName').value = nameParts.slice(1).join(' ') || '';
+            document.getElementById('email').value = currentUser.email || '';
+            document.getElementById('phone').value = currentUser.phone || '';
+            document.getElementById('city').value = currentUser.address?.city || '';
+            document.getElementById('state').value = currentUser.address?.state || '';
+
+            // Set preferences
+            if (currentUser.preferences) {
+                document.getElementById('budget').value = currentUser.preferences.budget || 'medium';
+                document.getElementById('accommodation').value = currentUser.preferences.accommodation || 'hotel';
+
+                // Set interests
+                if (currentUser.preferences.interests) {
+                    currentUser.preferences.interests.forEach(interest => {
+                        const checkbox = document.querySelector(`input[value="${interest}"]`);
+                        if (checkbox) {
+                            checkbox.checked = true;
+                            checkbox.closest('.preference-item').classList.add('selected');
+                        }
+                    });
+                }
+            }
+
+            // Set notifications
+            if (currentUser.notifications) {
+                document.querySelector('input[name="emailNotifications"]').checked = currentUser.notifications.emailNotifications ?? true;
+                document.querySelector('input[name="bookingUpdates"]').checked = currentUser.notifications.bookingUpdates ?? true;
+                document.querySelector('input[name="promotionalEmails"]').checked = currentUser.notifications.promotionalEmails ?? true;
+                document.querySelector('input[name="newsletter"]').checked = currentUser.notifications.newsletter ?? true;
+            }
+        }
+
+        // Load user statistics
+                // Load user statistics based on user's actual trips
+        async function loadUserStats() {
+            try {
+                let uid = currentUser._id || currentUser.id || "guest";
+                let allTrips = [];
+                
+                // Fetch from LocalStorage and Backend API
+                const token = localStorage.getItem('authToken');
+                if (token) {
+                    try {
+                        const res = await fetch(API_BASE_URL + '/trips?limit=50', {
+                            headers: { 'Authorization': 'Bearer ' + token }
+                        });
+                        if (res.ok) {
+                            const d = await res.json();
+                            allTrips = d.data || [];
+                        }
+                    } catch(e) { console.warn('API error', e); }
+                }
+                
+                // Merge local trips (deduplicate against backend data)
+                const localTrips = JSON.parse(localStorage.getItem('userTrips_' + uid) || '[]');
+                const apiIds = new Set(allTrips.map(x => x._id));
+                const localTripIds = new Set();
+                localTrips.forEach(t => {
+                    // Skip if already fetched from backend
+                    if (apiIds.has(t.tripId)) return;
+                    // Skip exact duplicate local entries
+                    const key = (t.tripId || '') + '|' + (t.title || '') + '|' + ((t.duration && t.duration.startDate) || '');
+                    if (localTripIds.has(key)) return;
+                    localTripIds.add(key);
+                    allTrips.push({
+                        status: t.status || 'draft',
+                        duration: t.duration || { endDate: t.date, startDate: t.date, days: 1 },
+                        _localId: t.tripId || key
+                    });
+                });
+
+                // Only include lastTripPlan_ if it is NOT already represented in userTrips_
+                // (trip-planner always writes to both, so this is only a fallback for edge cases)
+                const last = localStorage.getItem('lastTripPlan_' + uid);
+                if (last) {
+                    const lt = JSON.parse(last);
+                    const alreadyIn = allTrips.some(t =>
+                        t._id === lt.tripId ||
+                        t._localId === lt.tripId ||
+                        (t.duration &&
+                         t.duration.startDate === (lt.duration && lt.duration.startDate) &&
+                         t.status === (lt.status || 'planned'))
+                    );
+                    if (!alreadyIn) {
+                        allTrips.push({
+                            status: lt.status || 'planned',
+                            duration: lt.duration || { endDate: lt.date, startDate: lt.date, days: 1 },
+                            _localId: lt.tripId || 'last'
+                        });
+                    }
+                }
+                
+                // Calculate upcoming/completed logic similar to dashboard
+                const now = new Date();
+                let upcomingCount = 0;
+                let recentCount = 0;
+                let totalDays = 0;
+                let completedCount = 0;
+                
+                allTrips.forEach(t => {
+                    const dur = t.duration || {};
+                    const startRaw = (typeof dur === 'object') ? dur.startDate : undefined;
+                    const stopRaw = (typeof dur === 'object') ? dur.endDate : undefined;
+                    const days = parseInt((typeof dur === 'object' ? dur.days : dur) || 1);
+                    const st = typeof t.status === "string" ? t.status.toLowerCase() : "draft";
+
+                    const edDate = stopRaw || startRaw; 
+                    const isCompleted = st === 'completed' || (edDate && new Date(edDate) < now);
+                    
+                    if (isCompleted) {
+                        recentCount++;
+                        if (st !== "cancelled") {
+                            totalDays += days;
+                            completedCount++;
+                        }
+                    } else if (st !== "cancelled") {
+                        upcomingCount++;
+                        totalDays += days;
+                    }
+                });
+
+                document.getElementById('totalBookings').textContent = upcomingCount;
+                document.getElementById('totalTrips').textContent = recentCount;
+                document.getElementById('memberSince').textContent = totalDays;
+                
+                // For 'totalReviews' (which is now 'Completed'), display the number of actually fully completed trips
+                document.getElementById('totalReviews').textContent = completedCount;
+
+            } catch (error) {
+                console.error('Error loading user stats:', error);
+            }
+        }
+
+        // Show section
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.profile-section').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Remove active class from all menu items
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionName + 'Section').style.display = 'block';
+            event.target.closest('.menu-item').classList.add('active');
+        }
+
+        // Toggle preference
+        function togglePreference(element) {
+            const checkbox = element.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+
+            if (checkbox.checked) {
+                element.classList.add('selected');
+            } else {
+                element.classList.remove('selected');
+            }
+        }
+
+        // Upload avatar
+        function uploadAvatar(input) {
+            const file = input.files[0];
+            if (file) {
+                // In a real implementation, upload to server
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const avatar = document.getElementById('profileAvatar');
+                    avatar.innerHTML = `
+                        <img src="${e.target.result}" alt="Profile Picture">
+                        <button class="avatar-upload" onclick="document.getElementById('avatarInput').click()">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    `;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Reset form
+        function resetForm(formId) {
+            document.getElementById(formId).reset();
+            displayUserInfo(); // Reset to current user data
+        }
+
+        // Show error message
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        // Hide messages
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+
+        // Form submissions
+        document.getElementById('personalForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            await updateProfile('personal');
+        });
+
+        document.getElementById('preferencesForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            await updateProfile('preferences');
+        });
+
+        document.getElementById('passwordForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            await updatePassword();
+        });
+
+        document.getElementById('notificationsForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            await updateProfile('notifications');
+        });
+
+        // Update profile
+        async function updateProfile(type) {
+            hideMessages();
+
+            try {
+                let updateData = {};
+
+                if (type === 'personal') {
+                    const formData = new FormData(document.getElementById('personalForm'));
+                    updateData = {
+                        name: `${formData.get('firstName')} ${formData.get('lastName')}`,
+                        email: formData.get('email'),
+                        phone: formData.get('phone'),
+                        address: {
+                            city: formData.get('city'),
+                            state: formData.get('state')
+                        }
+                    };
+                } else if (type === 'preferences') {
+                    const formData = new FormData(document.getElementById('preferencesForm'));
+                    const interests = Array.from(document.querySelectorAll('input[name="interests"]:checked'))
+                        .map(checkbox => checkbox.value);
+
+                    updateData = {
+                        preferences: {
+                            interests: interests,
+                            budget: formData.get('budget'),
+                            accommodation: formData.get('accommodation')
+                        }
+                    };
+                } else if (type === 'notifications') {
+                    updateData = {
+                        notifications: {
+                            emailNotifications: document.querySelector('input[name="emailNotifications"]').checked,
+                            bookingUpdates: document.querySelector('input[name="bookingUpdates"]').checked,
+                            promotionalEmails: document.querySelector('input[name="promotionalEmails"]').checked,
+                            newsletter: document.querySelector('input[name="newsletter"]').checked
+                        }
+                    };
+                }
+
+                // Call real backend API
+                const token = localStorage.getItem('authToken');
+                if (!token) {
+                    showError('Please login to update your profile');
+                    return;
+                }
+
+                const response = await fetch(`${API_BASE_URL}/users/profile`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(updateData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Update local user data
+                    currentUser = { ...currentUser, ...updateData };
+                    localStorage.setItem('userData', JSON.stringify(currentUser));
+                    showSuccess('Profile updated successfully!');
+                } else {
+                    showError(result.message || 'Failed to update profile');
+                }
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                showError('Failed to update profile. Please try again.');
+            }
+        }
+
+        // Update password
+        async function updatePassword() {
+            hideMessages();
+
+            const formData = new FormData(document.getElementById('passwordForm'));
+            const currentPassword = formData.get('currentPassword');
+            const newPassword = formData.get('newPassword');
+            const confirmPassword = formData.get('confirmPassword');
+
+            if (newPassword !== confirmPassword) {
+                showError('New passwords do not match');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                showError('New password must be at least 6 characters long');
+                return;
+            }
+
+            try {
+                // Call real backend API
+                const token = localStorage.getItem('authToken');
+                if (!token) {
+                    showError('Please login to update your password');
+                    return;
+                }
+
+                const response = await fetch(`${API_BASE_URL}/users/update-password`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        currentPassword,
+                        newPassword
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showSuccess('Password updated successfully!');
+                    document.getElementById('passwordForm').reset();
+                } else {
+                    showError(result.message || 'Failed to update password');
+                }
+            } catch (error) {
+                console.error('Error updating password:', error);
+                showError('Failed to update password. Please try again.');
+            }
+        }
+
+        // Initialize profile page
+        document.addEventListener('DOMContentLoaded', function () {
+            checkAuth();
+        });
+    </script>
+</body>
+
+</html>

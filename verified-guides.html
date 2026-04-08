@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verified Local Guides - Boisar Tourism</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ── BASE ── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59) !important;
+            padding: 14px 0;
+            box-shadow: 0 2px 12px rgba(45, 90, 39, 0.2);
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white !important;
+            letter-spacing: 0.02em;
+        }
+
+        .navbar-brand i {
+            margin-right: 8px;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            font-weight: 400;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            padding: 6px 14px !important;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+        }
+
+        .navbar-toggler {
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255,255,255,0.85%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        /* ── HERO ── */
+        .hero-section {
+            background: linear-gradient(135deg, #2d5a27 0%, #4a7c59 60%, #667eea 100%);
+            padding: 70px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -40px;
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .hero-section h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .hero-section h1 i {
+            margin-right: 12px;
+        }
+
+        .hero-section .lead {
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 1.05rem;
+            font-weight: 300;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 16px;
+            border-radius: 99px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: white;
+        }
+
+        .hero-badge.green {
+            background: rgba(39, 174, 96, 0.85);
+        }
+
+        .hero-badge.blue {
+            background: rgba(52, 152, 219, 0.85);
+        }
+
+        .hero-badge.yellow {
+            background: rgba(243, 156, 18, 0.85);
+            color: #333;
+        }
+
+        .hero-icon {
+            font-size: 6rem;
+            color: rgba(255, 255, 255, 0.18);
+            text-align: center;
+        }
+
+        /* ── SEARCH BAR ── */
+        .search-section {
+            background: white;
+            padding: 28px 0;
+            border-bottom: 1px solid #e0e0e0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-card {
+            background: #f8f9fa;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 14px;
+            padding: 20px 24px;
+        }
+
+        .search-card .form-control,
+        .search-card .form-select {
+            border: 1.5px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            padding: 10px 14px;
+            background: white;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-card .form-control:focus,
+        .search-card .form-select:focus {
+            border-color: #2d5a27;
+            box-shadow: 0 0 0 3px rgba(45, 90, 39, 0.1);
+            outline: none;
+        }
+
+        .btn-filter {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            font-size: 0.9rem;
+            width: 100%;
+            transition: all 0.25s ease;
+        }
+
+        .btn-filter:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(45, 90, 39, 0.3);
+            color: white;
+        }
+
+        /* ── SECTION TITLE ── */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #1a3320;
+            margin-bottom: 8px;
+        }
+
+        .section-sub {
+            color: #666;
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        /* ── GUIDE CARD ── */
+        .guides-section {
+            padding: 56px 0;
+        }
+
+        .guide-card {
+            background: white;
+            border-radius: 16px;
+            border: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .guide-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        .guide-card-img {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .guide-symbol {
+            font-size: 3.5rem;
+            line-height: 1;
+            opacity: 0.95;
+            transition: transform 0.4s ease, font-size 0.4s ease;
+            color: white;
+        }
+
+        .guide-card:hover .guide-symbol {
+            transform: scale(1.1);
+            font-size: 4rem;
+        }
+
+        .verified-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #27ae60;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 99px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .guide-card-body {
+            padding: 20px 22px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .guide-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1a3320;
+            margin-bottom: 10px;
+        }
+
+        .guide-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 12px;
+        }
+
+        .guide-meta-item {
+            font-size: 0.85rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .guide-meta-item i {
+            color: #4a7c59;
+            width: 14px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .guide-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .guide-tag {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 99px;
+            font-weight: 500;
+        }
+
+        .tag-primary {
+            background: #e8f5e8;
+            color: #2d5a27;
+        }
+
+        .tag-secondary {
+            background: #eef0ff;
+            color: #667eea;
+        }
+
+        .guide-desc {
+            font-size: 0.85rem;
+            color: #777;
+            line-height: 1.55;
+            margin-bottom: 16px;
+            flex: 1;
+        }
+
+        .guide-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 14px;
+            border-top: 1px solid #f0f0f0;
+            margin-bottom: 14px;
+        }
+
+        .guide-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stars {
+            color: #f39c12;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        .rating-num {
+            font-size: 0.85rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .guide-price {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #2d5a27;
+        }
+
+        .guide-actions {
+            display: grid;
+            gap: 8px;
+        }
+
+        .btn-view {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: white;
+            border: none;
+            border-radius: 9px;
+            padding: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+        }
+
+        .btn-view:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(45, 90, 39, 0.3);
+        }
+
+        .btn-book {
+            background: white;
+            color: #2d5a27;
+            border: 2px solid #2d5a27;
+            border-radius: 9px;
+            padding: 9px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+        }
+
+        .btn-book:hover {
+            background: #e8f5e8;
+            transform: translateY(-1px);
+        }
+
+        /* ── VERIFICATION SECTION ── */
+        .verify-section {
+            background: white;
+            padding: 64px 0;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .verify-section .section-title {
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        .verify-section .section-sub {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .verify-card {
+            background: #f8f9fa;
+            border: none;
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            height: 100%;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+
+        .verify-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+        }
+
+        .verify-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .icon-green {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+        }
+
+        .icon-blue {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .icon-teal {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+        }
+
+        .verify-card h5 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1a3320;
+            margin-bottom: 8px;
+        }
+
+        .verify-card p {
+            font-size: 0.875rem;
+            color: #777;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* ── MODAL ── */
+        .modal-content {
+            border-radius: 16px;
+            border: none;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: white;
+            border: none;
+            padding: 20px 24px;
+        }
+
+        .modal-header .modal-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.15rem;
+        }
+
+        .modal-header .btn-close {
+            filter: invert(1) brightness(2);
+        }
+
+        .modal-body {
+            padding: 28px 24px;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #f0f0f0;
+            padding: 16px 24px;
+        }
+
+        .modal-detail {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #444;
+            margin-bottom: 10px;
+        }
+
+        .modal-detail i {
+            color: #4a7c59;
+            width: 16px;
+            text-align: center;
+        }
+
+        .modal-alert {
+            background: #e8f5e8;
+            color: #2d5a27;
+            border: none;
+            border-left: 4px solid #27ae60;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 0.875rem;
+            margin-top: 16px;
+        }
+
+        .btn-modal-book {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: white;
+            border: none;
+            border-radius: 9px;
+            padding: 10px 22px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+
+        .btn-modal-book:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(45, 90, 39, 0.3);
+        }
+
+        .btn-modal-close {
+            background: #f0f0f0;
+            color: #333;
+            border: none;
+            border-radius: 9px;
+            padding: 10px 22px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-modal-close:hover {
+            background: #e0e0e0;
+        }
+
+        /* ── FOOTER ── */
+        .site-footer {
+            background: #1a3320;
+            color: rgba(255, 255, 255, 0.75);
+            text-align: center;
+            padding: 30px 0;
+            font-size: 0.875rem;
+        }
+
+        .site-footer p {
+            margin: 0;
+            line-height: 2;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 48px 0;
+            }
+
+            .hero-section h1 {
+                font-size: 1.9rem;
+            }
+
+            .hero-icon {
+                display: none;
+            }
+
+            .guides-section {
+                padding: 36px 0;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="theme.css">`n</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-mountain"></i> Boisar Tourism
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blockchain-payment.html">Blockchain Payment</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1><i class="fas fa-shield-alt"></i>Verified Local Guides</h1>
+                    <p class="lead">
+                        Connect with blockchain-verified local guides who know Boisar's hidden gems,
+                        cultural heritage, and eco-tourism destinations.
+                    </p>
+                    <div class="hero-badges">
+                        <span class="hero-badge green"><i class="fas fa-check-circle"></i> Blockchain Verified</span>
+                        <span class="hero-badge blue"><i class="fas fa-language"></i> Local Language</span>
+                        <span class="hero-badge yellow"><i class="fas fa-star"></i> 5-Star Rated</span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="hero-icon"><i class="fas fa-user-check"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search -->
+    <section class="search-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 mx-auto">
+                    <div class="search-card">
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-4">
+                                <label class="form-label"
+                                    style="font-size:0.8rem;font-weight:500;color:#555;margin-bottom:6px;">Search</label>
+                                <input type="text" class="form-control" id="searchInput" placeholder="Name, specialty…">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label"
+                                    style="font-size:0.8rem;font-weight:500;color:#555;margin-bottom:6px;">Location</label>
+                                <select class="form-select" id="locationFilter">
+                                    <option value="">All Locations</option>
+                                    <option value="boisar">Boisar</option>
+                                    <option value="palghar">Palghar</option>
+                                    <option value="dahanu">Dahanu</option>
+                                    <option value="kelva">Kelva</option>
+                                    <option value="tarapur">Tarapur</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label"
+                                    style="font-size:0.8rem;font-weight:500;color:#555;margin-bottom:6px;">Language</label>
+                                <select class="form-select" id="languageFilter">
+                                    <option value="">All Languages</option>
+                                    <option value="marathi">Marathi</option>
+                                    <option value="hindi">Hindi</option>
+                                    <option value="english">English</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn-filter" onclick="filterGuides()">
+                                    <i class="fas fa-search"></i> Filter
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guides Grid -->
+    <section class="guides-section">
+        <div class="container">
+            <div class="mb-4">
+                <h2 class="section-title">Our Guides</h2>
+                <p class="section-sub">All guides are background-checked and blockchain-verified</p>
+            </div>
+            <div class="row g-4" id="guidesGrid"></div>
+        </div>
+    </section>
+
+    <!-- Verification -->
+    <section class="verify-section">
+        <div class="container">
+            <h2 class="section-title">How We Verify Our Guides</h2>
+            <p class="section-sub">A rigorous three-step process for your safety and trust</p>
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-4">
+                    <div class="verify-card">
+                        <div class="verify-icon icon-green"><i class="fas fa-id-card"></i></div>
+                        <h5>Identity Verification</h5>
+                        <p>Government ID verification and thorough background checks for every guide.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="verify-card">
+                        <div class="verify-icon icon-blue"><i class="fas fa-map-marked-alt"></i></div>
+                        <h5>Local Knowledge</h5>
+                        <p>Extensive assessment of local destinations, culture, and language proficiency.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="verify-card">
+                        <div class="verify-icon icon-teal"><i class="fas fa-link"></i></div>
+                        <h5>Blockchain Record</h5>
+                        <p>Immutable verification record stored on-chain for full transparency.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Boisar Tourism by TheemCOE students. All rights reserved.</p>
+            <p>Powered by Blockchain Technology</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const guides = [
+            { id: 1, name: "Rohit Patil", gender: "male", location: "Boisar", languages: ["Marathi", "Hindi", "English"], rating: 4.9, experience: "8 years", specialties: ["Beaches", "Local Tours", "Cultural Heritage"], price: "₹1500/day", description: "Expert in Boisar local culture and nearby beach destinations." },
+            { id: 2, name: "Neha Shah", gender: "female", location: "Dahanu", languages: ["Marathi", "Hindi", "English"], rating: 4.8, experience: "6 years", specialties: ["Beach Tourism", "Food Tours", "Chikoo Farms"], price: "₹1300/day", description: "Specializes in Dahanu beaches and local food experiences." },
+            { id: 3, name: "Amit More", gender: "male", location: "Palghar", languages: ["Marathi", "Hindi", "English"], rating: 4.9, experience: "10 years", specialties: ["Nature Trails", "Trekking", "Wildlife"], price: "₹1800/day", description: "Nature and trekking expert around the Palghar region." },
+            { id: 4, name: "Sunita Koli", gender: "female", location: "Kelva", languages: ["Marathi", "Hindi"], rating: 4.7, experience: "5 years", specialties: ["Beach Tours", "Fishing Culture", "Local Cuisine"], price: "₹1000/day", description: "Local guide specializing in Kelva beach and fishing community." },
+            { id: 5, name: "Vikram Desai", gender: "male", location: "Tarapur", languages: ["Hindi", "English", "Marathi"], rating: 4.8, experience: "7 years", specialties: ["Industrial Tours", "Fort Visits", "History"], price: "₹1600/day", description: "Expert in Tarapur fort and industrial area tours." },
+            { id: 6, name: "Meera Patkar", gender: "female", location: "Boisar", languages: ["Marathi", "Hindi", "English"], rating: 4.9, experience: "9 years", specialties: ["Warli Art", "Cultural Tours", "Festivals"], price: "₹1400/day", description: "Cultural expert focusing on Warli art and local traditions." },
+            { id: 7, name: "Prakash Yadav", gender: "male", location: "Palghar", languages: ["Hindi", "English", "Marathi"], rating: 4.8, experience: "11 years", specialties: ["Adventure Sports", "Rock Climbing", "Camping"], price: "₹1700/day", description: "Adventure enthusiast specializing in outdoor sports and camping experiences." },
+            { id: 8, name: "Divya Sharma", gender: "female", location: "Dahanu", languages: ["Marathi", "Hindi", "English"], rating: 4.9, experience: "8 years", specialties: ["Photography Tours", "Sunrise/Sunset", "Landscapes"], price: "₹1450/day", description: "Expert photographer guide capturing Boisar's stunning natural beauty." },
+            { id: 9, name: "Rajesh Kumar", gender: "male", location: "Boisar", languages: ["Hindi", "Marathi"], rating: 4.6, experience: "6 years", specialties: ["River Tours", "Water Activities", "Boating"], price: "₹1200/day", description: "Specialized guide for river activities and water sports adventures." },
+            { id: 10, name: "Anjali Deshmukh", gender: "female", location: "Kelva", languages: ["Marathi", "Hindi", "English", "Gujarati"], rating: 4.9, experience: "7 years", specialties: ["Cultural Heritage", "Temple Tours", "History"], price: "₹1350/day", description: "Knowledgeable guide on cultural heritage and religious historical sites." },
+            { id: 11, name: "Suresh Patil", gender: "male", location: "Tarapur", languages: ["Hindi", "English", "Marathi"], rating: 4.7, experience: "9 years", specialties: ["Wildlife Tours", "Bird Watching", "Nature"], price: "₹1550/day", description: "Wildlife specialist and bird watcher with extensive nature knowledge." },
+            { id: 12, name: "Preeti Nair", gender: "female", location: "Palghar", languages: ["Marathi", "Tamil", "English"], rating: 4.8, experience: "7 years", specialties: ["Wellness Tours", "Yoga Retreats", "Ayurveda"], price: "₹1400/day", description: "Holistic wellness guide specializing in yoga and traditional healing experiences." },
+            { id: 13, name: "Harish Reddy", gender: "male", location: "Boisar", languages: ["Hindi", "Telugu", "English"], rating: 4.7, experience: "5 years", specialties: ["Night Tours", "Star Gazing", "Astronomy"], price: "₹1100/day", description: "Night tour specialist offering unique stargazing and astronomy experiences." },
+            { id: 14, name: "Sophia Pereira", gender: "female", location: "Dahanu", languages: ["English", "Marathi", "Portuguese"], rating: 4.9, experience: "6 years", specialties: ["Beach Walks", "Coastal Ecology", "Environmental Tours"], price: "₹1300/day", description: "Environmental educator specializing in coastal ecology and marine life." }
+        ];
+
+        function starHTML(rating) {
+            const full = Math.floor(rating);
+            const empty = 5 - full;
+            return '★'.repeat(full) + '☆'.repeat(empty);
+        }
+
+        function loadGuides(list = guides) {
+            const grid = document.getElementById('guidesGrid');
+            grid.innerHTML = '';
+            if (list.length === 0) {
+                grid.innerHTML = '<div class="col-12 text-center py-5" style="color:#aaa;font-size:1rem;">No guides found matching your filters.</div>';
+                return;
+            }
+            list.forEach(guide => {
+                const col = document.createElement('div');
+                col.className = 'col-lg-4 col-md-6';
+                const genderIcon = guide.gender === 'male' ? 'fa-user-tie' : 'fa-user';
+                col.innerHTML = `
+                    <div class="guide-card">
+                        <div class="guide-card-img">
+                            <div class="guide-symbol"><i class="fas ${genderIcon}"></i></div>
+                            <div class="verified-badge"><i class="fas fa-check-circle"></i> Verified</div>
+                        </div>
+                        <div class="guide-card-body">
+                            <div class="guide-name">${guide.name}</div>
+                            <div class="guide-meta">
+                                <div class="guide-meta-item"><i class="fas fa-map-marker-alt"></i>${guide.location}</div>
+                                <div class="guide-meta-item"><i class="fas fa-language"></i>${guide.languages.join(', ')}</div>
+                                <div class="guide-meta-item"><i class="fas fa-clock"></i>${guide.experience} experience</div>
+                            </div>
+                            <div class="guide-tags">
+                                <span class="guide-tag tag-primary">${guide.specialties[0]}</span>
+                                <span class="guide-tag tag-secondary">${guide.specialties[1]}</span>
+                            </div>
+                            <p class="guide-desc">${guide.description}</p>
+                            <div class="guide-footer">
+                                <div class="guide-rating">
+                                    <span class="stars">${starHTML(guide.rating)}</span>
+                                    <span class="rating-num">${guide.rating}</span>
+                                </div>
+                                <span class="guide-price">${guide.price}</span>
+                            </div>
+                            <div class="guide-actions">
+                                <button class="btn-view" onclick="viewGuide(${guide.id})">
+                                    <i class="fas fa-eye"></i> View Profile
+                                </button>
+                                <button class="btn-book" onclick="bookGuide(${guide.id})">
+                                    <i class="fas fa-calendar-plus"></i> Book Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(col);
+            });
+        }
+
+        function filterGuides() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const location = document.getElementById('locationFilter').value.toLowerCase();
+            const language = document.getElementById('languageFilter').value.toLowerCase();
+            const filtered = guides.filter(g =>
+                (!search || g.name.toLowerCase().includes(search) || g.description.toLowerCase().includes(search) || g.specialties.some(s => s.toLowerCase().includes(search))) &&
+                (!location || g.location.toLowerCase() === location) &&
+                (!language || g.languages.some(l => l.toLowerCase() === language))
+            );
+            loadGuides(filtered);
+        }
+
+        function viewGuide(id) {
+            const guide = guides.find(g => g.id === id);
+            if (!guide) return;
+            const genderIcon = guide.gender === 'male' ? 'fa-user-tie' : 'fa-user';
+            const modal = document.createElement('div');
+            modal.className = 'modal fade';
+            modal.setAttribute('tabindex', '-1');
+            modal.innerHTML = `
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <span class="modal-title">${guide.name} — Verified Guide</span>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row g-4">
+                                <div class="col-md-4">
+                                    <div style="width:100%;height:200px;background:linear-gradient(135deg, #2d5a27, #4a7c59);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:4rem;color:white;">
+                                        <i class="fas ${genderIcon}"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="modal-detail"><i class="fas fa-map-marker-alt"></i><span><strong>Location:</strong> ${guide.location}</span></div>
+                                    <div class="modal-detail"><i class="fas fa-language"></i><span><strong>Languages:</strong> ${guide.languages.join(', ')}</span></div>
+                                    <div class="modal-detail"><i class="fas fa-clock"></i><span><strong>Experience:</strong> ${guide.experience}</span></div>
+                                    <div class="modal-detail"><i class="fas fa-star"></i><span><strong>Rating:</strong> ${guide.rating} / 5</span></div>
+                                    <div class="modal-detail"><i class="fas fa-rupee-sign"></i><span><strong>Price:</strong> ${guide.price}</span></div>
+                                    <hr style="border-color:#f0f0f0;margin:14px 0;">
+                                    <div class="modal-detail" style="align-items:flex-start"><i class="fas fa-map" style="margin-top:2px;"></i><span><strong>Specialties:</strong> ${guide.specialties.join(', ')}</span></div>
+                                    <div class="modal-detail" style="align-items:flex-start"><i class="fas fa-info-circle" style="margin-top:2px;"></i><span>${guide.description}</span></div>
+                                    <div class="modal-alert"><i class="fas fa-shield-alt"></i> This guide is blockchain-verified for authenticity and trust.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn-modal-close" data-bs-dismiss="modal">Close</button>
+                            <button class="btn-modal-book" onclick="bookGuide(${guide.id})">Book This Guide</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            const bsModal = new bootstrap.Modal(modal);
+            bsModal.show();
+            modal.addEventListener('hidden.bs.modal', () => document.body.removeChild(modal));
+        }
+
+        function bookGuide(id) {
+            const guide = guides.find(g => g.id === id);
+            if (!guide) return;
+            localStorage.setItem('selectedGuide', JSON.stringify({ guideId: guide.id, guideName: guide.name, price: guide.price, location: guide.location }));
+            window.location.href = 'dashboard.html#booking';
+        }
+
+        document.addEventListener('DOMContentLoaded', loadGuides);
+    </script>
+</body>
+
+</html>

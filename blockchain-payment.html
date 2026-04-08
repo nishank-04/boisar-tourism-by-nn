@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blockchain Payment - Boisar Tourism</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+
+    <style>
+        /* ── BASE ── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #f4f6f4;
+            color: #333;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59) !important;
+            padding: 0;
+            box-shadow: 0 2px 16px rgba(45, 90, 39, 0.2);
+        }
+
+        .navbar .container {
+            height: 64px;
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white !important;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.85) !important;
+            font-size: 0.9rem;
+            font-weight: 400;
+            padding: 8px 14px !important;
+            border-radius: 99px;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .navbar-toggler {
+            border-color: rgba(255, 255, 255, 0.35);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255,255,255,0.85%29' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        /* Connect wallet nav button */
+        #walletButton.btn-outline-light {
+            border-color: rgba(255, 255, 255, 0.4);
+            color: white;
+            font-size: 0.85rem;
+            padding: 6px 16px;
+            border-radius: 99px;
+            transition: all 0.2s;
+        }
+
+        #walletButton.btn-outline-light:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* ── PAGE WRAPPER ── */
+        .page-wrapper {
+            max-width: 780px;
+            margin: 36px auto 60px;
+            padding: 0 20px;
+        }
+
+        /* ── PAGE HERO ── */
+        .page-hero {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            border-radius: 20px;
+            padding: 32px 36px;
+            margin-bottom: 28px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            pointer-events: none;
+        }
+
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -20px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            pointer-events: none;
+        }
+
+        .page-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            position: relative;
+        }
+
+        .page-hero p {
+            opacity: 0.82;
+            font-size: 0.9rem;
+            font-weight: 300;
+            margin: 0;
+            position: relative;
+        }
+
+        .page-hero .hero-badges {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: white;
+        }
+
+        .badge-green {
+            background: rgba(39, 174, 96, 0.7);
+        }
+
+        .badge-blue {
+            background: rgba(52, 152, 219, 0.7);
+        }
+
+        .badge-purple {
+            background: rgba(142, 68, 173, 0.7);
+        }
+
+        /* ── SECTION CARDS ── */
+        .section-card {
+            background: white;
+            border-radius: 18px;
+            border: 1px solid #e8f0e6;
+            box-shadow: 0 2px 16px rgba(45, 90, 39, 0.07);
+            overflow: hidden;
+            margin-bottom: 22px;
+            animation: fadeUp 0.4s ease both;
+        }
+
+        .section-card:nth-child(2) {
+            animation-delay: 0.06s;
+        }
+
+        .section-card:nth-child(3) {
+            animation-delay: 0.12s;
+        }
+
+        .section-card:nth-child(4) {
+            animation-delay: 0.18s;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 24px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .card-head.green {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+        }
+
+        .card-head.blue {
+            background: linear-gradient(135deg, #2980b9, #3498db);
+        }
+
+        .card-head.teal {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: #1a3320;
+        }
+
+        .card-head.dark {
+            background: #1a3320;
+        }
+
+        .card-head i {
+            font-size: 1rem;
+        }
+
+        .card-body-inner {
+            padding: 24px;
+        }
+
+        /* ── WALLET STATUS ── */
+        .wallet-status-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .wallet-info p {
+            margin: 0 0 6px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .wallet-info p strong {
+            color: #222;
+        }
+
+        #walletStatus {
+            font-weight: 600;
+        }
+
+        #walletStatus.text-danger {
+            color: #e74c3c !important;
+        }
+
+        #walletStatus.text-success {
+            color: #27ae60 !important;
+        }
+
+        #walletAddress {
+            font-size: 0.78rem;
+            color: #888;
+            word-break: break-all;
+        }
+
+        /* Connect wallet card button */
+        .btn-connect {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 22px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s;
+            white-space: nowrap;
+        }
+
+        .btn-connect:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(45, 90, 39, 0.3);
+            color: white;
+        }
+
+        /* ── FORM ── */
+        .form-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #444;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+        }
+
+        .form-control {
+            border: 1.5px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 11px 14px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            background: #f8f9fa;
+            color: #333;
+            transition: all 0.2s;
+        }
+
+        .form-control:focus {
+            border-color: #2d5a27;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(45, 90, 39, 0.1);
+            outline: none;
+        }
+
+        .form-control[readonly] {
+            background: #f0f0f0;
+            color: #777;
+            cursor: default;
+        }
+
+        .form-text {
+            font-size: 0.75rem;
+            color: #aaa;
+            margin-top: 4px;
+        }
+
+        /* Pay button */
+        .btn-pay {
+            width: 100%;
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .btn-pay:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(45, 90, 39, 0.3);
+        }
+
+        .btn-pay:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* ── TRANSACTION TABLE ── */
+        .table {
+            font-size: 0.85rem;
+            margin: 0;
+        }
+
+        .table thead th {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #888;
+            font-weight: 500;
+            border-bottom: 1.5px solid #eee;
+            padding: 10px 12px;
+        }
+
+        .table tbody td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f5f5f5;
+            vertical-align: middle;
+            color: #444;
+        }
+
+        .table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge.bg-success {
+            background: #e8f5e8 !important;
+            color: #2d5a27 !important;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 99px;
+        }
+
+        .badge.bg-warning {
+            background: #fff3cd !important;
+            color: #856404 !important;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 99px;
+        }
+
+        .text-muted {
+            color: #aaa !important;
+            font-size: 0.875rem;
+        }
+
+        /* ── BLOCKCHAIN BENEFITS ── */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .benefit-item h6 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #1a3320;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .benefit-item h6 i {
+            color: #27ae60;
+            font-size: 0.85rem;
+        }
+
+        .benefit-item p {
+            font-size: 0.82rem;
+            color: #777;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* ── FOOTER ── */
+        .site-footer {
+            background: #1a3320;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            padding: 28px 0;
+            font-size: 0.875rem;
+        }
+
+        .site-footer p {
+            margin: 0;
+            line-height: 2;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .page-hero {
+                padding: 24px 20px;
+            }
+
+            .page-hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .card-body-inner {
+                padding: 18px;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wallet-status-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="theme.css">`n</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-mountain"></i> Boisar Tourism
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <button id="walletButton" class="btn btn-outline-light">
+                            <i class="fas fa-wallet me-1"></i> Connect Wallet
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="page-wrapper">
+
+        <!-- Hero -->
+        <div class="page-hero">
+            <h1><i class="fab fa-ethereum me-2"></i>Blockchain Payment</h1>
+            <p>Secure, transparent, and verified transactions powered by Web3 technology</p>
+            <div class="hero-badges">
+                <span class="hero-badge badge-green"><i class="fas fa-lock"></i> Secure</span>
+                <span class="hero-badge badge-blue"><i class="fas fa-eye"></i> Transparent</span>
+                <span class="hero-badge badge-purple"><i class="fas fa-shield-alt"></i> Immutable</span>
+            </div>
+        </div>
+
+        <!-- Wallet Status -->
+        <div class="section-card">
+            <div class="card-head green">
+                <i class="fas fa-wallet"></i> Wallet Status
+            </div>
+            <div class="card-body-inner">
+                <div class="wallet-status-row">
+                    <div class="wallet-info">
+                        <p><strong>Status:</strong>&nbsp;<span id="walletStatus" class="text-danger">Not
+                                Connected</span></p>
+                        <p style="margin:0;"><strong>Address:</strong>&nbsp;<span id="walletAddress"
+                                style="display:none;"></span><span id="walletAddressEmpty"
+                                style="color:#aaa;font-size:0.85rem;">—</span></p>
+                    </div>
+                    <button id="walletButtonCard" class="btn-connect">
+                        <i class="fas fa-plug me-1"></i> Connect Wallet
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Form -->
+        <div class="section-card">
+            <div class="card-head green">
+                <i class="fab fa-ethereum"></i> Make a Payment
+            </div>
+            <div class="card-body-inner">
+                <form id="paymentForm">
+                    <div class="mb-3">
+                        <label for="bookingId" class="form-label">Booking ID</label>
+                        <input type="text" class="form-control" id="bookingId" placeholder="e.g. BK-20240315-001"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount" class="form-label">Amount (ETH)</label>
+                        <input type="number" class="form-control" id="amount" step="0.001" placeholder="0.05" required>
+                        <div class="form-text">Enter the amount in ETH</div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="userAddress" class="form-label">Your Wallet Address</label>
+                        <input type="text" class="form-control" id="userAddress" readonly
+                            placeholder="Connect your wallet to autofill">
+                        <div class="form-text">Automatically filled when your wallet is connected</div>
+                    </div>
+                    <button type="submit" class="btn-pay" id="payButton" disabled>
+                        <i class="fab fa-ethereum"></i> Pay with Blockchain
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Transaction History -->
+        <div class="section-card">
+            <div class="card-head dark">
+                <i class="fas fa-history"></i> Transaction History
+            </div>
+            <div class="card-body-inner">
+                <div id="transactionHistory">
+                    <p class="text-muted">Connect your wallet to view transaction history</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blockchain Benefits -->
+        <div class="section-card">
+            <div class="card-head blue">
+                <i class="fas fa-shield-alt"></i> Why Blockchain?
+            </div>
+            <div class="card-body-inner">
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <h6><i class="fas fa-lock"></i> Secure Transactions</h6>
+                        <p>All payments are secured by blockchain technology with immutable transaction records.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h6><i class="fas fa-check-circle"></i> Verified Guides</h6>
+                        <p>Local guides are verified on the blockchain, ensuring authenticity and trust.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h6><i class="fas fa-home"></i> Verified Homestays</h6>
+                        <p>Homestays are verified with transparent ownership records on the blockchain.</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h6><i class="fas fa-eye"></i> Transparent Process</h6>
+                        <p>All transactions are publicly verifiable on the blockchain explorer.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 Boisar Tourism by TheemCOE students. All rights reserved.</p>
+            <p>Powered by Blockchain Technology</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/web3-integration.js"></script>
+    <script>
+        // Sync card wallet button with nav wallet button
+        document.getElementById('walletButtonCard').addEventListener('click', () => {
+            document.getElementById('walletButton').click();
+        });
+
+        // Payment form handling
+        document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const bookingId = document.getElementById('bookingId').value;
+            const amount = document.getElementById('amount').value;
+
+            if (!web3Integration.isConnected) {
+                alert('Please connect your wallet first');
+                return;
+            }
+
+            const payButton = document.getElementById('payButton');
+            payButton.disabled = true;
+            payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+            try {
+                const result = await web3Integration.createBookingTransaction(bookingId, amount);
+                if (result.success) {
+                    document.getElementById('paymentForm').reset();
+                    loadTransactionHistory();
+                }
+            } catch (error) {
+                console.error('Payment error:', error);
+            } finally {
+                payButton.disabled = false;
+                payButton.innerHTML = '<i class="fab fa-ethereum"></i> Pay with Blockchain';
+            }
+        });
+
+        // Update user address when wallet connects
+        function updateUserAddress() {
+            const userAddressInput = document.getElementById('userAddress');
+            const payButton = document.getElementById('payButton');
+            const walletAddress = document.getElementById('walletAddress');
+            const walletAddressEmpty = document.getElementById('walletAddressEmpty');
+            const walletStatus = document.getElementById('walletStatus');
+
+            if (web3Integration.isConnected && web3Integration.userAccount) {
+                userAddressInput.value = web3Integration.userAccount;
+                payButton.disabled = false;
+                walletAddress.textContent = web3Integration.userAccount;
+                walletAddress.style.display = 'inline';
+                walletAddressEmpty.style.display = 'none';
+                walletStatus.textContent = 'Connected';
+                walletStatus.className = 'text-success';
+            } else {
+                userAddressInput.value = '';
+                payButton.disabled = true;
+                walletAddress.style.display = 'none';
+                walletAddressEmpty.style.display = 'inline';
+                walletStatus.textContent = 'Not Connected';
+                walletStatus.className = 'text-danger';
+            }
+        }
+
+        // Load transaction history
+        async function loadTransactionHistory() {
+            if (!web3Integration.isConnected) return;
+
+            try {
+                const result = await web3Integration.getUserTransactions();
+                const historyDiv = document.getElementById('transactionHistory');
+
+                if (result.success && result.data.transactions.length > 0) {
+                    let html = '<div class="table-responsive"><table class="table">';
+                    html += '<thead><tr><th>Type</th><th>Amount</th><th>Status</th><th>Date</th><th>Hash</th></tr></thead><tbody>';
+
+                    result.data.transactions.forEach(tx => {
+                        html += `<tr>
+                            <td>${tx.type}</td>
+                            <td>${tx.amount} ${tx.currency}</td>
+                            <td><span class="badge bg-${tx.status === 'confirmed' ? 'success' : 'warning'}">${tx.status}</span></td>
+                            <td>${new Date(tx.timestamp).toLocaleDateString()}</td>
+                            <td><a href="${tx.explorerUrl}" target="_blank" style="color:#2d5a27;font-size:0.8rem;">${tx.hash.slice(0, 10)}…</a></td>
+                        </tr>`;
+                    });
+
+                    html += '</tbody></table></div>';
+                    historyDiv.innerHTML = html;
+                } else {
+                    historyDiv.innerHTML = '<p class="text-muted">No transactions found</p>';
+                }
+            } catch (error) {
+                console.error('Failed to load transaction history:', error);
+            }
+        }
+
+        // Poll for wallet connection changes
+        setInterval(() => {
+            updateUserAddress();
+            if (web3Integration.isConnected) loadTransactionHistory();
+        }, 1000);
+    </script>
+</body>
+
+</html>

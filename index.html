@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boisar Tourism – Eco & Cultural Experiences</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="index-improvements.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Maps API -->
+    <!-- Static Map Integration -->
+    <script src="js/static-map.js"></script>
+    <!-- Interactive Google Maps Integration -->
+    <script src="js/google-maps.js"></script>
+
+    <!-- ── CHATBOT STYLES (inlined so chatbot works on every page that includes it) ── -->
+    <style>
+        /* Toggle Button */
+        .chatbot-toggle {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 58px;
+            height: 58px;
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.4rem;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(45, 90, 39, 0.4);
+            transition: all 0.3s ease;
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chatbot-toggle:hover {
+            transform: scale(1.08);
+            box-shadow: 0 10px 28px rgba(45, 90, 39, 0.5);
+        }
+
+        .chatbot-toggle.active {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            box-shadow: 0 6px 20px rgba(192, 57, 43, 0.4);
+        }
+
+        .chatbot-toggle .badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 18px;
+            height: 18px;
+            background: #e74c3c;
+            border-radius: 50%;
+            border: 2px solid white;
+            font-size: 0.65rem;
+            font-weight: 700;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Chatbot Window */
+        .chatbot-container {
+            position: fixed;
+            bottom: 96px;
+            right: 24px;
+            width: 370px;
+            height: 540px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(45, 90, 39, 0.08);
+            flex-direction: column;
+            z-index: 10000;
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+            display: none;
+            opacity: 0;
+            transform: translateY(16px) scale(0.97);
+        }
+
+        .chatbot-container.open {
+            display: flex;
+        }
+
+        .chatbot-container.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Header */
+        .chatbot-header {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: white;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chatbot-header::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.07);
+            pointer-events: none;
+        }
+
+        .chatbot-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bot-avatar-header {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.18);
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        .chatbot-title-text h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .chatbot-title-text span {
+            font-size: 0.72rem;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .online-dot {
+            width: 6px;
+            height: 6px;
+            background: #69e069;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .chatbot-header-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .header-btn {
+            background: rgba(255, 255, 255, 0.12);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+
+        .header-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Messages */
+        .chatbot-messages {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #f8faf8;
+            scroll-behavior: smooth;
+        }
+
+        .chatbot-messages::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-thumb {
+            background: #d0ddd0;
+            border-radius: 4px;
+        }
+
+        /* Welcome banner */
+        .welcome-message {
+            background: white;
+            border: 1px solid #e8f0e6;
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(45, 90, 39, 0.06);
+        }
+
+        .welcome-message h4 {
+            font-size: 1rem;
+            color: #1a3320;
+            margin-bottom: 6px;
+        }
+
+        .welcome-message p {
+            font-size: 0.82rem;
+            color: #888;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .quick-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        .quick-chip {
+            background: #e8f5e8;
+            color: #2d5a27;
+            border: 1px solid #c8dfc8;
+            border-radius: 99px;
+            padding: 5px 11px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .quick-chip:hover {
+            background: #2d5a27;
+            color: white;
+            border-color: #2d5a27;
+        }
+
+        /* Message bubbles */
+        .message {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            animation: msgIn 0.3s ease both;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        @keyframes msgIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+            margin-bottom: 2px;
+        }
+
+        .message.bot .message-avatar {
+            background: #e8f5e8;
+            color: #2d5a27;
+            border: 1px solid #c8dfc8;
+        }
+
+        .message.user .message-avatar {
+            background: #2d5a27;
+            color: white;
+        }
+
+        .message-bubble-wrap {
+            display: flex;
+            flex-direction: column;
+            max-width: 78%;
+        }
+
+        .message.user .message-bubble-wrap {
+            align-items: flex-end;
+        }
+
+        .message-content {
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        .message.bot .message-content {
+            background: white;
+            color: #333;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #eee;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: white;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 12px rgba(45, 90, 39, 0.25);
+        }
+
+        .message-time {
+            font-size: 0.68rem;
+            color: #bbb;
+            margin-top: 4px;
+            padding: 0 2px;
+        }
+
+        /* Typing indicator */
+        .typing-wrap {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .typing-bubbles {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 16px;
+            border-bottom-left-radius: 4px;
+            padding: 12px 16px;
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .typing-dot {
+            width: 7px;
+            height: 7px;
+            background: #4a7c59;
+            border-radius: 50%;
+            animation: bounce 1.3s infinite ease;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.18s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.36s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0)
+            }
+
+            30% {
+                transform: translateY(-7px)
+            }
+        }
+
+        /* Input bar */
+        .chatbot-input {
+            padding: 12px 14px;
+            border-top: 1px solid #eef2ee;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            background: white;
+            flex-shrink: 0;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            border: 1.5px solid #e0e8e0;
+            border-radius: 99px;
+            padding: 9px 16px;
+            font-family: inherit;
+            font-size: 0.875rem;
+            outline: none;
+            background: #f8faf8;
+            color: #333;
+            transition: all 0.2s;
+        }
+
+        .chatbot-input input::placeholder {
+            color: #bbb;
+        }
+
+        .chatbot-input input:focus {
+            border-color: #4a7c59;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(45, 90, 39, 0.08);
+        }
+
+        .chatbot-send {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+
+        .chatbot-send:hover {
+            transform: scale(1.08);
+            box-shadow: 0 4px 12px rgba(45, 90, 39, 0.3);
+        }
+
+        .chatbot-send:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        @media (max-width: 480px) {
+            .chatbot-container {
+                width: 100%;
+                height: 100%;
+                bottom: 0;
+                right: 0;
+                border-radius: 0;
+            }
+
+            .chatbot-toggle {
+                bottom: 16px;
+                right: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-mountain"></i>
+                <span>Boisar Tourism</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#eco-tourism">Eco Tourism</a></li>
+                <li><a href="#cultural">Cultural Heritage</a></li>
+                <li><a href="#destinations">Destinations</a></li>
+                <li><a href="#plan-trip">Plan Trip</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-auth" id="navAuth">
+                <a href="login.html" class="btn-login">Login</a>
+                <a href="register.html" class="btn-register">Sign Up</a>
+                <a href="blockchain-payment.html" class="btn-blockchain">
+                    <i class="fab fa-ethereum"></i> Blockchain
+                </a>
+            </div>
+            <div class="nav-user" id="navUser" style="display: none;">
+                <div class="user-dropdown">
+                    <button class="user-btn" id="userBtn">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="userName">User</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu" id="dropdownMenu">
+                        <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="profile.html"><i class="fas fa-user-edit"></i> Profile</a>
+                        <a href="verified-guides.html"><i class="fas fa-user-check"></i> Verified Guides</a>
+                        <a href="blockchain-payment.html"><i class="fab fa-ethereum"></i> Blockchain Payment</a>
+                        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <!-- Photo Carousel Background -->
+        <div class="hero-carousel">
+            <div class="carousel-slides">
+                <div class="carousel-slide active">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="Boisar Beach View">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="Coastal Waves">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="Mountain Landscape">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1519904981063-b0cf448d479e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="Sunset View">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1495567720989-cebdbdd97913?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="Forest Path">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="Nature Beauty 1">
+                </div>
+                <div class="carousel-slide">
+                    <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80" alt="Nature Beauty 2">
+                </div>
+            </div>
+            <div class="carousel-overlay"></div>
+
+            <!-- Carousel Navigation -->
+            <div class="carousel-controls">
+                <button class="carousel-btn prev" onclick="previousSlide()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-btn next" onclick="nextSlide()">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <!-- Carousel Indicators -->
+            <div class="carousel-indicators">
+                <span class="indicator active" onclick="goToSlide(0)"></span>
+                <span class="indicator" onclick="goToSlide(1)"></span>
+                <span class="indicator" onclick="goToSlide(2)"></span>
+                <span class="indicator" onclick="goToSlide(3)"></span>
+                <span class="indicator" onclick="goToSlide(4)"></span>
+                <span class="indicator" onclick="goToSlide(5)"></span>
+                <span class="indicator" onclick="goToSlide(6)"></span>
+            </div>
+        </div>
+
+        <!-- Hero Content Overlay -->
+        <div class="hero-content">
+            <h1 class="hero-title animate-fade-in-up">Discover Boisar</h1>
+            <p class="byline animate-fade-in-up">Boisar Tourism</p>
+            <p class="hero-subtitle animate-fade-in-up delay-1">Where Industry Meets Nature</p>
+            <p class="hero-description animate-fade-in-up delay-2">
+                Explore the vibrant town of Boisar, known for its industrial growth, serene beaches, and proximity to
+                lush greenery and cultural heritage - a rising destination near Mumbai.
+            </p>
+            <div class="hero-buttons animate-fade-in-up delay-3">
+                <button class="btn-primary btn-glow animate-bounce-in">Explore Now</button>
+            
+            </div>
+        </div>
+    </section>
+
+    <!-- Eco Tourism Section -->
+    <section id="eco-tourism" class="eco-tourism scroll-reveal">
+        <div class="container">
+            <h2 class="section-title animate-fade-in-up">Eco Tourism Destinations</h2>
+            <p class="section-subtitle animate-fade-in-up delay-1">Explore Boisar's hidden gems of beaches, forts, and
+                greenery</p>
+
+            <div class="destinations-grid">
+                <div class="destination-card scroll-reveal">
+                    <div class="card-image">
+                        <i class="fas fa-umbrella-beach"></i>
+                    </div>
+                    <h3>Kelva Beach</h3>
+                    <p>Beautiful and serene beach known for its black sand, coconut trees, and peaceful environment.</p>
+                    <div class="card-features">
+                        <span><i class="fas fa-water"></i> Beach Walk</span>
+                        <span><i class="fas fa-camera"></i> Photography</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/LP3U7mEDuvHDkt6EA" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+
+                <div class="destination-card scroll-reveal">
+                    <div class="card-image">
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <h3>Kaldurg Fort</h3>
+                    <p>A popular trekking destination offering breathtaking views, especially during the monsoon season.
+                    </p>
+                    <div class="card-features">
+                        <span><i class="fas fa-hiking"></i> Trekking</span>
+                        <span><i class="fas fa-eye"></i> Scenic Views</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/nB52EhYsgkWWQUjaA" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+
+                <div class="destination-card scroll-reveal">
+                    <div class="card-image">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <h3>Dabhosa Waterfall</h3>
+                    <p>A stunning waterfall near Jawhar, surrounded by dense forest and ideal for nature lovers.</p>
+                    <div class="card-features">
+                        <span><i class="fas fa-swimming-pool"></i> Water Activities</span>
+                        <span><i class="fas fa-camera"></i> Photography</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/i8t5PXhpQ9UJVrsTA" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+
+                <div class="destination-card scroll-reveal">
+                    <div class="card-image">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <h3>Kohoj Hill</h3>
+                    <p>A scenic trekking spot with lush greenery and panoramic views, perfect for adventure seekers.</p>
+                    <div class="card-features">
+                        <span><i class="fas fa-hiking"></i> Trekking</span>
+                        <span><i class="fas fa-leaf"></i> Nature Walks</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/cMMA4sPARy68QKXm6" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+
+                <div class="destination-card scroll-reveal">
+                    <div class="card-image">
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <h3>Dahanu Beach</h3>
+                    <p>A clean and peaceful beach famous for chikoo orchards and relaxing coastal vibes.</p>
+                    <div class="card-features">
+                        <span><i class="fas fa-umbrella-beach"></i> Beach Activities</span>
+                        <span><i class="fas fa-camera"></i> Photography</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/voSRQEHRdu8B9j9ZA" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+
+                <div class="destination-card scroll-reveal">
+                    <div class="card-image">
+                        <i class="fas fa-fort-awesome"></i>
+                    </div>
+                    <h3>Tarapur Fort</h3>
+                    <p>A historic seaside fort offering scenic ocean views and a glimpse into the region's past.</p>
+                    <div class="card-features">
+                        <span><i class="fas fa-landmark"></i> Heritage</span>
+                        <span><i class="fas fa-eye"></i> Scenic Views</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/DwdQR6NMAN9Rap3QA" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- More Locations Button -->
+            <div style="grid-column: 1 / -1; display: flex; justify-content: center; margin-top: 30px;">
+                <a href="all-locations.html" class="btn-more-locations">
+                    <i class="fas fa-compass"></i> Explore All Locations
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultural Heritage Section -->
+    <section id="cultural" class="cultural-heritage">
+        <div class="container">
+            <h2 class="section-title scroll-reveal">Cultural Heritage</h2>
+            <p class="section-subtitle scroll-reveal">Explore the local culture, traditions, and lifestyle around Boisar
+            </p>
+
+            <div class="cultural-grid">
+                <div class="cultural-card">
+                    <div class="cultural-image">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Warli Art & Handicrafts</h3>
+                    <p>Discover famous Warli paintings and handmade crafts that showcase the artistic heritage of the
+                        region.</p>
+                </div>
+
+                <div class="cultural-card">
+                    <div class="cultural-image">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Coastal & Village Life</h3>
+                    <p>Experience simple village life near Boisar with fishing communities and traditional lifestyles.
+                    </p>
+                </div>
+
+                <div class="cultural-card">
+                    <div class="cultural-image">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Local Cuisine</h3>
+                    <p>Enjoy authentic Maharashtrian and coastal cuisine including fresh seafood and traditional dishes.
+                    </p>
+                </div>
+
+                <div class="cultural-card">
+                    <div class="cultural-image">
+                        <i class="fas fa-om"></i>
+                    </div>
+                    <h3>Ganesh Festival</h3>
+                    <p>Celebrate the vibrant Ganesh Chaturthi festival with grand idols, music, and community
+                        celebrations across Boisar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Map Section -->
+    <section id="destinations" class="map-section">
+        <div class="container">
+            <h2 class="section-title">Explore Boisar</h2>
+            <p class="section-subtitle">Interactive map of major tourist destinations</p>
+
+            <div class="map-search-container">
+                <div class="search-bar">
+                    <input type="text" id="mapSearch" placeholder="Search destinations..." class="search-input">
+                    <button class="search-btn" onclick="searchMapDestinations()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div id="mapSearchResults" class="map-search-results" style="display:none;"></div>
+            </div>
+
+            <div class="map-container">
+                <div id="map" class="google-map"></div>
+            </div>
+
+            <div class="map-legend">
+                <h4>Destination Types:</h4>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <span class="legend-icon dot-eco"></span>
+                        <span>Eco Tourism</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-icon dot-cultural"></span>
+                        <span>Cultural Heritage</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-icon dot-nature"></span>
+                        <span>Nature &amp; Waterfalls</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-icon dot-historical"></span>
+                        <span>Historical Sites</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-icon dot-industrial"></span>
+                        <span>Industrial Tourism</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plan Trip Section -->
+    <section id="plan-trip" class="plan-trip">
+        <div class="container">
+            <h2 class="section-title">Plan Your Perfect Trip</h2>
+            <p class="section-subtitle">Customize your Boisar experience</p>
+
+            <div class="planning-tools">
+                <div class="tool-card">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>Trip Planner</h3>
+                    <p>Create personalized itineraries based on your interests and duration.</p>
+                    <button class="btn-card" onclick="checkAuthAndRedirect('features/trip-planner.html')">
+                        Start Planning
+                    </button>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-bed"></i>
+                    <h3>Accommodations</h3>
+                    <p>Find eco-friendly stays, homestays, and luxury resorts.</p>
+                    <a href="accommodations.html" class="btn-card">
+                        Find Stays
+                    </a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-car"></i>
+                    <h3>Transportation</h3>
+                    <p>Eco-friendly transport options and guided tours.</p>
+                    <a href="transportation.html" class="btn-card">
+                        Transport Options
+                    </a>
+                </div>
+
+                <div class="tool-card">
+                    <i class="fas fa-ticket-alt"></i>
+                    <h3>Activities</h3>
+                    <p>Discover and book unique experiences and activities.</p>
+                    <a href="activities.html" class="btn-card">Browse Activities</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blockchain Features Section -->
+    <section id="blockchain-features" class="blockchain-features">
+        <div class="container">
+            <h2 class="section-title">Blockchain-Powered Tourism</h2>
+            <p class="section-subtitle">Secure, transparent, and verified experiences</p>
+
+            <div class="blockchain-grid">
+                <div class="blockchain-card">
+                    <div class="card-icon">
+                        <i class="fab fa-ethereum"></i>
+                    </div>
+                    <h3>Secure Payments</h3>
+                    <p>All transactions are secured by blockchain technology with immutable records and instant
+                        verification.</p>
+                    <button class="btn-blockchain" onclick="checkAuthAndRedirect('blockchain-payment.html')">Pay with Crypto</button>
+                </div>
+
+                <div class="blockchain-card">
+                    <div class="card-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h3>Verified Guides</h3>
+                    <p>Local guides are verified on the blockchain, ensuring authenticity and building trust with
+                        travelers.</p>
+                    <a href="verified-guides.html" class="btn-blockchain">Find Verified Guides</a>
+                </div>
+
+
+                <div class="blockchain-card">
+                    <div class="card-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Trust & Transparency</h3>
+                    <p>All reviews, ratings, and transactions are recorded on the blockchain for complete transparency.
+                    </p>
+                    <a href="dashboard.html#reviews" class="btn-blockchain">View Reviews</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sustainable Tourism Section -->
+    <section id="sustainable" class="sustainable scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">Sustainable Tourism</h2>
+            <p class="section-subtitle">Eco-friendly practices to preserve Boisar's beaches, nature, and local culture
+            </p>
+
+            <div class="sustainable-grid">
+                <div class="sustain-card">
+                    <i class="fas fa-recycle"></i>
+                    <h3>Responsible Waste</h3>
+                    <p>Keep beaches clean by avoiding plastic use and disposing waste properly in designated areas.</p>
+                </div>
+                <div class="sustain-card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Protect Nature</h3>
+                    <p>Respect coastal ecosystems, avoid disturbing wildlife, and preserve greenery during visits.</p>
+                </div>
+                <div class="sustain-card">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <h3>Support Local</h3>
+                    <p>Buy from local vendors, support fishermen communities, and promote regional crafts.</p>
+                </div>
+                <div class="sustain-card">
+                    <i class="fas fa-bus"></i>
+                    <h3>Eco-Friendly Travel</h3>
+                    <p>Use public transport or carpool when visiting Boisar to reduce environmental impact.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">Traveler Stories</h2>
+            <p class="section-subtitle">Real experiences from visitors to Boisar</p>
+
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="avatar">A</div>
+                    <p class="quote">"A peaceful getaway! Kelva Beach was clean and relaxing, perfect for a weekend
+                        escape."</p>
+                    <div class="author">Anita, Mumbai</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="avatar">R</div>
+                    <p class="quote">"Loved the Warli art and local culture. The people were friendly and the experience
+                        felt authentic."</p>
+                    <div class="author">Rahul, Pune</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="avatar">S</div>
+                    <p class="quote">"Trekking to Kaldurg Fort was amazing! The view from the top was totally worth it."
+                    </p>
+                    <div class="author">Sara, Thane</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tribal Art & Handicrafts Section -->
+    <section id="handicrafts" class="handicrafts scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">Local Art & Handicrafts</h2>
+            <p class="section-subtitle">Explore Warli art and traditional crafts of the Boisar region</p>
+
+            <div class="handicraft-grid">
+                <div class="craft-card">
+                    <div class="image-wrapper">
+                        <img src="https://www.artworld.co.in/wp-content/uploads/2020/11/bl1.jpg" alt="Warli Art">
+                    </div>
+                    <h4>Warli Paintings</h4>
+                    <div class="price-rating">
+                        <span class="price">₹499</span>
+                        <span class="rating">⭐⭐⭐⭐☆</span>
+                    </div>
+                    <a class="btn-tool" href="#" target="_blank">Shop Now</a>
+                </div>
+
+                <div class="craft-card">
+                    <div class="image-wrapper">
+                        <img src="https://content.jdmagicbox.com/comp/def_content_category/bamboo-handicraft-dealers/360-f-435531937-fzd9qo5pox0eelh1358ptc9rmwxjg9rm-bamboo-handicraft-dealers-3-6ew6u.jpg"
+                            alt="Bamboo Craft">
+                    </div>
+                    <h4>Bamboo Craft</h4>
+                    <div class="price-rating">
+                        <span class="price">₹299</span>
+                        <span class="rating">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <a class="btn-tool" href="#" target="_blank">Shop Now</a>
+                </div>
+
+                <div class="craft-card">
+                    <div class="image-wrapper">
+                        <img src="https://5.imimg.com/data5/ANDROID/Default/2023/11/361949457/FI/UY/DC/5523835/product-jpeg.jpg"
+                            alt="Pottery">
+                    </div>
+                    <h4>Clay Pottery</h4>
+                    <div class="price-rating">
+                        <span class="price">₹199</span>
+                        <span class="rating">⭐⭐⭐⭐☆</span>
+                    </div>
+                    <a class="btn-tool" href="#" target="_blank">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Festivals & Events Section -->
+    <section id="festivals" class="festivals scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">Local Festivals & Events</h2>
+            <p class="section-subtitle">Celebrate vibrant traditions and community festivals in Boisar</p>
+
+            <div class="festival-layout">
+                <div class="calendar">
+                    <div class="calendar-header">Upcoming Events</div>
+                    <div style="display: grid; gap: 20px;">
+                        <!-- April 2026 Events -->
+                        <div>
+                            <h4 style="color: #2d5a27; font-weight: 600; margin-bottom: 12px;">
+                                <i class="fas fa-calendar"></i> April 2026
+                            </h4>
+                            <ul class="calendar-list">
+                                <li><span class="date">Apr 10</span> Ram Navami Festival <span style="font-size:0.75rem; color:#999;">(Divine Celebration)</span></li>
+                                <li><span class="date">Apr 14</span> Baisakhi & Summer Harvest <span style="font-size:0.75rem; color:#999;">(Local Farmers Festival)</span></li>
+                                <li><span class="date">Apr 21</span> Mahavir Jayanti Observance <span style="font-size:0.75rem; color:#999;">(Spiritual Gathering)</span></li>
+                                <li><span class="date">Apr 25-30</span> Beach Cleanup Drive <span style="font-size:0.75rem; color:#999;">(Eco-Tourism Initiative)</span></li>
+                            </ul>
+                        </div>
+
+                        <!-- May 2026 Events -->
+                        <div>
+                            <h4 style="color: #2d5a27; font-weight: 600; margin-bottom: 12px;">
+                                <i class="fas fa-calendar"></i> May 2026
+                            </h4>
+                            <ul class="calendar-list">
+                                <li><span class="date">May 03</span> Buddha Purnima <span style="font-size:0.75rem; color:#999;">(Birth of Buddha)</span></li>
+                                <li><span class="date">May 10</span> Warli Art Workshop <span style="font-size:0.75rem; color:#999;">(Cultural Heritage)</span></li>
+                                <li><span class="date">May 15-20</span> Summer Heritage Walk <span style="font-size:0.75rem; color:#999;">(Guided Tours)</span></li>
+                                <li><span class="date">May 25</span> Community Music Night <span style="font-size:0.75rem; color:#999;">(Local Musicians)</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="festival-map">
+                    <div class="map-fallback">
+                        <div class="fallback-content">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <h3>Festival Locations</h3>
+                            <p>Explore event locations across Boisar and nearby coastal regions.</p>
+                            <div style="margin-top: 20px; padding: 16px; background: #f8f9fa; border-radius: 10px; font-size: 0.9rem; color: #666; line-height: 1.8;">
+                                <p><strong>🏖️ Beach Events:</strong> Kelva Beach, Dahanu Beach</p>
+                                <p><strong>🏛️ Heritage Sites:</strong> Tarapur Fort, Warli Village</p>
+                                <p><strong>🌳 Nature Areas:</strong> Kohoj Hill, Kaldurg Fort</p>
+                                <p><strong>🎭 Cultural Centers:</strong> Boisar Town, Local Temples</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Adventure Activities Section -->
+    <section id="adventure" class="adventure scroll-reveal">
+        <div class="container">
+            <h2 class="section-title">Adventure Activities</h2>
+            <p class="section-subtitle">From trekking to beach adventures — explore Boisar thrills</p>
+
+            <div class="adventure-grid">
+                <div class="adventure-card">
+                    <div class="media">
+                        <img src="https://ik.imagekit.io/lb4u/wp-content/uploads/2021/06/2020110417.jpg" alt="Kaldurg Fort"
+                            alt="Fort Trekking">
+                        
+                    </div>
+                    <h3>Fort Trekking</h3>
+                    <p>Explore scenic treks like Kaldurg and Kohoj Hill with breathtaking views.</p>
+                </div>
+
+                <div class="adventure-card">
+                    <div class="media">
+                        <img src="https://www.mumbailive.com/images/media/images/kelva_beach_1646311055467jpeg?bg=9eb4c9&crop=801.5625%2C450%2Cnull%2C0&fit=crop&fitToScale=h%2C1368%2C768&fm=webp&h=432.2807017543859&height=450&w=770&width=850"
+                            alt="Beach Activities">
+                        
+                    </div>
+                    <h3>Beach Activities</h3>
+                    <p>Enjoy relaxing walks, photography, and fun activities at Kelva and Dahanu beaches.</p>
+                </div>
+
+                <div class="adventure-card">
+                    <div class="media">
+                        <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/5a/47/a4/dabhosa-waterfall.jpg?w=900&h=500&s=1"
+                            alt="Waterfall Visit">
+                        
+                    </div>
+                    <h3>Waterfall Exploration</h3>
+                    <p>Visit stunning spots like Dabhosa Waterfall, especially during the monsoon season.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <p class="section-subtitle">Ready to explore Boisar? Contact us for more information</p>
+
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p><a href="tel:+919876543210" class="contact-link">+91 98765 43210</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p><a href="mailto:info@boisartourism.com" class="contact-link">info@boisartourism.com</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Address</h4>
+                            <p>Boisar Tourism Office, Palghar District, Maharashtra, India</p>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="contact-form">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Your Message" rows="5" required></textarea>
+                    <button type="submit" class="btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Boisar Tourism</h3>
+                    <p>Promoting sustainable coastal and cultural tourism in Boisar and nearby regions.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#eco-tourism">Eco Tourism</a></li>
+                        <li><a href="#cultural">Cultural Heritage</a></li>
+                        <li><a href="#destinations">Destinations</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#plan-trip">Trip Planning</a></li>
+                        <li><a href="#">Accommodation</a></li>
+                        <li><a href="#">Transportation</a></li>
+                        <li><a href="#">Guided Tours</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-phone"></i> <a href="tel:+919876543210" class="contact-link">+91 98765 43210</a>
+                    </p>
+                    <p><i class="fas fa-envelope"></i> <a href="mailto:info@boisartourism.com"
+                            class="contact-link">info@boisartourism.com</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 by TheemCOE students. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ══════════════════════════════════════════
+         CHATBOT — matches chatbot.js exactly
+         ══════════════════════════════════════════ -->
+
+    <!-- Toggle Button -->
+    <button class="chatbot-toggle" id="chatbotToggle" title="Chat with us">
+        <i class="fas fa-comments"></i>
+        <span class="badge" id="chatBadge"></span>
+    </button>
+
+    <!-- Chatbot Window -->
+    <div class="chatbot-container" id="chatbotContainer">
+
+        <!-- Header -->
+        <div class="chatbot-header">
+            <div class="chatbot-title">
+                <div class="bot-avatar-header"><i class="fas fa-robot"></i></div>
+                <div class="chatbot-title-text">
+                    <h3>Boisar Tourism Assistant</h3>
+                    <span><span class="online-dot"></span> Online &mdash; usually replies instantly</span>
+                </div>
+            </div>
+            <div class="chatbot-header-actions">
+                <button class="header-btn" id="chatbotClear" title="Clear chat"><i
+                        class="fas fa-trash-alt"></i></button>
+                <button class="header-btn" id="chatbotClose" title="Close"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="welcome-message">
+                <h4>Welcome to Boisar Tourism! 🌊</h4>
+                <p>I'm your virtual guide. Ask me anything about destinations, culture, accommodation, or trip planning.
+                </p>
+                <div class="quick-chips">
+                    <span class="quick-chip" data-query="Best places to visit">📍 Best places</span>
+                    <span class="quick-chip" data-query="Eco tourism destinations">🌿 Eco tourism</span>
+                    <span class="quick-chip" data-query="Cultural experiences">🎭 Culture</span>
+                    <span class="quick-chip" data-query="Best time to visit">📅 When to visit</span>
+                    <span class="quick-chip" data-query="Accommodation options">🏨 Stay</span>
+                    <span class="quick-chip" data-query="Transportation">🚗 Transport</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input -->
+        <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Ask me anything about Boisar tourism…" maxlength="500"
+                autocomplete="off">
+            <button class="chatbot-send" id="chatbotSend" title="Send">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+
+    </div>
+    <!-- ══════════════════════════════════════════ -->
+
+    <script src="script.js"></script>
+    <script src="chatbot.js"></script>
+
+    <!-- Authentication Check for Trip Planner -->
+    <script>
+        // ── CAROUSEL FUNCTIONALITY ──
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const totalSlides = slides.length;
+        let autoplayInterval;
+
+        function showSlide(n) {
+            // Remove active class from all slides and indicators
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+
+            // Add active class to current slide and indicator
+            slides[n].classList.add('active');
+            indicators[n].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+            resetAutoplay();
+        }
+
+        function previousSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlide);
+            resetAutoplay();
+        }
+
+        function goToSlide(n) {
+            currentSlide = n;
+            showSlide(currentSlide);
+            resetAutoplay();
+        }
+
+        function autoplay() {
+            nextSlide();
+        }
+
+        function resetAutoplay() {
+            clearInterval(autoplayInterval);
+            autoplayInterval = setInterval(autoplay, 5000); // Change slide every 5 seconds
+        }
+
+        // Initialize carousel on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            showSlide(0);
+            autoplayInterval = setInterval(autoplay, 5000); // Auto-rotate every 5 seconds
+        });
+
+        // Pause autoplay on hover
+        const carousel = document.querySelector('.hero-carousel');
+        if (carousel) {
+            carousel.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
+            carousel.addEventListener('mouseleave', () => resetAutoplay());
+        }
+
+        function checkAuthAndRedirect(targetUrl) {
+            const authToken = localStorage.getItem('authToken');
+            const userId = localStorage.getItem('userId');
+
+            if (authToken && userId) {
+                // User is logged in, redirect to trip planner
+                window.location.href = targetUrl;
+            } else {
+                // User is not logged in, redirect to login page
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+
+    <!-- Load Google Maps JS API -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCN07qxNgRZSiGIGbEBthCIuHYIVYJqhm4&libraries=places&region=IN&callback=initMap"
+        onerror="mapsLoadError()"></script>
+</body>
+
+</html>

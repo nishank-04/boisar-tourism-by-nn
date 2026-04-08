@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transportation - Boisar Tourism</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ── RESET & BASE ── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #f4f6f4;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            padding: 0;
+            box-shadow: 0 2px 16px rgba(45, 90, 39, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 4px;
+        }
+
+        .nav-menu a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 400;
+            padding: 7px 14px;
+            border-radius: 99px;
+            transition: all 0.2s;
+        }
+
+        .nav-menu a:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        /* ── PAGE LAYOUT ── */
+        .page-wrapper {
+            padding: 40px 0 70px;
+            min-height: calc(100vh - 64px);
+        }
+
+        .page-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── PAGE HEADER ── */
+        .page-header {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            border-radius: 20px;
+            padding: 40px 36px;
+            margin-bottom: 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            pointer-events: none;
+        }
+
+        .page-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .page-header p {
+            opacity: 0.82;
+            font-size: 1rem;
+            font-weight: 300;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        /* ── CATEGORY SECTION ── */
+        .transport-category {
+            margin-bottom: 50px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #2d5a27;
+        }
+
+        .category-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1a3320;
+            margin: 0;
+        }
+
+        .category-icon {
+            font-size: 1.75rem;
+            color: #4a7c59;
+        }
+
+        /* ── TRANSPORT CARD GRID ── */
+        .transport-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+
+        .transport-card {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #e8f0e6;
+            box-shadow: 0 2px 12px rgba(45, 90, 39, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .transport-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(45, 90, 39, 0.15);
+            border-color: #4a7c59;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #f0f5f0, #e8f0e6);
+            padding: 20px;
+            border-bottom: 1px solid #e0e8e0;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            color: #4a7c59;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a3320;
+            margin: 0;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-details {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .detail-item i {
+            color: #4a7c59;
+            margin-top: 3px;
+            flex-shrink: 0;
+            min-width: 16px;
+        }
+
+        .detail-item strong {
+            color: #2d5a27;
+            font-weight: 600;
+        }
+
+        .feature-tag {
+            display: inline-block;
+            background: #e8f5e8;
+            color: #2d5a27;
+            padding: 4px 10px;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin: 4px 4px 4px 0;
+        }
+
+        .features-section {
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid #e8f0e6;
+        }
+
+        .fare-badge {
+            background: #2d5a27;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 12px;
+            display: inline-block;
+        }
+
+        .availability-badge {
+            background: #4a7c59;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 12px;
+            display: inline-block;
+            margin-left: 8px;
+        }
+
+        /* ── INFO BOX ── */
+        .info-box {
+            background: #e8f5e8;
+            border-left: 4px solid #2d5a27;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 32px;
+        }
+
+        .info-box h3 {
+            color: #2d5a27;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .info-box p {
+            color: #555;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .transport-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .category-header h2 {
+                font-size: 1.3rem;
+            }
+
+            .page-container {
+                padding: 0 16px;
+            }
+
+            .card-icon {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* ── FOOTER ── */
+        .footer-spacing {
+            height: 40px;
+        }
+    </style>
+    <link rel="stylesheet" href="theme.css">`n</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-mountain"></i>
+                <span>Boisar Tourism</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#eco-tourism">Eco Tourism</a></li>
+                <li><a href="index.html#destinations">Destinations</a></li>
+                <li><a href="all-locations.html">All Locations</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="page-wrapper">
+        <div class="page-container">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1><i class="fas fa-bus" style="margin-right:12px;"></i>Transportation Guide</h1>
+                <p>Explore convenient and affordable transportation options to reach and travel around Boisar. Multiple modes of transport available for every budget and preference.</p>
+            </div>
+
+            <!-- Info Box -->
+            <div class="info-box">
+                <h3><i class="fas fa-info-circle" style="margin-right:8px;"></i>Quick Travel Info</h3>
+                <p>Boisar is well-connected via railway, road, and has good proximity to Mumbai's Chhatrapati Shivaji Maharaj International Airport. Plan your journey based on your starting point and preferred mode of travel.</p>
+            </div>
+
+            <!-- Railway Transport -->
+            <div class="transport-category">
+                <div class="category-header">
+                    <i class="fas fa-train category-icon"></i>
+                    <h2>Railway Transport</h2>
+                </div>
+                <div class="transport-grid">
+                    <!-- Boisar Railway Station -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-train"></i></div>
+                            <h3 class="card-title">Boisar Railway Station</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span><strong>Western Railway Line</strong> - Main hub for Boisar</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Direct trains from <strong>Mumbai Central</strong> (1.5-2 hours)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-train"></i>
+                                    <span>Local & Express trains available</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-phone"></i>
+                                    <span>Station amenities: Ticket counter, waiting area</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">Main Hub</span>
+                                <span class="feature-tag">Most Connected</span>
+                                <span class="feature-tag">Budget Friendly</span>
+                                <span class="feature-tag">Daily Trains</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Palghar Railway Station -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-train"></i></div>
+                            <h3 class="card-title">Palghar Railway Station</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span><strong>Western Railway Line</strong> - District headquarters</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Trains from Mumbai (1.5 hours), excellent frequency</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-train"></i>
+                                    <span>Well-developed station infrastructure</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Good boarding point for broader region access</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">District Hub</span>
+                                <span class="feature-tag">Frequent Service</span>
+                                <span class="feature-tag">Modern Amenities</span>
+                                <span class="feature-tag">Reliable</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dahanu Road Railway Station -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-train"></i></div>
+                            <h3 class="card-title">Dahanu Road Railway Station</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span><strong>Western Railway Line</strong> - Gateway to Dahanu beaches</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>1 hour 45 minutes from Mumbai</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-bus"></i>
+                                    <span>Auto/taxi easily available for Dahanu Beach (10 km)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Less crowded, convenient for beach lovers</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">Beach Access</span>
+                                <span class="feature-tag">1 Hour 45 Min</span>
+                                <span class="feature-tag">Scenic Route</span>
+                                <span class="feature-tag">Quiet Station</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Virar Railway Station -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-train"></i></div>
+                            <h3 class="card-title">Virar Railway Station</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span><strong>Northern gateway</strong> - Entry point to Boisar region</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Closest to Mumbai (55 minutes)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-bus"></i>
+                                    <span>Good transport links to Boisar, Palghar, and inland areas</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Busiest station with most frequent services</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">Closest to Mumbai</span>
+                                <span class="feature-tag">55 Minutes</span>
+                                <span class="feature-tag">Highest Frequency</span>
+                                <span class="feature-tag">Busy Hub</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Road Transport (Public) -->
+            <div class="transport-category">
+                <div class="category-header">
+                    <i class="fas fa-bus category-icon"></i>
+                    <h2>Road Transport - Public</h2>
+                </div>
+                <div class="transport-grid">
+                    <!-- MSRTC Buses -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-bus"></i></div>
+                            <h3 class="card-title">MSRTC Buses</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-building"></i>
+                                    <span><strong>Maharashtra State Transport</strong> - Official state buses</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-map-pin"></i>
+                                    <span>Covers major routes: Mumbai-Boisar, Palghar-Dahanu</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-tags"></i>
+                                    <span>Affordable fares, regular schedules</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Air-conditioned & non-AC options available</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">State Operated</span>
+                                <span class="feature-tag">Affordable</span>
+                                <span class="feature-tag">Reliable</span>
+                                <span class="feature-tag">AC & Non-AC</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Local BEST / ST Buses -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-bus"></i></div>
+                            <h3 class="card-title">BEST / ST Local Buses</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-pin"></i>
+                                    <span>Local routes: <strong>Virar–Boisar–Dahanu–Palghar</strong></span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Frequent services (every 15-30 minutes)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-tags"></i>
+                                    <span>Very budget-friendly (₹10-50 per journey)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Perfect for local sightseeing & inter-town travel</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">Local Routes</span>
+                                <span class="feature-tag">Very Cheap</span>
+                                <span class="feature-tag">Frequent</span>
+                                <span class="feature-tag">Local Travel</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shared Auto Rickshaws -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-taxi"></i></div>
+                            <h3 class="card-title">Shared Auto Rickshaws</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-pin"></i>
+                                    <span>Available in all towns: Boisar, Palghar, Dahanu, Virar</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Operates on fixed routes & timings</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-tags"></i>
+                                    <span>Shared with other passengers (budget-friendly)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Fast, direct routes to specific destinations</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">Affordable</span>
+                                <span class="feature-tag">Fast</span>
+                                <span class="feature-tag">Local Knowledge</span>
+                                <span class="feature-tag">3-Seater</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Private Bus Services -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-bus"></i></div>
+                            <h3 class="card-title">Private Bus Services</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-building"></i>
+                                    <span>Various private operators covering Boisar-Mumbai routes</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Often faster than government buses</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-chair"></i>
+                                    <span>Sleeper, AC, Seater options available</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Can be booked online or at bus stands</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">Premium Comfort</span>
+                                <span class="feature-tag">Fast Service</span>
+                                <span class="feature-tag">Online Booking</span>
+                                <span class="feature-tag">AC Available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Private Transport -->
+            <div class="transport-category">
+                <div class="category-header">
+                    <i class="fas fa-car category-icon"></i>
+                    <h2>Private Transport</h2>
+                </div>
+                <div class="transport-grid">
+                    <!-- Ola / Uber -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-mobile-alt"></i></div>
+                            <h3 class="card-title">Ola / Uber Cabs</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Available in Boisar, Palghar, Dahanu (limited coverage)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <span>Book via app - Ride sharing at fixed rates</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>Safe option with GPS tracking</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-tags"></i>
+                                    <span>Surge pricing during peak hours</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">App Based</span>
+                                <span class="feature-tag">Safe</span>
+                                <span class="feature-tag">On-Demand</span>
+                                <span class="feature-tag">Limited Areas</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Local Taxi Services -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-car"></i></div>
+                            <h3 class="card-title">Local Taxi Services</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-phone"></i>
+                                    <span>Easy to find at railway stations and main markets</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-stopwatch"></i>
+                                    <span>Negotiated meter or hourly rates</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-user-tie"></i>
+                                    <span>Professional drivers with local knowledge</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Good for full-day tours or specific destinations</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">On-Call</span>
+                                <span class="feature-tag">Negotiable</span>
+                                <span class="feature-tag">Local</span>
+                                <span class="feature-tag">Tour Ready</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Auto Rickshaws -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-taxi"></i></div>
+                            <h3 class="card-title">Auto Rickshaws (Private)</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-pin"></i>
+                                    <span>Available everywhere - stands at stations & markets</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-stopwatch"></i>
+                                    <span>Meter-based or negotiated rates</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>Ideal for short distances (₹30-200)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Quick, maneuverable, perfect for narrow lanes</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">Everywhere</span>
+                                <span class="feature-tag">Quick</span>
+                                <span class="feature-tag">Affordable</span>
+                                <span class="feature-tag">Local Access</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rental Cars -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-key"></i></div>
+                            <h3 class="card-title">Rental Cars</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-check"></i>
+                                    <span>Self-drive options available</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-user-tie"></i>
+                                    <span>Rental with professional drivers upon request</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-car"></i>
+                                    <span>Variety: Sedan, SUV, Tempo available</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Perfect for multi-day trips & customized itineraries</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">Self Drive</span>
+                                <span class="feature-tag">With Driver</span>
+                                <span class="feature-tag">Multi-day</span>
+                                <span class="feature-tag">Flexible</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Self Travel -->
+            <div class="transport-category">
+                <div class="category-header">
+                    <i class="fas fa-road category-icon"></i>
+                    <h2>Self Travel</h2>
+                </div>
+                <div class="transport-grid">
+                    <!-- Personal Car / Bike -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-car"></i></div>
+                            <h3 class="card-title">Personal Car / Bike</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-check"></i>
+                                    <span>Complete freedom and flexibility for exploration</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-map"></i>
+                                    <span>Visit off-beat locations easily</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-gas-pump"></i>
+                                    <span>Fuel available at regular petrol pumps</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Parking available at most locations</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">Flexible</span>
+                                <span class="feature-tag">Personal Pace</span>
+                                <span class="feature-tag">Off-Beats</span>
+                                <span class="feature-tag">Freedom</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mumbai–Ahmedabad Highway -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-road"></i></div>
+                            <h3 class="card-title">NH-48 (Mumbai–Ahmedabad)</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-pin"></i>
+                                    <span>National Highway-48 passes near Boisar region</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-road"></i>
+                                    <span>4-lane highway, excellent road quality</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-gas-pump"></i>
+                                    <span>Toll charges applicable, many exits to Boisar</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Fastest road route from Mumbai</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">4-Lane Highway</span>
+                                <span class="feature-tag">Well Maintained</span>
+                                <span class="feature-tag">Fast Access</span>
+                                <span class="feature-tag">Toll Road</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coastal Road Routes -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-water"></i></div>
+                            <h3 class="card-title">Coastal Road Routes</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-pin"></i>
+                                    <span>Scenic coastal routes connecting Dahanu, Kelva, Bordi</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-view"></i>
+                                    <span>Beautiful seascapes and village views</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-car"></i>
+                                    <span>Winding roads, ideal for bike riders</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Takes longer but worth it for nature lovers</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">Scenic</span>
+                                <span class="feature-tag">Coastal Views</span>
+                                <span class="feature-tag">Adventure</span>
+                                <span class="feature-tag">Slower Route</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Air Transport -->
+            <div class="transport-category">
+                <div class="category-header">
+                    <i class="fas fa-plane category-icon"></i>
+                    <h2>Air Transport - Nearest Airport</h2>
+                </div>
+                <div class="transport-grid">
+                    <!-- Chhatrapati Shivaji Airport -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-plane"></i></div>
+                            <h3 class="card-title">Chhatrapati Shivaji M. Int'l Airport</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-pin"></i>
+                                    <span><strong>Mumbai</strong> - 120 km from Boisar (2.5-3 hours by car)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-globe"></i>
+                                    <span>Major international & domestic flight hub</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-bus"></i>
+                                    <span>Airport transfers: Cabs, prepaid taxis, buses available</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Best for international visitors arriving in Mumbai</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">International</span>
+                                <span class="feature-tag">120 km Away</span>
+                                <span class="feature-tag">Major Hub</span>
+                                <span class="feature-tag">Well Connected</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Local Travel Options -->
+            <div class="transport-category">
+                <div class="category-header">
+                    <i class="fas fa-biking category-icon"></i>
+                    <h2>Local Travel Options</h2>
+                </div>
+                <div class="transport-grid">
+                    <!-- Bike Rentals -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-motorcycle"></i></div>
+                            <h3 class="card-title">Bike Rentals</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-check"></i>
+                                    <span>Available in town centers (Boisar, Palghar, Dahanu)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-motor-bike"></i>
+                                    <span>Rent 100cc-200cc motorcycles/scooters</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-tags"></i>
+                                    <span>Affordable daily rates (₹300-600/day)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Perfect for adventurers & exploring rural areas</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">Adventure</span>
+                                <span class="feature-tag">Affordable</span>
+                                <span class="feature-tag">Daily Rental</span>
+                                <span class="feature-tag">Local Exploration</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cycle Rentals -->
+                    <div class="transport-card">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-biking"></i></div>
+                            <h3 class="card-title">Cycle Rentals</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-pin"></i>
+                                    <span>Available near beaches & village centers</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-biking"></i>
+                                    <span>Eco-friendly way to explore nearby areas</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-tags"></i>
+                                    <span>Very cheap (₹50-150/day)</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Great for short beach walks & village tours</span>
+                                </div>
+                            </div>
+                            <div class="features-section">
+                                <span class="feature-tag">Eco-Friendly</span>
+                                <span class="feature-tag">Cheap</span>
+                                <span class="feature-tag">Beach Access</span>
+                                <span class="feature-tag">Health Friendly</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="footer-spacing"></div>
+
+</body>
+
+</html>

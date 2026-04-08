@@ -1,0 +1,1870 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Boisar Locations - Tourism</title>
+    <link rel="stylesheet" href="styles.css">`n    <link rel="stylesheet" href="theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .all-locations-container {
+            min-height: 100vh;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .locations-header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .locations-header h1 {
+            font-size: 2.5rem;
+            color: #2d5a27;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .locations-header p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* Filter Section Styles */
+        .filter-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            animation: slideDown 0.6s ease;
+        }
+
+        .filter-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #2d5a27;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .filter-select {
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            color: #333;
+        }
+
+        .filter-select:hover {
+            border-color: #2d5a27;
+            box-shadow: 0 2px 8px rgba(45, 90, 39, 0.15);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: #2d5a27;
+            box-shadow: 0 0 0 3px rgba(45, 90, 39, 0.1);
+        }
+
+        .btn-reset-filter {
+            padding: 10px 20px;
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            align-self: flex-end;
+        }
+
+        .btn-reset-filter:hover {
+            background: #e0e0e0;
+            border-color: #2d5a27;
+            color: #2d5a27;
+        }
+
+        .filter-results {
+            text-align: center;
+            padding: 10px 0;
+            color: #666;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .filter-results span {
+            color: #2d5a27;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Hidden location card */
+        .location-card.hidden {
+            display: none;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .locations-header p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 25px;
+            background: #2d5a27;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            background: #1e3f1c;
+            transform: translateX(-5px);
+        }
+
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .location-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            animation: fadeInUp 0.8s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .location-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+        }
+
+        .location-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .location-card:hover .location-image img {
+            transform: scale(1.05);
+        }
+
+        .location-image-placeholder {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+            z-index: 0;
+        }
+
+        .location-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .location-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            animation: fadeInUp 0.8s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .location-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+        }
+
+        .location-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .location-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .location-card:hover .location-image img {
+            transform: scale(1.05);
+        }
+
+        .location-image-placeholder {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+            z-index: 0;
+        }
+
+        .location-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .location-card:nth-child(1) .location-image {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .location-card:nth-child(2) .location-image {
+            background: linear-gradient(135deg, #8b7355 0%, #d4a574 100%);
+        }
+
+        .location-card:nth-child(3) .location-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .location-card:nth-child(4) .location-image {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .location-card:nth-child(5) .location-image {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .location-card:nth-child(6) .location-image {
+            background: linear-gradient(135deg, #c471f5 0%, #fa71cd 100%);
+        }
+
+        .location-card:nth-child(7) .location-image {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .location-card:nth-child(8) .location-image {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .location-card:nth-child(9) .location-image {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        }
+
+        .location-card:nth-child(10) .location-image {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        .location-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .location-header {
+            margin-bottom: 12px;
+        }
+
+        .location-content h2 {
+            color: #1a1a1a;
+            margin: 0 0 8px 0;
+            font-size: 1.3rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .location-content .category {
+            display: inline-block;
+            background: #eff6ff;
+            color: #2d5a27;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid #d0e4ff;
+            margin-bottom: 12px;
+        }
+
+        .location-content p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 14px;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        .highlights {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        .highlight-tag {
+            background: #fff3cd;
+            color: #856404;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .location-details {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 14px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 0.85rem;
+        }
+
+        .detail-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-item i {
+            width: 18px;
+            color: #2d5a27;
+            font-weight: bold;
+            margin-right: 8px;
+            font-size: 0.95rem;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            padding: 10px 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        .stars {
+            color: #f59e0b;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .reviews {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .location-card .btn-card {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: auto;
+        }
+
+        .location-card .btn-card:hover {
+            background: linear-gradient(135deg, #1e3f1c, #2d5a27);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(45, 90, 39, 0.3);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background: #2d5a27;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 50px;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        .footer-links {
+            margin-top: 15px;
+        }
+
+        .footer-links a {
+            color: #a8d5ba;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Image handling - show placeholder when no image is provided */
+        .location-image img[src=""] {
+            display: none !important;
+        }
+
+        .location-image img:not([src=""]) {
+            display: block !important;
+        }
+
+        .location-image img:not([src=""])~.location-image-placeholder {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .all-locations-container {
+                padding: 20px 10px;
+            }
+
+            .locations-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .locations-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .location-image {
+                height: 200px;
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="all-locations-container">
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+
+        <div class="locations-header">
+            <h1>🌴 Explore All Boisar Locations</h1>
+            <p>Discover the complete collection of stunning tourist destinations in Boisar</p>
+        </div>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="filter-container">
+                <div class="filter-group">
+                    <label for="category-filter">
+                        <i class="fas fa-filter"></i> Category
+                    </label>
+                    <select id="category-filter" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="Beach">🏖️ Beaches</option>
+                        <option value="Waterfall">💧 Waterfalls</option>
+                        <option value="Fort">🏰 Forts</option>
+                        <option value="Lake">🏞️ Lakes</option>
+                        <option value="Hill Station">⛰️ Hill Stations</option>
+                        <option value="Palace">🏛️ Palaces</option>
+                        <option value="Viewpoint">🌅 Viewpoints</option>
+                        <option value="Religious Site">🛕 Religious Sites</option>
+                        <option value="Wildlife Sanctuary">🦁 Wildlife</option>
+                        <option value="Dam">💧 Dams</option>
+                        <option value="River">🚣 Rivers</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="price-filter">
+                        <i class="fas fa-money-bill"></i> Entry Fee
+                    </label>
+                    <select id="price-filter" class="filter-select">
+                        <option value="">All Prices</option>
+                        <option value="Free">Free Entry</option>
+                        <option value="Paid">Paid Entry</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="season-filter">
+                        <i class="fas fa-leaf"></i> Best Season
+                    </label>
+                    <select id="season-filter" class="filter-select">
+                        <option value="">All Seasons</option>
+                        <option value="Winter">❄️ Winter (Oct-Mar)</option>
+                        <option value="Monsoon">🌧️ Monsoon (Jun-Sep)</option>
+                        <option value="Year Round">🌍 Year Round</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="rating-filter">
+                        <i class="fas fa-star"></i> Rating
+                    </label>
+                    <select id="rating-filter" class="filter-select">
+                        <option value="">All Ratings</option>
+                        <option value="4.8">4.8 ⭐ & Above</option>
+                        <option value="4.6">4.6 ⭐ & Above</option>
+                        <option value="4.4">4.4 ⭐ & Above</option>
+                        <option value="4.2">4.2 ⭐ & Above</option>
+                    </select>
+                </div>
+
+                <button id="reset-filters" class="btn-reset-filter">
+                    <i class="fas fa-redo"></i> Reset Filters
+                </button>
+            </div>
+            <div class="filter-results">
+                <p><span id="results-count">27</span> locations found</p>
+            </div>
+        </div>
+
+        <div class="locations-grid" id="locations-grid">
+            <!-- Kelva Beach -->
+            <div class="location-card" data-category="Beach" data-price="Free" data-season="Winter" data-rating="4.7">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://www.mumbailive.com/images/media/images/kelva_beach_1646311055467jpeg?bg=9eb4c9&crop=801.5625%2C450%2Cnull%2C0&fit=crop&fitToScale=h%2C1368%2C768&fm=webp&h=432.2807017543859&height=450&w=770&width=850"
+                        alt="Kelva Beach">
+                </div>
+                <div class="location-content">
+                    <h2>Kelva Beach</h2>
+                    <span class="category">🏖️ Beach</span>
+                    <p>A silent and clean beach near Boisar, perfect for relaxing, sunset views, and family outings.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🌅 Sunset Views</span>
+                        <span class="highlight-tag">🌊 Clean Shoreline</span>
+                        <span class="highlight-tag">📷 Photography</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Oct - Mar</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★★ 4.7/5</span>
+                        <span class="reviews">(210 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/LP3U7mEDuvHDkt6EA" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Kaldurg Fort -->
+            <div class="location-card" data-category="Fort" data-price="Free" data-season="Monsoon" data-rating="4.8">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://ik.imagekit.io/lb4u/wp-content/uploads/2021/06/2020110417.jpg" alt="Kaldurg Fort">
+                </div>
+                <div class="location-content">
+                    <h2>Kaldurg Fort</h2>
+                    <span class="category">⛰️ Trekking Spot</span>
+                    <p>A popular trekking destination near Boisar with breathtaking hilltop views.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🥾 Trekking Trail</span>
+                        <span class="highlight-tag">🏔️ Hilltop Views</span>
+                        <span class="highlight-tag">🌄 Sunrise & Sunset</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Jun - Feb</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★★ 4.8/5</span>
+                        <span class="reviews">(240 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/nB52EhYsgkWWQUjaA" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Dabhosa Waterfall -->
+            <div class="location-card" data-category="Waterfall" data-price="Paid" data-season="Monsoon"
+                data-rating="4.5">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/14/5a/47/a4/dabhosa-waterfall.jpg?w=900&h=500&s=1"
+                        alt="Dabhosa Waterfall">
+                </div>
+                <div class="location-content">
+                    <h2>Dabhosa Waterfall</h2>
+                    <span class="category">💦 Waterfall</span>
+                    <p>A beautiful seasonal waterfall near Boisar, especially stunning during the monsoon.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🌧️ Monsoon Beauty</span>
+                        <span class="highlight-tag">🏞️ Scenic Landscape</span>
+                        <span class="highlight-tag">🎬 Photography</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Jawhar, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Jul - Sep</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>₹20 per person</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★☆ 4.5/5</span>
+                        <span class="reviews">(160 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/i8t5PXhpQ9UJVrsTA" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Kohoj Hill -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://www.owletoutdoors.in/images/uploaded_images/Kohoj%2001.jpg" alt="Kohoj Hill">
+                </div>
+                <div class="location-content">
+                    <h2>Kohoj Hill</h2>
+                    <span class="category">🧗 Trekking Spot</span>
+                    <p>A scenic trekking destination near Boisar known for its unique rock formations and panoramic
+                        views.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🏔️ Panoramic Views</span>
+                        <span class="highlight-tag">🪨 Rock Formations</span>
+                        <span class="highlight-tag">🌲 Nature Trails</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Jun - Feb</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★☆ 4.6/5</span>
+                        <span class="reviews">(130 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/cMMA4sPARy68QKXm6" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Dahanu Beach -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://www.mtdc.co.in/wp-content/uploads/2019/12/Dahanu_Beach.jpg" alt="Dahanu Beach">
+                </div>
+                <div class="location-content">
+                    <h2>Dahanu Beach</h2>
+                    <span class="category">🏖️ Beach</span>
+                    <p>A clean and less crowded beach famous for chikoo farms and calm coastal environment.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🍍 Chikoo Farms</span>
+                        <span class="highlight-tag">🌊 Clean Beach</span>
+                        <span class="highlight-tag">🤫 Peaceful</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Dahanu, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Oct - Feb</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★☆ 4.6/5</span>
+                        <span class="reviews">(180 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/voSRQEHRdu8B9j9ZA" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tarapur Fort -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://cdn.s3waas.gov.in/s3a9a1d5317a33ae8cef33961c34144f84/uploads/bfi_thumb/2020110312-oxv8q8u8w786fzbt8sulrwaaipk97ip3uo21m54m8a.jpg"
+                        alt="Tarapur Fort">
+                </div>
+                <div class="location-content">
+                    <h2>Tarapur Fort</h2>
+                    <span class="category">🏰 Historical Site</span>
+                    <p>A historic coastal fort offering scenic views and insight into the region's past.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🏛️ Historical</span>
+                        <span class="highlight-tag">🌊 Sea View</span>
+                        <span class="highlight-tag">🚶 Exploration</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Tarapur, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Oct - Mar</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★☆ 4.4/5</span>
+                        <span class="reviews">(120 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/DwdQR6NMAN9Rap3QA" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Gholvad Beach -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://content3.jdmagicbox.com/v2/comp/thane/a6/022pxx22.xx22.220317101900.f7a6/catalogue/gholvad-beach-gholvad-thane-tourist-attraction-l4amq8s8xs.jpg"
+                        alt="Gholvad Beach">
+                </div>
+                <div class="location-content">
+                    <h2>Gholvad Beach</h2>
+                    <span class="category">🏖️ Beach</span>
+                    <p>A serene and uncrowded beach with pristine shoreline, perfect for swimming and water activities.
+                    </p>
+                    <div class="highlights">
+                        <span class="highlight-tag">💧 Clean Waters</span>
+                        <span class="highlight-tag">🏊 Swimming</span>
+                        <span class="highlight-tag">🌅 Sunrise Views</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Gholvad, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Oct - Mar</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★☆ 4.5/5</span>
+                        <span class="reviews">(95 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/4863QYNZRC8W6rfj6" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Satpati Beach -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://images.jdmagicbox.com/v2/comp/palghar/w7/022pxx22.xx22.141218165203.f2w7/catalogue/satpati-beach-satpati-palghar-tourist-attraction-AcPZ8RV4ZF.jpg"
+                        alt="Satpati Beach">
+                </div>
+                <div class="location-content">
+                    <h2>Satpati Beach</h2>
+                    <span class="category">🏖️ Beach</span>
+                    <p>A beautiful coastal beach with fishing villages, offering authentic seaside village experience.
+                    </p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🎣 Fishing Villages</span>
+                        <span class="highlight-tag">🏘️ Coastal Life</span>
+                        <span class="highlight-tag">📸 Cultural Experience</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Satpati, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Oct - Mar</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★☆ 4.3/5</span>
+                        <span class="reviews">(78 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/FTQBsYveHSbey2s78" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Shirgaon Beach -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://image-worker.mindtrip.ai/image-resize/format=webp,w=1200/https:/images.mindtrip.ai/attractions/4646/e34c/6162/115b/92ae/c0b5/7f98/1b76"
+                        alt="Shirgaon Beach">
+                </div>
+                <div class="location-content">
+                    <h2>Shirgaon Beach</h2>
+                    <span class="category">🏖️ Beach</span>
+                    <p>A scenic beach near Shirgaon fort with beautiful coastal views and adventure opportunities.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🏰 Fort Nearby</span>
+                        <span class="highlight-tag">🎯 Adventure Sports</span>
+                        <span class="highlight-tag">📸 Photography</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Shirgaon, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Oct - Mar</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★☆ 4.4/5</span>
+                        <span class="reviews">(88 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/xcpxA8BfNbnzdngM9" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Arnala Beach -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://content.jdmagicbox.com/v2/comp/mumbai/i9/022pxx22.xx22.190719212028.z2i9/catalogue/arnala-beach-garden-arnala-palghar-parks-wsu8j6h8x5.jpg"
+                        alt="Arnala Beach">
+                </div>
+                <div class="location-content">
+                    <h2>Arnala Beach</h2>
+                    <span class="category">🏖️ Beach</span>
+                    <p>A quiet beach with historical significance, known for its calm waters and beachside ruins.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🏛️ Historical Ruins</span>
+                        <span class="highlight-tag">🤫 Peaceful Atmosphere</span>
+                        <span class="highlight-tag">📸 Photography Spot</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Arnala, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Oct - Mar</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★☆ 4.2/5</span>
+                        <span class="reviews">(72 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/zJ3NfGVPxwgoZpRQ8" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Arnala Fort -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://cdn.s3waas.gov.in/s3a9a1d5317a33ae8cef33961c34144f84/uploads/bfi_thumb/2020102679-oxhagc9fwsgndmaxvaquvaw47ayxuzsdhjqh39ck96.jpg"
+                        alt="Arnala Fort">
+                </div>
+                <div class="location-content">
+                    <h2>Arnala Fort</h2>
+                    <span class="category">🏰 Historical Fort</span>
+                    <p>An ancient coastal fort with Portuguese and Mughal history, offering panoramic sea views.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🏛️ Ancient History</span>
+                        <span class="highlight-tag">🌊 Sea Views</span>
+                        <span class="highlight-tag">📸 Photography</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Arnala, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Oct - Mar</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>₹30 per person</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★☆ 4.3/5</span>
+                        <span class="reviews">(85 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/eJhMGWh2gyw6TUbw6" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Asherigad Fort -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://www.mtdc.co.in/wp-content/uploads/2013/08/asherigad-Fort-640x445.jpg"
+                        alt="Asherigad Fort">
+                </div>
+                <div class="location-content">
+                    <h2>Asherigad Fort</h2>
+                    <span class="category">🏰 Historical Fort</span>
+                    <p>A hilltop fort with breathtaking views and historical significance in Palghar region.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🏔️ Hilltop Location</span>
+                        <span class="highlight-tag">🌄 Panoramic Views</span>
+                        <span class="highlight-tag">🥾 Trekking Trail</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Jun - Feb</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★★ 4.6/5</span>
+                        <span class="reviews">(110 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/6Tir9Mhs395hBcf89" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tandulwadi Fort -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://ts-production.imgix.net/images/eaae7067-24fa-4749-aa43-52327e786d47.jpeg?auto=compress,format&w=800&h=450"
+                        alt="Tandulwadi Fort">
+                </div>
+                <div class="location-content">
+                    <h2>Tandulwadi Fort</h2>
+                    <span class="category">🏰 Historical Fort</span>
+                    <p>A lesser-known hilltop fort surrounded by greenery and offering scenic monsoon views.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🏔️ Hill Fort</span>
+                        <span class="highlight-tag">🌧️ Monsoon Views</span>
+                        <span class="highlight-tag">🌲 Lush Greenery</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Tandulwadi, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Jun - Feb</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★☆ 4.4/5</span>
+                        <span class="reviews">(92 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/3fEf3atSJs2bSLLJ9" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Shirgaon Fort -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://static2.tripoto.com/media/filter/tst/img/1927440/TripDocument/1581281004_img20200105160406.jpg"
+                        alt="Shirgaon Fort">
+                </div>
+                <div class="location-content">
+                    <h2>Shirgaon Fort</h2>
+                    <span class="category">🏰 Historical Fort</span>
+                    <p>A historic coastal fort with sea views, perfect for trekking and photography.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🌊 Sea Views</span>
+                        <span class="highlight-tag">🥾 Trekking Trail</span>
+                        <span class="highlight-tag">📸 Photography</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Shirgaon, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Oct - Mar</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>₹20 per person</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★★ 4.5/5</span>
+                        <span class="reviews">(98 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/DP4S7JKUeRRneKKP9" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Bordi Beach -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://images.jdmagicbox.com/v2/comp/palghar/e8/022pxx22.xx22.141218143536.l3e8/catalogue/bordi-beach-bordi-palghar-tourist-attraction-98zxaw9o9r.jpg"
+                        alt="Bordi Beach">
+                </div>
+                <div class="location-content">
+                    <h2>Bordi Beach</h2>
+                    <span class="category">🏖️ Beach</span>
+                    <p>A long sandy beach ideal for relaxation, with nearby resorts and recreational facilities.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🏨 Resort Facilities</span>
+                        <span class="highlight-tag">🏐 Water Sports</span>
+                        <span class="highlight-tag">🌅 Sunset Views</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Bordi, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Oct - Mar</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★☆ 4.4/5</span>
+                        <span class="reviews">(105 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/RYAZqSkpNDL6wY8T6" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Kalamb Beach -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://marathi.cdn.zeenews.com/marathi/sites/default/files/2024/11/20/816407-kalamb-beach.jpg?im=FitAndFill=(1200,900)"
+                        alt="Kalamb Beach">
+                </div>
+                <div class="location-content">
+                    <h2>Kalamb Beach</h2>
+                    <span class="category">🏖️ Beach</span>
+                    <p>A secluded beach with peaceful environment, far from crowds, perfect for nature lovers.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🤫 Secluded Beach</span>
+                        <span class="highlight-tag">🕊️ Peaceful Environment</span>
+                        <span class="highlight-tag">📸 Photography Opportunity</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Kalamb, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Oct - Mar</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★☆ 4.3/5</span>
+                        <span class="reviews">(68 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/kYwsfYFHTcdgBkWr5" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Surya River Dam -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://sceneloc8.com/wp-content/uploads/2024/04/4-49.png" alt="Surya River Dam">
+                </div>
+                <div class="location-content">
+                    <h2>Surya River Dam</h2>
+                    <span class="category">💧 Dam</span>
+                    <p>A scenic dam with water activities and peaceful riverside trails for nature enthusiasts.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🚣 Water Activities</span>
+                        <span class="highlight-tag">🌳 Scenic Trails</span>
+                        <span class="highlight-tag">📸 Nature Photography</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Jun - Mar</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★☆ 4.2/5</span>
+                        <span class="reviews">(55 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/7h1sbAoXtwEMH1JZ6" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Vaitarna Lake -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK8moFiuYBVP0XxCnlFFjqgJTpPEqqh7p7yw&s"
+                        alt="Vaitarna Lake">
+                </div>
+                <div class="location-content">
+                    <h2>Vaitarna Lake</h2>
+                    <span class="category">🏞️ Lake</span>
+                    <p>A peaceful lake surrounded by hills and forests, ideal for bird watching and nature photography.
+                    </p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🦅 Bird Watching</span>
+                        <span class="highlight-tag">🏞️ Lake Scenery</span>
+                        <span class="highlight-tag">📸 Nature Photography</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Oct - Mar</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★☆ 4.4/5</span>
+                        <span class="reviews">(78 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/mhzwhtMYoKupsSoR8" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+
+            <!-- Jai Vilas Palace -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://www.trawell.in/admin/images/upload/016771431jai-vilas-palace.jpg"
+                        alt="Jai Vilas Palace">
+                </div>
+                <div class="location-content">
+                    <h2>Jai Vilas Palace</h2>
+                    <span class="category">🏛️ Palace</span>
+                    <p>A majestic palace in Jawhar showcasing royal architecture and surrounding gardens.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🏰 Royal Architecture</span>
+                        <span class="highlight-tag">🌺 Beautiful Gardens</span>
+                        <span class="highlight-tag">📸 Photography Spot</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Jawhar, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Oct - Mar</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>₹50 per person</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★★ 4.5/5</span>
+                        <span class="reviews">(115 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/L1tQRXanvijP62fj7" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Shirpamal (Sunset Point) -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0c/dc/6d/e3/shirpamal-jawhar.jpg?w=1200&h=-1&s=1"
+                        alt="Shirpamal">
+                </div>
+                <div class="location-content">
+                    <h2>Shirpamal (Sunset Point)</h2>
+                    <span class="category">🌅 Viewpoint</span>
+                    <p>A stunning sunset viewpoint in Jawhar with panoramic views of the surrounding landscape.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🌅 Sunset Views</span>
+                        <span class="highlight-tag">🌄 Panoramic Landscape</span>
+                        <span class="highlight-tag">💕 Romantic Spot</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Jawhar, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Year Round</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★★ 4.8/5</span>
+                        <span class="reviews">(168 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/CsQhBNTFgJkzXgiz7" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hanuman Point -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://www.trawell.in/admin/images/upload/016771530hanuman-point.jpg"
+                        alt="Hanuman Point">
+                </div>
+                <div class="location-content">
+                    <h2>Hanuman Point</h2>
+                    <span class="category">🛕 Viewpoint</span>
+                    <p>A scenic viewpoint near a Hanuman temple offering panoramic views and spiritual experience.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🛕 Temple Visit</span>
+                        <span class="highlight-tag">🌄 Scenic Beauty</span>
+                        <span class="highlight-tag">🙏 Spiritual Spot</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Jawhar, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Year Round</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★★ 4.6/5</span>
+                        <span class="reviews">(128 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/LomqLp8JRpYeSKuQ8" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Jai Sagar Dam -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://www.trawell.in/admin/images/thumbs/01677170Khadkhad-dam_thumb.jpg"
+                        alt="Jai Sagar Dam">
+                </div>
+                <div class="location-content">
+                    <h2>Jai Sagar Dam</h2>
+                    <span class="category">💧 Dam</span>
+                    <p>A scenic dam in Jawhar surrounded by hills, perfect for bird watching and nature photography.
+                    </p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🦅 Bird Watching</span>
+                        <span class="highlight-tag">🏔️ Hill Surroundings</span>
+                        <span class="highlight-tag">📸 Nature Photography</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Jawhar, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Oct - Mar</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★★ 4.5/5</span>
+                        <span class="reviews">(92 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/LLP8VHBDQm5L9iCq9" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Vajreshwari Temple -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://mandirbook.com/uploads/temple/87/photo/crop/photo15362522460.jpeg"
+                        alt="Vajreshwari Temple">
+                </div>
+                <div class="location-content">
+                    <h2>Vajreshwari Temple</h2>
+                    <span class="category">🛕 Religious Site</span>
+                    <p>An ancient temple dedicated to Goddess Vajreshwari, an important pilgrimage site in Palghar.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🏛️ Ancient Temple</span>
+                        <span class="highlight-tag">🛕 Religious Significance</span>
+                        <span class="highlight-tag">🙏 Spiritual Experience</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Year Round</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★★ 4.6/5</span>
+                        <span class="reviews">(135 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/F6XXUwFKsRM4dVRq8" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tansa Wildlife Sanctuary -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://sanctuarynaturefoundation.org/uploads/Article/1638532152814_Forest-around-Suryamal-Hill---photo-credit-Kedar-Gore_C-1920.jpg"
+                        alt="Tansa Wildlife Sanctuary">
+                </div>
+                <div class="location-content">
+                    <h2>Tansa Wildlife Sanctuary</h2>
+                    <span class="category">🦁 Wildlife Sanctuary</span>
+                    <p>A rich wildlife sanctuary with diverse flora and fauna, ideal for nature and wildlife
+                        enthusiasts.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🦁 Wildlife Spotting</span>
+                        <span class="highlight-tag">🦅 Bird Watching</span>
+                        <span class="highlight-tag">🌳 Forest Trails</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Nov - Mar</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>₹50 per person</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★★ 4.7/5</span>
+                        <span class="reviews">(155 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/jRiuijJA2dNQsjedA" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Dhekale Dam -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://images.jdmagicbox.com/v2/comp/palghar/z3/022pxx22.xx22.221127034042.i9z3/catalogue/dhekale-dam-palghar-tourist-attraction-ri24340565.jpg"
+                        alt="Dhekale Dam">
+                </div>
+                <div class="location-content">
+                    <h2>Dhekale Dam</h2>
+                    <span class="category">🏞️ Dam</span>
+                    <p>A scenic dam surrounded by greenery and hills, offering beautiful views and recreational
+                        activities.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🏞️ Dam Views</span>
+                        <span class="highlight-tag">⛰️ Scenic Landscape</span>
+                        <span class="highlight-tag">🛶 Boating</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Jun - Mar</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>Free Entry</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★☆ 4.3/5</span>
+                        <span class="reviews">(75 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/iL2XceyMT9rbHBux7" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tandulwadi Waterfall -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReO0fxwQQVWNQ7w0RVqKcNxey3eMULL7cI-g&s"
+                        alt="Tandulwadi Waterfall">
+                </div>
+                <div class="location-content">
+                    <h2>Tandulwadi Waterfall</h2>
+                    <span class="category">💧 Waterfall</span>
+                    <p>A breathtaking seasonal waterfall near Tandulwadi fort surrounded by dense forests and rocky
+                        terrain.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🌊 Seasonal Beauty</span>
+                        <span class="highlight-tag">🏔️ Rocky Terrain</span>
+                        <span class="highlight-tag">📸 Photography</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Tandulwadi, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Jul - Oct</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>₹15 per person</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★☆ 4.5/5</span>
+                        <span class="reviews">(98 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/V5etsjc9Gs5NF2rp9" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+            <!-- Kalmandavi Waterfall -->
+            <div class="location-card">
+                <div class="location-image">
+                    <!-- Add image URL here: src="path-to-image.jpg" -->
+                    <img src="https://media1.thrillophilia.com/filestore/x5b1zlmiuz92c6y2f9wmzsn0hlko_maxresdefault.jpg"
+                        alt="Kalmandavi Waterfall">
+                </div>
+                <div class="location-content">
+                    <h2>Kalmandavi Waterfall</h2>
+                    <span class="category">💧 Waterfall</span>
+                    <p>A stunning hidden waterfall nestled in the Palghar hills, known for its pristine waters and lush
+                        green surroundings.</p>
+                    <div class="highlights">
+                        <span class="highlight-tag">🤫 Hidden Waterfall</span>
+                        <span class="highlight-tag">💧 Pristine Waters</span>
+                        <span class="highlight-tag">🌿 Lush Greenery</span>
+                    </div>
+                    <div class="location-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Kalmandavi, Palghar District</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Jun - Oct</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill"></i>
+                            <span>₹20 per person</span>
+                        </div>
+                    </div>
+                    <div class="rating">
+                        <span class="stars">★★★★★ 4.6/5</span>
+                        <span class="reviews">(112 reviews)</span>
+                    </div>
+                    <a href="https://maps.app.goo.gl/ejYiToJbMfvs8Ns5A" target="_blank" class="btn-card">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <footer>
+            <p><strong>Boisar Tourism</strong></p>
+            <p>Your gateway to unforgettable experiences in Palghar, Maharashtra</p>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="#eco-tourism">Eco Tourism</a>
+                <a href="#cultural">Cultural Sites</a>
+                <a href="#contact">Contact Us</a>
+            </div>
+            <p style="margin-top: 20px; opacity: 0.8;">&copy; 2024 Boisar Tourism. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Filter functionality
+        const categoryFilter = document.getElementById('category-filter');
+        const priceFilter = document.getElementById('price-filter');
+        const seasonFilter = document.getElementById('season-filter');
+        const ratingFilter = document.getElementById('rating-filter');
+        const resetBtn = document.getElementById('reset-filters');
+        const resultsCount = document.getElementById('results-count');
+        const locationsGrid = document.getElementById('locations-grid');
+
+        // Get all location cards
+        function getAllLocationCards() {
+            return Array.from(document.querySelectorAll('.location-card[data-category]'));
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const selectedCategory = categoryFilter.value;
+            const selectedPrice = priceFilter.value;
+            const selectedSeason = seasonFilter.value;
+            const selectedRating = parseFloat(ratingFilter.value) || 0;
+
+            let visibleCount = 0;
+            const allCards = getAllLocationCards();
+
+            allCards.forEach(card => {
+                let shouldShow = true;
+
+                // Category filter
+                if (selectedCategory && card.dataset.category !== selectedCategory) {
+                    shouldShow = false;
+                }
+
+                // Price filter
+                if (shouldShow && selectedPrice) {
+                    const cardPrice = card.dataset.price;
+                    if (selectedPrice === 'Free' && cardPrice !== 'Free') {
+                        shouldShow = false;
+                    }
+                    if (selectedPrice === 'Paid' && cardPrice === 'Free') {
+                        shouldShow = false;
+                    }
+                }
+
+                // Season filter
+                if (shouldShow && selectedSeason) {
+                    const cardSeason = card.dataset.season;
+                    if (selectedSeason === 'Winter' && cardSeason !== 'Winter' && cardSeason !== 'Year Round') {
+                        shouldShow = false;
+                    }
+                    if (selectedSeason === 'Monsoon' && cardSeason !== 'Monsoon' && cardSeason !== 'Year Round') {
+                        shouldShow = false;
+                    }
+                    if (selectedSeason === 'Year Round' && cardSeason !== 'Year Round') {
+                        shouldShow = false;
+                    }
+                }
+
+                // Rating filter
+                if (shouldShow && selectedRating > 0) {
+                    const cardRating = parseFloat(card.dataset.rating) || 0;
+                    if (cardRating < selectedRating) {
+                        shouldShow = false;
+                    }
+                }
+
+                // Show or hide card
+                if (shouldShow) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // Update results count
+            resultsCount.textContent = visibleCount;
+        }
+
+        // Reset filters
+        function resetFilters() {
+            categoryFilter.value = '';
+            priceFilter.value = '';
+            seasonFilter.value = '';
+            ratingFilter.value = '';
+            applyFilters();
+        }
+
+        // Add event listeners
+        categoryFilter.addEventListener('change', applyFilters);
+        priceFilter.addEventListener('change', applyFilters);
+        seasonFilter.addEventListener('change', applyFilters);
+        ratingFilter.addEventListener('change', applyFilters);
+        resetBtn.addEventListener('click', resetFilters);
+
+        // Show all cards on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const allCards = getAllLocationCards();
+            allCards.forEach(card => {
+                if (!locationsGrid.contains(card)) {
+                    locationsGrid.appendChild(card);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

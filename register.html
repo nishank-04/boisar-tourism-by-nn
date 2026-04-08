@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Boisar Tourism</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ── ORIGINAL COLORS PRESERVED ── */
+        :root {
+            --primary: #2d5a27;
+            --primary-mid: #4a7c59;
+            --success: #27ae60;
+            --warn: #f39c12;
+            --warn2: #f1c40f;
+            --error: #e74c3c;
+            --error-bg: #fdf2f2;
+            --success-bg: #f0f9f0;
+            --focus-ring: rgba(45, 90, 39, 0.1);
+            --border: #e0e0e0;
+            --input-bg: #f8f9fa;
+            --text-main: #333;
+            --text-muted: #666;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Original purple gradient background */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px 20px;
+        }
+
+        /* ── CARD ── */
+        .auth-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+            width: 100%;
+            max-width: 520px;
+            overflow: hidden;
+            animation: cardIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(24px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* ── HEADER — original green gradient ── */
+        .auth-header {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: white;
+            padding: 36px 40px 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-header::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .auth-header::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .auth-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin: 0 0 6px;
+            position: relative;
+        }
+
+        .auth-header h1 i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        .auth-header p {
+            margin: 0;
+            opacity: 0.85;
+            font-size: 0.9rem;
+            font-weight: 300;
+            position: relative;
+        }
+
+        /* ── FORM BODY ── */
+        .auth-form {
+            padding: 36px 40px 40px;
+        }
+
+        /* Messages */
+        .error-message,
+        .success-message {
+            padding: 13px 16px;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            margin-bottom: 22px;
+            display: none;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .error-message {
+            background: var(--error-bg);
+            color: var(--error);
+            border-left: 3px solid var(--error);
+        }
+
+        .success-message {
+            background: var(--success-bg);
+            color: var(--success);
+            border-left: 3px solid var(--success);
+        }
+
+        /* ── FORM GRID ── */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 16px;
+        }
+
+        .field-full {
+            grid-column: 1 / -1;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 7px;
+        }
+
+        .field label .opt {
+            font-weight: 300;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap .field-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            pointer-events: none;
+            transition: color 0.2s;
+        }
+
+        .input-wrap:focus-within .field-icon {
+            color: var(--primary);
+        }
+
+        .input-wrap input {
+            width: 100%;
+            padding: 13px 14px 13px 40px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            background: var(--input-bg);
+            transition: all 0.25s ease;
+            outline: none;
+        }
+
+        .input-wrap input::placeholder {
+            color: #bbb;
+        }
+
+        .input-wrap input:focus {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px var(--focus-ring);
+        }
+
+        .input-wrap input.error {
+            border-color: var(--error);
+            background: var(--error-bg);
+        }
+
+        .input-wrap input.success {
+            border-color: var(--success);
+            background: var(--success-bg);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .password-toggle:hover {
+            color: var(--primary);
+        }
+
+        /* Strength */
+        .strength-wrap {
+            margin-top: 7px;
+        }
+
+        .strength-track {
+            height: 3px;
+            background: var(--border);
+            border-radius: 99px;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            border-radius: 99px;
+            width: 0%;
+            transition: width 0.35s ease, background 0.35s ease;
+        }
+
+        .strength-label {
+            font-size: 0.75rem;
+            color: #aaa;
+            margin-top: 4px;
+        }
+
+        /* ── INTERESTS ── */
+        .section-label {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 11px;
+            display: block;
+        }
+
+        .interests-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 9px;
+            margin-bottom: 22px;
+        }
+
+        .interest-chip {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 11px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            background: var(--input-bg);
+            transition: all 0.2s;
+        }
+
+        .interest-chip input[type="checkbox"] {
+            display: none;
+        }
+
+        .chip-check {
+            width: 15px;
+            height: 15px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.55rem;
+            color: white;
+            transition: all 0.2s;
+        }
+
+        .chip-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.2;
+        }
+
+        .interest-chip:hover {
+            background: #e8f5e8;
+            border-color: #2d5a27;
+        }
+
+        .interest-chip:has(input:checked) {
+            background: #e8f5e8;
+            border-color: #2d5a27;
+        }
+
+        .interest-chip:has(input:checked) .chip-check {
+            background: #2d5a27;
+            border-color: #2d5a27;
+        }
+
+        .interest-chip:has(input:checked) .chip-check::after {
+            content: '✓';
+        }
+
+        .interest-chip:has(input:checked) .chip-label {
+            color: #2d5a27;
+            font-weight: 500;
+        }
+
+        /* ── CHECKBOXES ── */
+        .check-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .check-row input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin-top: 2px;
+            accent-color: #2d5a27;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .check-row label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            cursor: pointer;
+        }
+
+        .check-row label a {
+            color: #2d5a27;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .check-row label a:hover {
+            text-decoration: underline;
+        }
+
+        /* ── BUTTON — original green gradient ── */
+        .auth-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 6px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            transition: all 0.3s ease;
+        }
+
+        .auth-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(45, 90, 39, 0.3);
+        }
+
+        .auth-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .loading-spinner {
+            display: none;
+            width: 17px;
+            height: 17px;
+            border: 2px solid rgba(255, 255, 255, 0.35);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ── DIVIDER ── */
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 18px;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ── SOCIAL ── */
+        .social-login {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .social-button {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            background: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-button:hover {
+            border-color: #2d5a27;
+            color: #2d5a27;
+        }
+
+        /* ── FOOTER ── */
+        .auth-footer {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .auth-footer a {
+            color: #2d5a27;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 560px) {
+            body {
+                padding: 16px;
+            }
+
+            .auth-form {
+                padding: 28px 24px 32px;
+            }
+
+            .auth-header {
+                padding: 28px 24px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .field-full {
+                grid-column: 1;
+            }
+
+            .interests-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="theme.css">`n</head>
+
+<body>
+
+    <div class="auth-card">
+
+        <!-- HEADER -->
+        <div class="auth-header">
+            <h1><i class="fas fa-mountain"></i>Boisar Tourism</h1>
+            <p>Join us and discover the beauty of Boisar</p>
+        </div>
+
+        <!-- FORM -->
+        <div class="auth-form">
+
+            <div class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorText"></span>
+            </div>
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i>
+                <span id="successText"></span>
+            </div>
+
+            <form id="registerForm">
+                <div class="form-grid">
+
+                    <div class="field">
+                        <label for="firstName">First Name</label>
+                        <div class="input-wrap">
+                            <i class="fas fa-user field-icon"></i>
+                            <input type="text" id="firstName" name="firstName" placeholder="Aisha" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="lastName">Last Name</label>
+                        <div class="input-wrap">
+                            <i class="fas fa-user field-icon"></i>
+                            <input type="text" id="lastName" name="lastName" placeholder="Sharma" required>
+                        </div>
+                    </div>
+
+                    <div class="field field-full">
+                        <label for="email">Email Address</label>
+                        <div class="input-wrap">
+                            <i class="fas fa-envelope field-icon"></i>
+                            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                        </div>
+                    </div>
+
+                    <div class="field field-full">
+                        <label for="phone">Phone Number <span class="opt">(optional)</span></label>
+                        <div class="input-wrap">
+                            <i class="fas fa-phone field-icon"></i>
+                            <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210">
+                        </div>
+                    </div>
+
+                    <div class="field field-full">
+                        <label for="password">Password</label>
+                        <div class="input-wrap">
+                            <i class="fas fa-lock field-icon"></i>
+                            <input type="password" id="password" name="password" placeholder="Min. 6 characters"
+                                required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                                <i class="fas fa-eye" id="eye-password"></i>
+                            </button>
+                        </div>
+                        <div class="strength-wrap">
+                            <div class="strength-track">
+                                <div class="strength-fill" id="strengthFill"></div>
+                            </div>
+                            <div class="strength-label" id="strengthText">Password strength</div>
+                        </div>
+                    </div>
+
+                    <div class="field field-full">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="input-wrap">
+                            <i class="fas fa-lock field-icon"></i>
+                            <input type="password" id="confirmPassword" name="confirmPassword"
+                                placeholder="Repeat your password" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">
+                                <i class="fas fa-eye" id="eye-confirmPassword"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Interests -->
+                <div style="margin-bottom: 4px;">
+                    <span class="section-label">Travel Interests <span
+                            style="font-weight:300;color:#888;font-size:0.78rem">(optional)</span></span>
+                    <div class="interests-grid">
+                        <label class="interest-chip">
+                            <input type="checkbox" name="interests" value="wildlife">
+                            <div class="chip-check"></div>
+                            <span class="chip-label">Wildlife & Nature</span>
+                        </label>
+                        <label class="interest-chip">
+                            <input type="checkbox" name="interests" value="tribal">
+                            <div class="chip-check"></div>
+                            <span class="chip-label">Cultural Heritage</span>
+                        </label>
+                        <label class="interest-chip">
+                            <input type="checkbox" name="interests" value="camping">
+                            <div class="chip-check"></div>
+                            <span class="chip-label">Adventure</span>
+                        </label>
+                        <label class="interest-chip">
+                            <input type="checkbox" name="interests" value="photography">
+                            <div class="chip-check"></div>
+                            <span class="chip-label">Photography</span>
+                        </label>
+                        <label class="interest-chip">
+                            <input type="checkbox" name="interests" value="trekking">
+                            <div class="chip-check"></div>
+                            <span class="chip-label">Trekking & Hiking</span>
+                        </label>
+                        <label class="interest-chip">
+                            <input type="checkbox" name="interests" value="cuisine">
+                            <div class="chip-check"></div>
+                            <span class="chip-label">Local Cuisine</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Terms -->
+                <div class="check-row">
+                    <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                    <label for="agreeTerms">
+                        I agree to the <a href="terms.html" target="_blank">Terms of Service</a> and <a
+                            href="privacy.html" target="_blank">Privacy Policy</a>
+                    </label>
+                </div>
+                <div class="check-row" style="margin-bottom: 24px;">
+                    <input type="checkbox" id="newsletter" name="newsletter">
+                    <label for="newsletter">Subscribe to our newsletter for travel updates and offers</label>
+                </div>
+
+                <button type="submit" class="auth-button" id="registerButton">
+                    <div class="loading-spinner" id="registerSpinner"></div>
+                    <span id="registerText">Create Account</span>
+                </button>
+            </form>
+
+            <div class="auth-divider">Or sign up with</div>
+
+            <div class="social-login">
+                <a href="#" class="social-button" onclick="socialRegister('google')">
+                    <i class="fab fa-google"></i> Google
+                </a>
+                <a href="#" class="social-button" onclick="socialRegister('facebook')">
+                    <i class="fab fa-facebook-f"></i> Facebook
+                </a>
+            </div>
+
+            <div class="auth-footer">
+                Already have an account? <a href="login.html">Sign in here</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            const icon = document.getElementById('eye-' + id);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        function checkPasswordStrength(pwd) {
+            let s = 0;
+            if (pwd.length >= 8) s++;
+            if (/[a-z]/.test(pwd)) s++;
+            if (/[A-Z]/.test(pwd)) s++;
+            if (/[0-9]/.test(pwd)) s++;
+            if (/[^A-Za-z0-9]/.test(pwd)) s++;
+            const fill = document.getElementById('strengthFill');
+            const label = document.getElementById('strengthText');
+            const states = [
+                { w: '25%', bg: '#e74c3c', t: 'Weak password' },
+                { w: '50%', bg: '#f39c12', t: 'Fair password' },
+                { w: '75%', bg: '#f1c40f', t: 'Good password' },
+                { w: '100%', bg: '#27ae60', t: 'Strong password' },
+            ];
+            const idx = Math.min(Math.max(s - 1, 0), 3);
+            fill.style.width = pwd ? states[idx].w : '0%';
+            fill.style.background = states[idx].bg;
+            label.textContent = pwd ? states[idx].t : 'Password strength';
+            label.style.color = pwd ? states[idx].bg : '#aaa';
+        }
+
+        function showError(msg) {
+            document.getElementById('errorText').textContent = msg;
+            document.getElementById('errorMessage').style.display = 'flex';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+        function showSuccess(msg) {
+            document.getElementById('successText').textContent = msg;
+            document.getElementById('successMessage').style.display = 'flex';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+        function hideMessages() {
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+        function setLoading(on) {
+            document.getElementById('registerButton').disabled = on;
+            document.getElementById('registerSpinner').style.display = on ? 'block' : 'none';
+            document.getElementById('registerText').textContent = on ? 'Creating Account…' : 'Create Account';
+        }
+
+        function validateForm() {
+            const fn = document.getElementById('firstName').value.trim();
+            const ln = document.getElementById('lastName').value.trim();
+            const em = document.getElementById('email').value.trim();
+            const ph = document.getElementById('phone').value.trim();
+            const pw = document.getElementById('password').value;
+            const cpw = document.getElementById('confirmPassword').value;
+            const ok = document.getElementById('agreeTerms').checked;
+
+            document.querySelectorAll('.input-wrap input').forEach(i => i.classList.remove('error', 'success'));
+
+            if (!fn || fn.length < 2) { document.getElementById('firstName').classList.add('error'); showError('First name must be at least 2 characters.'); return false; }
+            document.getElementById('firstName').classList.add('success');
+            if (!ln || ln.length < 2) { document.getElementById('lastName').classList.add('error'); showError('Last name must be at least 2 characters.'); return false; }
+            document.getElementById('lastName').classList.add('success');
+            if (!em || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { document.getElementById('email').classList.add('error'); showError('Please enter a valid email address.'); return false; }
+            document.getElementById('email').classList.add('success');
+            if (ph && !/^[\+]?[1-9][\d]{0,15}$/.test(ph.replace(/\s/g, ''))) { document.getElementById('phone').classList.add('error'); showError('Please enter a valid phone number.'); return false; }
+            if (ph) document.getElementById('phone').classList.add('success');
+            if (!pw || pw.length < 6) { document.getElementById('password').classList.add('error'); showError('Password must be at least 6 characters.'); return false; }
+            document.getElementById('password').classList.add('success');
+            if (pw !== cpw) { document.getElementById('confirmPassword').classList.add('error'); showError('Passwords do not match.'); return false; }
+            if (cpw) document.getElementById('confirmPassword').classList.add('success');
+            if (!ok) { showError('You must agree to the Terms of Service and Privacy Policy.'); return false; }
+            return true;
+        }
+
+        document.getElementById('password').addEventListener('input', function () {
+            checkPasswordStrength(this.value);
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            if (!validateForm()) return;
+            hideMessages();
+            setLoading(true);
+            try {
+                const fd = new FormData(this);
+                const interests = Array.from(document.querySelectorAll('input[name="interests"]:checked')).map(c => c.value);
+                const payload = {
+                    name: `${fd.get('firstName')} ${fd.get('lastName')}`,
+                    email: fd.get('email'),
+                    phone: fd.get('phone') || undefined,
+                    password: fd.get('password'),
+                    preferences: { interests, newsletter: fd.get('newsletter') === 'on' }
+                };
+                const API_BASE = window.API_BASE || 'http://localhost:5000';
+                const res = await fetch(`${API_BASE}/api/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await res.json();
+                if (result.success) {
+                    // Store token so user is logged in immediately
+                    localStorage.setItem('authToken', result.data.token);
+                    localStorage.setItem('userData', JSON.stringify(result.data.user));
+                    showSuccess('Account created successfully! Redirecting to dashboard…');
+                    setTimeout(() => { window.location.href = 'dashboard.html'; }, 2000);
+                } else {
+                    showError(result.message || 'Registration failed. Please try again.');
+                }
+            } catch {
+                showError('Could not connect to server. Make sure the backend is running on port 5000.');
+            } finally {
+                setLoading(false);
+            }
+        });
+
+        function socialRegister(provider) {
+            const data = {
+                id: `demo_${provider}_${Date.now()}`,
+                name: provider === 'google' ? 'Demo Google User' : 'Demo Facebook User',
+                email: `demo.${provider}@example.com`,
+                provider,
+                createdAt: new Date().toISOString()
+            };
+            localStorage.setItem('authToken', `demo_${provider}_token_${Date.now()}`);
+            localStorage.setItem('userData', JSON.stringify(data));
+            showSuccess('Registration successful! Redirecting…');
+            setTimeout(() => { window.location.href = 'dashboard.html'; }, 1500);
+        }
+
+        window.addEventListener('load', function () {
+            if (localStorage.getItem('authToken')) window.location.href = 'dashboard.html';
+            document.getElementById('firstName').focus();
+        });
+    </script>
+</body>
+
+</html>

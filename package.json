@@ -1,0 +1,27 @@
+{
+  "name": "boisar-tourism",
+  "version": "1.0.0",
+  "description": "Smart Digital Platform to Promote Eco & Cultural Tourism in Boisar",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "start": "python -m http.server 8000",
+    "build": "echo 'Static site - no build needed'",
+    "vercel-build": "echo 'Frontend build completed'"
+  },
+  "keywords": [
+    "tourism",
+    "boisar",
+    "eco-tourism",
+    "cultural-heritage",
+    "travel",
+    "india"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/boisar-tourism.git"
+  },
+  "homepage": "https://boisar-tourism.vercel.app"
+}

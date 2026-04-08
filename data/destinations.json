@@ -1,0 +1,912 @@
+{
+  "destinations": [
+    {
+      "id": "kelva-beach",
+      "name": "Kelva Beach",
+      "type": "eco-tourism",
+      "category": "Beach",
+      "description": "A silent and clean beach near Boisar, perfect for relaxing, sunset views, and family outings.",
+      "location": "Palghar District",
+      "coordinates": {
+        "lat": 19.611587714724607, 
+        "lng": 72.72995772883563
+      },
+      "highlights": [
+        "Sunset Views",
+        "Clean Shoreline",
+        "Beach Fort Nearby",
+        "Peaceful Atmosphere"
+      ],
+      "activities": [
+        "Beach Walk",
+        "Photography",
+        "Picnic",
+        "Relaxation"
+      ],
+      "bestTimeToVisit": "October to March",
+      "entryFee": "Free",
+      "image": "kelva-beach.jpg",
+      "rating": 4.7,
+      "reviews": 210
+    },
+    {
+      "id": "kaldurg-fort",
+      "name": "Kaldurg Fort",
+      "type": "eco-tourism",
+      "category": "Trekking Spot",
+      "description": "A popular trekking destination near Boisar with breathtaking hilltop views.",
+      "location": "Palghar District",
+      "coordinates": {
+        "lat": 19.694531781043086, 
+        "lng": 72.81742135159378
+      },
+      "highlights": [
+        "Trekking Trail",
+        "Hilltop Views",
+        "Nature Experience",
+        "Sunrise & Sunset"
+      ],
+      "activities": [
+        "Trekking",
+        "Photography",
+        "Adventure",
+        "Nature Walk"
+      ],
+      "bestTimeToVisit": "June to February",
+      "entryFee": "Free",
+      "image": "kaldurg-fort.jpg",
+      "rating": 4.8,
+      "reviews": 240
+    },
+    {
+      "id": "dabhosa-waterfall",
+      "name": "Dabhosa Waterfall",
+      "type": "nature",
+      "category": "Waterfall",
+      "description": "A beautiful seasonal waterfall near Boisar, especially stunning during the monsoon.",
+      "location": "Jawhar, Palghar District",
+      "coordinates": {
+        "lat": 20.00469223089058, 
+        "lng": 73.20810890000001
+      },
+      "highlights": [
+        "Monsoon Beauty",
+        "Scenic Landscape",
+        "Adventure Spot",
+        "Photography Location"
+      ],
+      "activities": [
+        "Sightseeing",
+        "Photography",
+        "Nature Walk",
+        "Adventure"
+      ],
+      "bestTimeToVisit": "July to September",
+      "entryFee": "₹20 per person",
+      "image": "dabhosa-waterfall.jpg",
+      "rating": 4.5,
+      "reviews": 160
+    },
+    {
+      "id": "kohoj-hill",
+      "name": "Kohoj Hill",
+      "type": "eco-tourism",
+      "category": "Trekking Spot",
+      "description": "A scenic trekking destination near Boisar known for its unique rock formations and panoramic hilltop views.",
+      "location": "Palghar District",
+      "coordinates": {
+        "lat": 19.670621293393992, 
+        "lng": 72.98893181534257
+      },
+      "highlights": [
+        "Panoramic Views",
+        "Unique Rock Formations",
+        "Peaceful Environment",
+        "Nature Trails"
+      ],
+      "activities": [
+        "Trekking",
+        "Photography",
+        "Adventure",
+        "Nature Walk"
+      ],
+      "bestTimeToVisit": "June to February",
+      "entryFee": "Free",
+      "image": "kohoj-hill.jpg",
+      "rating": 4.6,
+      "reviews": 130
+    },
+    {
+      "id": "dahanu-beach",
+      "name": "Dahanu Beach",
+      "type": "eco-tourism",
+      "category": "Beach",
+      "description": "A clean and less crowded beach famous for chikoo farms and calm coastal environment.",
+      "location": "Dahanu, Palghar District",
+      "coordinates": {
+        "lat": 19.991570919914874, 
+        "lng": 72.7223948632197
+      },
+      "highlights": [
+        "Chikoo Farms",
+        "Clean Beach",
+        "Coastal Views",
+        "Quiet Environment"
+      ],
+      "activities": [
+        "Beach Walk",
+        "Food Tasting",
+        "Photography",
+        "Relaxation"
+      ],
+      "bestTimeToVisit": "October to February",
+      "entryFee": "Free",
+      "image": "dahanu-beach.jpg",
+      "rating": 4.6,
+      "reviews": 180
+    },
+    {
+      "id": "tarapur-fort",
+      "name": "Tarapur Fort",
+      "type": "historical",
+      "category": "Fort",
+      "description": "A historic coastal fort offering scenic views and insight into the region’s past.",
+      "location": "Tarapur, Palghar District",
+      "coordinates": {
+        "lat": 19.863847283834907, 
+        "lng": 72.68201418465745
+      },
+      "highlights": [
+        "Historic Architecture",
+        "Sea View",
+        "Photography Spot",
+        "Quiet Surroundings"
+      ],
+      "activities": [
+        "Historical Tour",
+        "Photography",
+        "Exploration"
+      ],
+      "bestTimeToVisit": "October to March",
+      "entryFee": "Free",
+      "image": "tarapur-fort.jpg",
+      "rating": 4.4,
+      "reviews": 120
+    },
+    {
+      "id": "gholvad-beach",
+      "name": "Gholvad Beach",
+      "type": "eco-tourism",
+      "category": "Beach",
+      "description": "A serene and uncrowded beach with pristine shoreline, perfect for swimming and water activities.",
+      "location": "Gholvad, Palghar District",
+      "coordinates": {
+        "lat": 20.092411431745898,
+        "lng": 72.72872644308462
+      },
+      "highlights": [
+        "Clean Waters",
+        "Pristine Shoreline",
+        "Water Sports",
+        "Sunrise Views"
+      ],
+      "activities": [
+        "Swimming",
+        "Beach Volleyball",
+        "Photography",
+        "Water Sports"
+      ],
+      "bestTimeToVisit": "October to March",
+      "entryFee": "Free",
+      "image": "gholvad-beach.jpg",
+      "rating": 4.5,
+      "reviews": 95
+    },
+    {
+      "id": "satpati-beach",
+      "name": "Satpati Beach",
+      "type": "eco-tourism",
+      "category": "Beach",
+      "description": "A beautiful coastal beach with fishing villages, offering authentic seaside village experience.",
+      "location": "Satpati, Palghar District",
+      "coordinates": {
+        "lat": 19.721495040404957,
+        "lng": 72.6999517
+      },
+      "highlights": [
+        "Fishing Villages",
+        "Coastal Life",
+        "Authentic Experience",
+        "Sea Activities"
+      ],
+      "activities": [
+        "Village Tours",
+        "Photography",
+        "Cultural Experience",
+        "Beach Walks"
+      ],
+      "bestTimeToVisit": "October to March",
+      "entryFee": "Free",
+      "image": "satpati-beach.jpg",
+      "rating": 4.3,
+      "reviews": 78
+    },
+    {
+      "id": "shirgaon-beach",
+      "name": "Shirgaon Beach",
+      "type": "eco-tourism",
+      "category": "Beach",
+      "description": "A scenic beach near Shirgaon fort with beautiful coastal views and adventure opportunities.",
+      "location": "Shirgaon, Palghar District",
+      "coordinates": {
+        "lat": 19.696556462695384,
+        "lng": 72.7104809
+      },
+      "highlights": [
+        "Scenic Views",
+        "Fort Nearby",
+        "Adventure Sports",
+        "Coastal Beauty"
+      ],
+      "activities": [
+        "Trekking to Fort",
+        "Photography",
+        "Beach Activities",
+        "Adventure Sports"
+      ],
+      "bestTimeToVisit": "October to March",
+      "entryFee": "Free",
+      "image": "shirgaon-beach.jpg",
+      "rating": 4.4,
+      "reviews": 88
+    },
+    {
+      "id": "arnala-beach",
+      "name": "Arnala Beach",
+      "type": "eco-tourism",
+      "category": "Beach",
+      "description": "A quiet beach with historical significance, known for its calm waters and beachside ruins.",
+      "location": "Arnala, Palghar District",
+      "coordinates": {
+        "lat": 19.45237768672278,
+        "lng": 72.7479625306851
+      },
+      "highlights": [
+        "Historical Ruins",
+        "Calm Waters",
+        "Quiet Atmosphere",
+        "Photography Spot"
+      ],
+      "activities": [
+        "Photography",
+        "Historical Tours",
+        "Beach Walks",
+        "Relaxation"
+      ],
+      "bestTimeToVisit": "October to March",
+      "entryFee": "Free",
+      "image": "arnala-beach.jpg",
+      "rating": 4.2,
+      "reviews": 72
+    },
+    {
+      "id": "arnala-fort",
+      "name": "Arnala Fort",
+      "type": "historical",
+      "category": "Fort",
+      "description": "An ancient coastal fort with Portuguese and Mughal history, offering panoramic sea views.",
+      "location": "Arnala, Palghar District",
+      "coordinates": {
+        "lat": 19.466082660172965,
+        "lng": 72.73224137116438
+      },
+      "highlights": [
+        "Historic Architecture",
+        "Sea Views",
+        "Ancient Ruins",
+        "Photography Location"
+      ],
+      "activities": [
+        "Historical Exploration",
+        "Photography",
+        "Trekking",
+        "Historical Tours"
+      ],
+      "bestTimeToVisit": "October to March",
+      "entryFee": "₹30 per person",
+      "image": "arnala-fort.jpg",
+      "rating": 4.3,
+      "reviews": 85
+    },
+    {
+      "id": "asherigad-fort",
+      "name": "Asherigad Fort",
+      "type": "historical",
+      "category": "Fort",
+      "description": "A hilltop fort with breathtaking views and historical significance in Palghar region.",
+      "location": "Palghar District",
+      "coordinates": {
+        "lat": 19.82531672692034,
+        "lng": 72.92090657780638
+      },
+      "highlights": [
+        "Hilltop Location",
+        "Panoramic Views",
+        "Historical Ruins",
+        "Nature Trails"
+      ],
+      "activities": [
+        "Trekking",
+        "Photography",
+        "Historical Exploration",
+        "Nature Walk"
+      ],
+      "bestTimeToVisit": "June to February",
+      "entryFee": "Free",
+      "image": "asherigad-fort.jpg",
+      "rating": 4.6,
+      "reviews": 110
+    },
+    {
+      "id": "tandulwadi-fort",
+      "name": "Tandulwadi Fort",
+      "type": "historical",
+      "category": "Fort",
+      "description": "A lesser-known hilltop fort surrounded by greenery and offering scenic monsoon views.",
+      "location": "Tandulwadi, Palghar District",
+      "coordinates": {
+        "lat": 19.61824584963359,
+        "lng": 72.84183252883562
+      },
+      "highlights": [
+        "Hill Fort",
+        "Monsoon Views",
+        "Lush Greenery",
+        "Adventure Trekking"
+      ],
+      "activities": [
+        "Trekking",
+        "Photography",
+        "Nature Walks",
+        "Fort Exploration"
+      ],
+      "bestTimeToVisit": "June to February",
+      "entryFee": "Free",
+      "image": "tandulwadi-fort.jpg",
+      "rating": 4.4,
+      "reviews": 92
+    },
+    {
+      "id": "shirgaon-fort",
+      "name": "Shirgaon Fort",
+      "type": "historical",
+      "category": "Fort",
+      "description": "A historic coastal fort with sea views, perfect for trekking and photography.",
+      "location": "Shirgaon, Palghar District",
+      "coordinates": {
+        "lat": 19.69644897282875, 
+        "lng": 72.71350855582182
+      },
+      "highlights": [
+        "Coastal Fort",
+        "Sea Views",
+        "Trekking Trail",
+        "Historical Site"
+      ],
+      "activities": [
+        "Trekking",
+        "Photography",
+        "Historical Tours",
+        "Adventure"
+      ],
+      "bestTimeToVisit": "October to March",
+      "entryFee": "₹20 per person",
+      "image": "shirgaon-fort.jpg",
+      "rating": 4.5,
+      "reviews": 98
+    },
+    {
+      "id": "bordi-beach",
+      "name": "Bordi Beach",
+      "type": "eco-tourism",
+      "category": "Beach",
+      "description": "A long sandy beach ideal for relaxation, with nearby resorts and recreational facilities.",
+      "location": "Bordi, Palghar District",
+      "coordinates": {
+        "lat": 20.100289117681776,
+        "lng": 72.7324811693149 
+      },
+      "highlights": [
+        "Sandy Beach",
+        "Resort Facilities",
+        "Water Sports",
+        "Sunset Views"
+      ],
+      "activities": [
+        "Swimming",
+        "Water Sports",
+        "Beach Volleyball",
+        "Relaxation"
+      ],
+      "bestTimeToVisit": "October to March",
+      "entryFee": "Free",
+      "image": "bordi-beach.jpg",
+      "rating": 4.4,
+      "reviews": 105
+    },
+    {
+      "id": "kalamb-beach",
+      "name": "Kalamb Beach",
+      "type": "eco-tourism",
+      "category": "Beach",
+      "description": "A secluded beach with peaceful environment, far from crowds, perfect for nature lovers.",
+      "location": "Kalamb, Palghar District",
+      "coordinates": {
+        "lat": 19.403994678148575,
+        "lng": 72.76159626137022 
+      },
+      "highlights": [
+        "Secluded Beach",
+        "Peaceful Environment",
+        "Nature Walks",
+        "Photography Opportunity"
+      ],
+      "activities": [
+        "Beach Walks",
+        "Photography",
+        "Nature Exploration",
+        "Relaxation"
+      ],
+      "bestTimeToVisit": "October to March",
+      "entryFee": "Free",
+      "image": "kalamb-beach.jpg",
+      "rating": 4.3,
+      "reviews": 68
+    },
+    {
+      "id": "surya-river-dam",
+      "name": "Surya River Dam",
+      "type": "eco-tourism",
+      "category": "River",
+      "description": "A scenic river with water activities and peaceful riverside trails for nature enthusiasts.",
+      "location": "Palghar District",
+      "coordinates": {
+        "lat": 19.697647213505245,
+        "lng": 72.85093739744585
+      },
+      "highlights": [
+        "Water Activities",
+        "Scenic Trails",
+        "River Beauty",
+        "Nature Experience"
+      ],
+      "activities": [
+        "River Rafting",
+        "Nature Walks",
+        "Photography",
+        "Picnicking"
+      ],
+      "bestTimeToVisit": "June to March",
+      "entryFee": "Free",
+      "image": "surya-river.jpg",
+      "rating": 4.2,
+      "reviews": 55
+    },
+    {
+      "id": "vaitarna-lake",
+      "name": "Vaitarna Lake",
+      "type": "eco-tourism",
+      "category": "Lake",
+      "description": "A peaceful lake surrounded by hills and forests, ideal for bird watching and nature photography.",
+      "location": "Palghar District",
+      "coordinates": {
+        "lat": 19.81854739331834,
+        "lng": 73.50855213673722 
+      },
+      "highlights": [
+        "Bird Watching",
+        "Lake Scenery",
+        "Hill Views",
+        "Nature Photography"
+      ],
+      "activities": [
+        "Bird Watching",
+        "Photography",
+        "Nature Walks",
+        "Picnicking"
+      ],
+      "bestTimeToVisit": "October to March",
+      "entryFee": "Free",
+      "image": "vaitarna-lake.jpg",
+      "rating": 4.4,
+      "reviews": 78
+    },
+    {
+      "id": "jai-vilas-palace",
+      "name": "Jai Vilas Palace",
+      "type": "historical",
+      "category": "Palace",
+      "description": "A majestic palace in Jawhar showcasing royal architecture and surrounding gardens.",
+      "location": "Jawhar, Palghar District",
+      "coordinates": {
+        "lat": 19.89977385557532,
+        "lng": 73.2266680558218 
+      },
+      "highlights": [
+        "Royal Architecture",
+        "Historical Significance",
+        "Beautiful Gardens",
+        "Photography Spot"
+      ],
+      "activities": [
+        "Historical Tour",
+        "Photography",
+        "Garden Walk",
+        "Cultural Experience"
+      ],
+      "bestTimeToVisit": "October to March",
+      "entryFee": "₹50 per person",
+      "image": "jai-vilas-palace.jpg",
+      "rating": 4.5,
+      "reviews": 115
+    },
+    {
+      "id": "shirpamal-sunset",
+      "name": "Shirpamal (Sunset Point)",
+      "type": "nature",
+      "category": "Viewpoint",
+      "description": "A stunning sunset viewpoint in Jawhar with panoramic views of the surrounding landscape.",
+      "location": "Jawhar, Palghar District",
+      "coordinates": {
+        "lat": 19.92725087482257,
+        "lng": 73.2443456725193 
+      },
+      "highlights": [
+        "Sunset Views",
+        "Panoramic Landscape",
+        "Photography Location",
+        "Romantic Spot"
+      ],
+      "activities": [
+        "Sunset Watching",
+        "Photography",
+        "Sightseeing",
+        "Relaxation"
+      ],
+      "bestTimeToVisit": "Year Round",
+      "entryFee": "Free",
+      "image": "shirpamal-sunset.jpg",
+      "rating": 4.8,
+      "reviews": 168
+    },
+    {
+      "id": "hanuman-point",
+      "name": "Hanuman Point",
+      "type": "nature",
+      "category": "Viewpoint",
+      "description": "A scenic viewpoint near a Hanuman temple offering panoramic views and spiritual experience.",
+      "location": "Jawhar, Palghar District",
+      "coordinates": {
+        "lat": 19.903603651547346,
+        "lng": 73.23181391349308 
+      },
+      "highlights": [
+        "Viewpoint",
+        "Temple Visit",
+        "Spiritual Spot",
+        "Scenic Beauty"
+      ],
+      "activities": [
+        "Temple Visit",
+        "Photography",
+        "Sightseeing",
+        "Spiritual Experience"
+      ],
+      "bestTimeToVisit": "Year Round",
+      "entryFee": "Free",
+      "image": "hanuman-point.jpg",
+      "rating": 4.6,
+      "reviews": 128
+    },
+    {
+      "id": "jai-sagar-dam",
+      "name": "Jai Sagar Dam",
+      "type": "eco-tourism",
+      "category": "Dam",
+      "description": "A scenic dam in Jawhar surrounded by hills, perfect for bird watching and nature photography.",
+      "location": "Jawhar, Palghar District",
+      "coordinates": {
+        "lat": 19.928833907361565,
+        "lng": 73.22213972277905
+      },
+      "highlights": [
+        "Bird Watching",
+        "Lake Views",
+        "Hill Surroundings",
+        "Nature Photography"
+      ],
+      "activities": [
+        "Bird Watching",
+        "Photography",
+        "Nature Walks",
+        "Picnicking"
+      ],
+      "bestTimeToVisit": "October to March",
+      "entryFee": "Free",
+      "image": "kamalpura-lake.jpg",
+      "rating": 4.5,
+      "reviews": 92
+    },
+    {
+      "id": "vajreshwari-temple",
+      "name": "Vajreshwari Temple",
+      "type": "cultural",
+      "category": "Religious Site",
+      "description": "An ancient temple dedicated to Goddess Vajreshwari, an important pilgrimage site in Palghar.",
+      "location": "Palghar District",
+      "coordinates": {
+        "lat": 19.487228456207113,
+        "lng": 73.02611801534256
+      },
+      "highlights": [
+        "Ancient Temple",
+        "Religious Significance",
+        "Sacred Wells",
+        "Spiritual Experience"
+      ],
+      "activities": [
+        "Religious Visit",
+        "Temple Darshan",
+        "Photography",
+        "Meditation"
+      ],
+      "bestTimeToVisit": "Year Round",
+      "entryFee": "Free",
+      "image": "vajreshwari-temple.jpg",
+      "rating": 4.6,
+      "reviews": 135
+    },
+    {
+      "id": "tansa-wildlife",
+      "name": "Tansa Wildlife Sanctuary",
+      "type": "eco-tourism",
+      "category": "Wildlife Sanctuary",
+      "description": "A rich wildlife sanctuary with diverse flora and fauna, ideal for nature and wildlife enthusiasts.",
+      "location": "Palghar District",
+      "coordinates": {
+        "lat": 19.553241304116543,
+        "lng": 73.26085061647288 
+      },
+      "highlights": [
+        "Wildlife Spotting",
+        "Bird Watching",
+        "Forest Trails",
+        "Biodiversity"
+      ],
+      "activities": [
+        "Wildlife Safari",
+        "Bird Watching",
+        "Nature Walks",
+        "Photography"
+      ],
+      "bestTimeToVisit": "November to March",
+      "entryFee": "₹50 per person",
+      "image": "tansa-wildlife.jpg",
+      "rating": 4.7,
+      "reviews": 155
+    },
+    {
+      "id": "dhekale-dam",
+      "name": "Dhekale Dam",
+      "type": "eco-tourism",
+      "category": "Dam",
+      "description": "A scenic dam surrounded by greenery and hills, offering beautiful views and recreational activities.",
+      "location": "Palghar District",
+      "coordinates": {
+        "lat": 19.620773911714195,
+        "lng": 72.93999667301384
+      },
+      "highlights": [
+        "Dam Views",
+        "Scenic Landscape",
+        "Picnic Spot",
+        "Photography Location"
+      ],
+      "activities": [
+        "Picnicking",
+        "Photography",
+        "Nature Walks",
+        "Boating"
+      ],
+      "bestTimeToVisit": "June to March",
+      "entryFee": "Free",
+      "image": "dhekale-dam.jpg",
+      "rating": 4.3,
+      "reviews": 75
+    },
+    {
+      "id": "tandulwadi-waterfall",
+      "name": "Tandulwadi Waterfall",
+      "type": "nature",
+      "category": "Waterfall",
+      "description": "A breathtaking seasonal waterfall near Tandulwadi fort surrounded by dense forests and rocky terrain.",
+      "location": "Tandulwadi, Palghar District",
+      "coordinates": {
+        "lat": 19.615356414915404,
+        "lng": 72.84926021164361
+      },
+      "highlights": [
+        "Seasonal Beauty",
+        "Rocky Terrain",
+        "Forest Surroundings",
+        "Adventure Spot",
+        "Photography Location"
+      ],
+      "activities": [
+        "Sightseeing",
+        "Photography",
+        "Nature Walk",
+        "Adventure",
+        "Trekking"
+      ],
+      "bestTimeToVisit": "July to October",
+      "entryFee": "₹15 per person",
+      "image": "tandulwadi-waterfall.jpg",
+      "rating": 4.5,
+      "reviews": 98
+    },
+    {
+      "id": "kalmandavi-waterfall",
+      "name": "Kalmandavi Waterfall",
+      "type": "nature",
+      "category": "Waterfall",
+      "description": "A stunning hidden waterfall nestled in the Palghar hills, known for its pristine waters and lush green surroundings.",
+      "location": "Kalmandavi, Palghar District",
+      "coordinates": {
+        "lat": 19.869962516834068,
+        "lng": 73.25382506942
+      },
+      "highlights": [
+        "Hidden Waterfall",
+        "Pristine Waters",
+        "Lush Green Surroundings",
+        "Photography Spot",
+        "Nature Paradise"
+      ],
+      "activities": [
+        "Swimming",
+        "Photography",
+        "Nature Walks",
+        "Adventure",
+        "Picnicking"
+      ],
+      "bestTimeToVisit": "June to October",
+      "entryFee": "₹20 per person",
+      "image": "kalmandavi-waterfall.jpg",
+      "rating": 4.6,
+      "reviews": 112
+    }
+  ],
+  "culturalSites": [
+    {
+      "id": "warli-village-palghar",
+      "name": "Warli Village Experience",
+      "type": "cultural",
+      "category": "Village Tourism",
+      "description": "Experience authentic Warli tribal life, traditions, and art in villages around Palghar and Boisar.",
+      "location": "Palghar District",
+      "highlights": [
+        "Warli Art",
+        "Tribal Lifestyle",
+        "Traditional Customs",
+        "Local Cuisine",
+        "Cultural Exchange"
+      ],
+      "activities": [
+        "Village Stay",
+        "Art Workshops",
+        "Cultural Exchange",
+        "Local Food Experience",
+        "Handicraft Shopping"
+      ]
+    },
+    {
+      "id": "tarpa-dance",
+      "name": "Tarpa Dance Performance",
+      "type": "cultural",
+      "category": "Traditional Arts",
+      "description": "Witness the traditional Tarpa dance performed by tribal communities, celebrating nature and festivals.",
+      "location": "Palghar & Dahanu Region",
+      "highlights": [
+        "Traditional Tribal Dance",
+        "Cultural Heritage",
+        "Music and Rhythm",
+        "Festival Celebrations",
+        "Community Participation"
+      ],
+      "activities": [
+        "Dance Performance",
+        "Cultural Learning",
+        "Photography",
+        "Music Experience",
+        "Festival Participation"
+      ]
+    },
+    {
+      "id": "warli-art-handicrafts",
+      "name": "Warli Art & Handicrafts",
+      "type": "cultural",
+      "category": "Handicrafts",
+      "description": "Explore traditional Warli paintings and handmade crafts that reflect tribal heritage of Maharashtra.",
+      "location": "Palghar Artisan Villages",
+      "highlights": [
+        "Warli Paintings",
+        "Handmade Crafts",
+        "Traditional Art",
+        "Cultural Heritage",
+        "Local Artisan Skills"
+      ],
+      "activities": [
+        "Art Workshop",
+        "Shopping",
+        "Artisan Interaction",
+        "Learning Painting",
+        "Cultural Experience"
+      ]
+    }
+  ],
+  "regions": {
+    "north": {
+      "name": "Dahanu Region",
+      "districts": [
+        "Dahanu",
+        "Gholvad"
+      ],
+      "description": "Known for beaches, chikoo farms, and peaceful coastal lifestyle",
+      "keyAttractions": [
+        "Dahanu Beach",
+        "Chikoo Farms",
+        "Gholvad Beach"
+      ]
+    },
+    "south": {
+      "name": "Boisar Region",
+      "districts": [
+        "Boisar",
+        "Tarapur"
+      ],
+      "description": "Industrial hub with nearby beaches and historical sites",
+      "keyAttractions": [
+        "Kelva Beach",
+        "Tarapur Fort",
+        "Boisar Town"
+      ]
+    },
+    "east": {
+      "name": "Palghar Hills Region",
+      "districts": [
+        "Palghar",
+        "Jawhar"
+      ],
+      "description": "Rich in hills, waterfalls, and tribal culture",
+      "keyAttractions": [
+        "Kaldurg Fort",
+        "Dabhosa Waterfall",
+        "Kohoj Hill"
+      ]
+    },
+    "west": {
+      "name": "Coastal Belt",
+      "districts": [
+        "Kelva",
+        "Satpati"
+      ],
+      "description": "Coastal fishing villages with scenic beaches and cultural life",
+      "keyAttractions": [
+        "Kelva Beach",
+        "Satpati Beach",
+        "Fishing Villages"
+      ]
+    }
+  }
+}

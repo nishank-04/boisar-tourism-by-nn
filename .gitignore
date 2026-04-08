@@ -1,0 +1,7 @@
+backend/node_modules/
+backend/config.env
+backend/backend.log
+backend/backend.pid
+node_modules/
+*.env
+.env.local

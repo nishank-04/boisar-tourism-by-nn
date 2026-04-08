@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Trip Planner - Boisar Tourism</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ── RESET & BASE ── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #f4f6f4;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* ── NAVBAR ── */
+        .navbar {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            padding: 0;
+            box-shadow: 0 2px 16px rgba(45, 90, 39, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 4px;
+        }
+
+        .nav-menu a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 400;
+            padding: 7px 14px;
+            border-radius: 99px;
+            transition: all 0.2s;
+        }
+
+        .nav-menu a:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.14);
+        }
+
+        /* ── PAGE LAYOUT ── */
+        .trip-planner {
+            padding: 40px 0 70px;
+            min-height: calc(100vh - 64px);
+        }
+
+        .planner-container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── PAGE HEADER ── */
+        .page-header {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            border-radius: 20px;
+            padding: 32px 36px;
+            margin-bottom: 32px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            pointer-events: none;
+        }
+
+        .page-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            position: relative;
+        }
+
+        .page-header p {
+            opacity: 0.82;
+            font-size: 0.95rem;
+            font-weight: 300;
+            position: relative;
+        }
+
+        /* ── STEP INDICATORS ── */
+        .planner-steps {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 22px;
+            background: white;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 99px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #888;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .step.active {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 16px rgba(45, 90, 39, 0.25);
+        }
+
+        .step-number {
+            width: 26px;
+            height: 26px;
+            background: #f0f0f0;
+            color: #888;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        .step.active .step-number {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        /* ── FORM CARD ── */
+        .planner-form {
+            background: white;
+            border-radius: 20px;
+            border: 1px solid #e8f0e6;
+            box-shadow: 0 2px 20px rgba(45, 90, 39, 0.08);
+            overflow: hidden;
+            animation: fadeUp 0.4s ease both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-step-header {
+            background: #f8faf8;
+            border-bottom: 1px solid #eef2ee;
+            padding: 20px 32px;
+        }
+
+        .form-step-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1a3320;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-step-header h3 i {
+            color: #4a7c59;
+            font-size: 1rem;
+        }
+
+        .form-body {
+            padding: 28px 32px;
+        }
+
+        /* ── FORM ELEMENTS ── */
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #444;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 7px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1.5px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            color: #333;
+            background: #f8f9fa;
+            transition: all 0.25s ease;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #2d5a27;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(45, 90, 39, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        /* ── INTEREST CHECKBOXES ── */
+        .interests-section-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #444;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 8px;
+            margin-bottom: 22px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 11px 14px;
+            background: #f8f9fa;
+            border: 1.5px solid #e8e8e8;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.875rem;
+            color: #555;
+        }
+
+        .checkbox-item:hover {
+            background: #e8f5e8;
+            border-color: #4a7c59;
+            color: #2d5a27;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 15px;
+            height: 15px;
+            accent-color: #2d5a27;
+            margin: 0;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 400;
+        }
+
+        /* ── LOCATION SELECTOR ── */
+        .locations-selector {
+            border: 1.5px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 12px;
+            background: #f8f9fa;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .location-item {
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .location-item:hover {
+            background: #e8f5e8;
+            border-color: #4a7c59;
+        }
+
+        .location-item input[type="checkbox"] {
+            flex-shrink: 0;
+        }
+
+        .location-info {
+            flex: 1;
+            font-size: 0.85rem;
+        }
+
+        .location-info strong {
+            display: block;
+            color: #2d5a27;
+            font-weight: 600;
+        }
+
+        .location-info span {
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        /* ── ITINERARY PREVIEW ── */
+        .itinerary-preview {
+            background: #f8faf8;
+            border: 1px solid #e8f0e6;
+            border-radius: 14px;
+            padding: 20px;
+        }
+
+        .itinerary-preview > h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: #1a3320;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #e0e8e0;
+        }
+
+        .itinerary-day {
+            background: white;
+            border: 1px solid #e8f0e6;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(45, 90, 39, 0.05);
+        }
+
+        .itinerary-day h5 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #2d5a27;
+            margin-bottom: 12px;
+        }
+
+        .itinerary-activity {
+            padding: 9px 0;
+            border-bottom: 1px solid #f5f5f5;
+            font-size: 0.875rem;
+            color: #555;
+        }
+
+        .itinerary-activity:last-child {
+            border-bottom: none;
+        }
+
+        .activity-location {
+            font-weight: 600;
+            color: #2d5a27;
+        }
+
+        .activity-details {
+            font-size: 0.75rem;
+            color: #999;
+            margin-top: 2px;
+        }
+
+        /* ── NAV BUTTONS ── */
+        .form-navigation {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 20px 32px 28px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .btn-nav {
+            padding: 11px 26px;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .btn-prev {
+            background: #f4f6f4;
+            color: #555;
+            border: 1.5px solid #e0e0e0;
+        }
+
+        .btn-prev:hover {
+            background: #e8ede8;
+            color: #333;
+        }
+
+        .btn-next,
+        .btn-submit {
+            background: linear-gradient(135deg, #2d5a27, #4a7c59);
+            color: white;
+        }
+
+        .btn-next:hover,
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(45, 90, 39, 0.3);
+        }
+
+        .btn-submit:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* ── TOAST MESSAGES ── */
+        .toast-msg {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 380px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast-msg.success {
+            background: #f0f9f0;
+            color: #27ae60;
+            border-left: 3px solid #27ae60;
+        }
+
+        .toast-msg.error {
+            background: #fdf2f2;
+            color: #e74c3c;
+            border-left: 3px solid #e74c3c;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .loading {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid rgba(45, 90, 39, 0.3);
+            border-top-color: #2d5a27;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 640px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .planner-steps {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+
+            .form-body {
+                padding: 20px;
+            }
+
+            .form-navigation {
+                padding: 16px 20px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-mountain"></i>
+                <span>Boisar Tourism</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../all-locations.html">All Locations</a></li>
+                <li><a href="../index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Trip Planner -->
+    <section class="trip-planner">
+        <div class="planner-container">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <h2><i class="fas fa-map-marked-alt" style="margin-right:10px;"></i>Plan Your Perfect Boisar Adventure</h2>
+                <p>Create a personalized itinerary using 35+ locations. Get smart recommendations based on your interests, duration & budget.</p>
+            </div>
+
+            <!-- Step Indicators -->
+            <div class="planner-steps">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <span>Trip Basics</span>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <span>Interests</span>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <span>Review Plan</span>
+                </div>
+            </div>
+
+            <!-- Form Card -->
+            <div class="planner-form">
+                <form id="tripPlannerForm">
+
+                    <!-- Step 1: Basic Information -->
+                    <div class="form-step" id="step1">
+                        <div class="form-step-header">
+                            <h3><i class="fas fa-info-circle"></i>Trip Basics</h3>
+                        </div>
+                        <div class="form-body">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="tripDuration">Trip Duration *</label>
+                                    <select id="tripDuration" required>
+                                        <option value="">Select Duration</option>
+                                        <option value="1">1 Day</option>
+                                        <option value="2">2 Days</option>
+                                        <option value="3">3 Days</option>
+                                        <option value="5">5 Days</option>
+                                        <option value="7">1 Week</option>
+                                        <option value="10">10 Days</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="travelDate">Travel Date *</label>
+                                    <input type="date" id="travelDate" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="groupSize">Group Size *</label>
+                                    <select id="groupSize" required>
+                                        <option value="">Select Group Size</option>
+                                        <option value="solo">Solo Traveler</option>
+                                        <option value="couple">Couple</option>
+                                        <option value="small">Small Group (3–5)</option>
+                                        <option value="medium">Medium Group (6–10)</option>
+                                        <option value="large">Large Group (10+)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="budget">Budget Range *</label>
+                                    <select id="budget" required>
+                                        <option value="">Select Budget</option>
+                                        <option value="low">Budget (₹5k–15k)</option>
+                                        <option value="medium">Moderate (₹15k–40k)</option>
+                                        <option value="high">Premium (₹40k+)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Interests/Preferences -->
+                    <div class="form-step" id="step2" style="display:none;">
+                        <div class="form-step-header">
+                            <h3><i class="fas fa-heart"></i>Your Interests & Preferences</h3>
+                        </div>
+                        <div class="form-body">
+                            <span class="interests-section-label">What are you interested in? (Select at least one)</span>
+                            <div class="checkbox-group" id="interestCheckboxes">
+                                <!-- Dynamically populated -->
+                            </div>
+
+                            <div class="form-group">
+                                <label for="travelPace">Travel Pace</label>
+                                <select id="travelPace">
+                                    <option value="relaxed">Relaxed (See fewer locations in depth)</option>
+                                    <option value="moderate" selected>Moderate (Balanced mix)</option>
+                                    <option value="fast">Fast-paced (Visit many locations)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="preferredRegion">Preferred Region (Optional)</label>
+                                <select id="preferredRegion">
+                                    <option value="">No preference</option>
+                                    <option value="beach">Beaches & Coastal</option>
+                                    <option value="hills">Hills & Forts</option>
+                                    <option value="cultural">Cultural & Villages</option>
+                                    <option value="nature">Nature & Wildlife</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Review & Generate -->
+                    <div class="form-step" id="step3" style="display:none;">
+                        <div class="form-step-header">
+                            <h3><i class="fas fa-calendar-check"></i>Your Personalized Itinerary</h3>
+                        </div>
+                        <div class="form-body">
+                            <div id="itineraryPreview" class="itinerary-preview">
+                                <p style="color:#aaa;font-size:0.9rem;">Complete the previous steps to generate your personalized itinerary.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <div class="form-navigation">
+                        <button type="button" id="prevBtn" class="btn-nav btn-prev" onclick="changeStep(-1)" style="display:none;">
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button type="button" id="nextBtn" class="btn-nav btn-next" onclick="changeStep(1)">
+                            Next <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <button type="submit" id="submitBtn" class="btn-nav btn-submit" style="display:none;">
+                            <i class="fas fa-check"></i> Generate Itinerary
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Load all locations from destinations.json
+        let allLocations = [];
+
+        async function loadLocations() {
+            try {
+                const response = await fetch('../data/destinations.json');
+                const data = await response.json();
+                allLocations = data.destinations || [];
+                initializeInterestCheckboxes();
+            } catch (error) {
+                console.error('Error loading locations:', error);
+                showToast('Error loading locations. Please refresh the page.', 'error');
+            }
+        }
+
+        function initializeInterestCheckboxes() {
+            const interestTypes = new Set();
+            allLocations.forEach(loc => {
+                if (loc.type) interestTypes.add(loc.type);
+            });
+
+            const interestMap = {
+                'eco-tourism': '🌿 Eco-Tourism',
+                'nature': '🏞️ Nature & Wildlife',
+                'cultural': '🎭 Cultural Heritage',
+                'historical': '🏛️ Historical Sites',
+                'adventure': '🧗 Adventure Sports'
+            };
+
+            let html = '';
+            interestTypes.forEach(type => {
+                const label = interestMap[type] || type;
+                html += `
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="interest_${type}" value="${type}">
+                        <label for="interest_${type}">${label}</label>
+                    </div>
+                `;
+            });
+
+            document.getElementById('interestCheckboxes').innerHTML = html;
+        }
+
+        let currentStep = 1;
+        const totalSteps = 3;
+        let lastGeneratedItinerary = []; // stores structured day-by-day data
+
+        function changeStep(direction) {
+            const steps = document.querySelectorAll('.step');
+            const formSteps = document.querySelectorAll('.form-step');
+
+            // Validate current step before moving
+            if (direction > 0 && !validateStep(currentStep)) {
+                return;
+            }
+
+            formSteps[currentStep - 1].style.display = 'none';
+            steps[currentStep - 1].classList.remove('active');
+
+            currentStep += direction;
+
+            if (currentStep <= totalSteps) {
+                formSteps[currentStep - 1].style.display = 'block';
+                steps[currentStep - 1].classList.add('active');
+            }
+
+            updateButtonStates();
+
+            if (currentStep === 3) {
+                generateItinerary();
+            }
+        }
+
+        function validateStep(step) {
+            if (step === 1) {
+                const duration = document.getElementById('tripDuration').value;
+                const date = document.getElementById('travelDate').value;
+                const groupSize = document.getElementById('groupSize').value;
+                const budget = document.getElementById('budget').value;
+
+                if (!duration || !date || !groupSize || !budget) {
+                    showToast('Please fill all required fields.', 'error');
+                    return false;
+                }
+            } else if (step === 2) {
+                const interests = document.querySelectorAll('#interestCheckboxes input[type="checkbox"]:checked');
+                if (interests.length === 0) {
+                    showToast('Please select at least one interest.', 'error');
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function updateButtonStates() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (currentStep === 1) {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'inline-flex';
+                submitBtn.style.display = 'none';
+            } else if (currentStep === totalSteps) {
+                prevBtn.style.display = 'inline-flex';
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-flex';
+            } else {
+                prevBtn.style.display = 'inline-flex';
+                nextBtn.style.display = 'inline-flex';
+                submitBtn.style.display = 'none';
+            }
+        }
+
+        function getLocationsByInterests(interests) {
+            const matched = allLocations.filter(loc => interests.includes(loc.type));
+
+            // If no exact match, return some default variety
+            if (matched.length === 0) {
+                return allLocations.slice(0, 10);
+            }
+
+            return matched;
+        }
+
+        function calculateDistance(lat1, lng1, lat2, lng2) {
+            // Simple distance approximation (not exact)
+            const dLat = lat2 - lat1;
+            const dLng = lng2 - lng1;
+            return Math.sqrt(dLat * dLat + dLng * dLng);
+        }
+
+        function optimizeItinerary(selectedLocations, days) {
+            // Group locations by type for variety
+            const grouped = {};
+            selectedLocations.forEach(loc => {
+                if (!grouped[loc.category]) grouped[loc.category] = [];
+                grouped[loc.category].push(loc);
+            });
+
+            const itinerary = {};
+            for (let day = 1; day <= days; day++) {
+                itinerary[day] = [];
+            }
+
+            // Distribute locations across days
+            let dayIndex = 1;
+            selectedLocations.forEach(loc => {
+                if (dayIndex > days) dayIndex = 1;
+                itinerary[dayIndex].push(loc);
+                dayIndex++;
+            });
+
+            return itinerary;
+        }
+
+        function generateItinerary() {
+            const duration = parseInt(document.getElementById('tripDuration').value);
+            const pace = document.getElementById('travelPace').value;
+            const interests = Array.from(document.querySelectorAll('#interestCheckboxes input[type="checkbox"]:checked')).map(cb => cb.value);
+            const preferredRegion = document.getElementById('preferredRegion').value;
+
+            if (interests.length === 0) {
+                document.getElementById('itineraryPreview').innerHTML = '<p style="color:#aaa;">Please select interests to generate itinerary.</p>';
+                return;
+            }
+
+            // Get matching locations
+            let selectedLocations = getLocationsByInterests(interests);
+
+            // Filter by region if selected
+            if (preferredRegion) {
+                const regionMap = {
+                    'beach': ['Beach'],
+                    'hills': ['Fort', 'Hill', 'Trekking Spot'],
+                    'cultural': ['Village Tourism', 'Village', 'Religious Site'],
+                    'nature': ['Waterfall', 'Wildlife Sanctuary', 'Lake', 'River', 'Dam']
+                };
+                const categories = regionMap[preferredRegion] || [];
+                selectedLocations = selectedLocations.filter(loc =>
+                    categories.some(cat => loc.category && loc.category.includes(cat))
+                );
+            }
+
+            // Limit based on pace and duration
+            const locationsPerDay = pace === 'relaxed' ? 2 : pace === 'moderate' ? 3 : 4;
+            const maxLocations = Math.min(selectedLocations.length, duration * locationsPerDay);
+            selectedLocations = selectedLocations.slice(0, maxLocations);
+
+            const itinerary = optimizeItinerary(selectedLocations, duration);
+
+            let html = `<h4>🎯 Your ${duration}-Day Boisar Adventure</h4>`;
+
+            for (let day = 1; day <= duration; day++) {
+                const dayLocations = itinerary[day] || [];
+                html += `<div class="itinerary-day">`;
+                html += `<h5>📅 Day ${day}</h5>`;
+
+                if (dayLocations.length === 0) {
+                    html += `<div class="itinerary-activity"><em style="color:#999;">Rest day / Free time</em></div>`;
+                } else {
+                    dayLocations.forEach((loc, idx) => {
+                        const timeSlot = idx === 0 ? '🌅 Morning' : idx === 1 ? '🌞 Afternoon' : '🌆 Evening';
+                        html += `
+                            <div class="itinerary-activity">
+                                <strong>${timeSlot}</strong>
+                                <div class="activity-location">📍 ${loc.name}</div>
+                                <div class="activity-details">
+                                    ${loc.category} • ${loc.location} • Rating: ${loc.rating ? loc.rating + '/5' : 'N/A'}
+                                    ${loc.entryFee && loc.entryFee !== 'Free' ? `<br/>Entry: ${loc.entryFee}` : '<br/>Entry: Free'}
+                                    ${loc.bestTimeToVisit ? `<br/>Best time: ${loc.bestTimeToVisit}` : ''}
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                html += `</div>`;
+            }
+
+            // Build structured itinerary data for saving
+            lastGeneratedItinerary = [];
+            for (let day = 1; day <= duration; day++) {
+                const startD = new Date(document.getElementById('travelDate').value + 'T00:00:00');
+                startD.setDate(startD.getDate() + day - 1);
+                const dayLocations = itinerary[day] || [];
+                const timeSlots = ['Morning', 'Afternoon', 'Evening'];
+                const activities = dayLocations.map((loc, idx) => ({
+                    time: idx === 0 ? '09:00' : idx === 1 ? '13:00' : '17:00',
+                    timeLabel: timeSlots[idx] || 'Visit',
+                    activity: 'Visit',
+                    location: loc.name,
+                    category: loc.category || '',
+                    area: loc.location || '',
+                    rating: loc.rating || null,
+                    entryFee: loc.entryFee || 'Free',
+                    bestTime: loc.bestTimeToVisit || ''
+                }));
+                lastGeneratedItinerary.push({ day, date: startD.toISOString(), activities });
+            }
+
+            document.getElementById('itineraryPreview').innerHTML = html;
+        }
+
+        // Form submission
+        document.getElementById('tripPlannerForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const durationDays = parseInt(document.getElementById('tripDuration').value);
+            const travelDateStr = document.getElementById('travelDate').value; // "YYYY-MM-DD"
+
+            // Calculate end date properly
+            const [year, month, day] = travelDateStr.split('-');
+            const startDate = new Date(year, parseInt(month) - 1, parseInt(day));
+            const endDate = new Date(startDate);
+            endDate.setDate(endDate.getDate() + durationDays - 1);
+
+            const interests = Array.from(document.querySelectorAll('#interestCheckboxes input[type="checkbox"]:checked')).map(cb => cb.value);
+            const pace = document.getElementById('travelPace').value;
+            const preferredRegion = document.getElementById('preferredRegion').value;
+
+            // Generate descriptive title
+            const regionNames = {
+                'beach': 'Beach Paradise',
+                'hills': 'Mountain Adventure',
+                'cultural': 'Cultural Journey',
+                'nature': 'Nature Escape'
+            };
+            const titleRegion = regionNames[preferredRegion] || 'Boisar Adventure';
+            const title = `${durationDays}-Day ${titleRegion}`;
+
+            const groupSizeVal = document.getElementById('groupSize').value;
+            const groupSizeMap = { solo: 1, couple: 2, small: 4, medium: 8, large: 15 };
+            const numAdults = groupSizeMap[groupSizeVal] || 1;
+
+            const tripData = {
+                title,
+                description: `A ${durationDays}-day ${pace} paced trip to explore ${preferredRegion || 'beautiful destinations'} in Boisar and Palghar. Interests: ${interests.join(', ')}`,
+                duration: {
+                    days: durationDays,
+                    startDate: startDate.toISOString(),
+                    endDate: endDate.toISOString()
+                },
+                groupSize: {
+                    adults: numAdults,
+                    children: 0,
+                    infants: 0
+                },
+                budget: document.getElementById('budget').value,
+                interests: interests,
+                accommodation: 'homestay',
+                status: 'planned',
+                itinerary: lastGeneratedItinerary
+            };
+
+            console.log('Submitting trip data:', tripData);
+
+            try {
+                const submitBtn = document.getElementById('submitBtn');
+                submitBtn.innerHTML = '<div class="loading"></div> Saving Plan…';
+                submitBtn.disabled = true;
+
+                const token = localStorage.getItem('authToken');
+                console.log('Auth token exists:', !!token);
+                let tripId = null;
+                let backendSuccess = false;
+
+                // Save to backend
+                if (token) {
+                    try {
+                        console.log('Sending trip to backend...');
+                        const response = await fetch('http://localhost:5000/api/trips', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: JSON.stringify(tripData)
+                        });
+
+                        console.log('Backend response status:', response.status);
+
+                        if (response.ok) {
+                            const result = await response.json();
+                            console.log('Backend response:', result);
+                            tripId = result.data._id;
+                            localStorage.setItem('lastTripId', tripId);
+                            backendSuccess = true;
+                            console.log('Trip saved to backend with ID:', tripId);
+                        } else {
+                            const errorText = await response.text();
+                            console.error('Backend save failed:', response.status, errorText);
+                        }
+                    } catch (backendError) {
+                        console.error('Backend request error:', backendError);
+                    }
+                }
+
+                // Determine current user ID for scoped storage
+                const userDataRaw = localStorage.getItem('userData');
+                let uid = 'guest';
+                try {
+                    if (userDataRaw) {
+                        const ud = JSON.parse(userDataRaw);
+                        uid = ud._id || ud.id || 'guest';
+                    }
+                } catch(e) {}
+
+                // Save locally — scoped to this user
+                const localTrip = {...tripData, tripId, savedAt: new Date().toISOString()};
+                localStorage.setItem('lastTripPlan_' + uid, JSON.stringify(localTrip));
+
+                // Push to this user's trips array so only they see it on the dashboard
+                const tripsKey = 'userTrips_' + uid;
+                const existingTrips = JSON.parse(localStorage.getItem(tripsKey) || '[]');
+                // Deduplicate by tripId or same title+date
+                const filtered = existingTrips.filter(t => !(t.tripId && t.tripId === tripId) && !(t.title === title && t.duration && t.duration.startDate === startDate.toISOString()));
+                filtered.unshift(localTrip);
+                localStorage.setItem(tripsKey, JSON.stringify(filtered.slice(0, 20)));
+                console.log('Trip saved to localStorage for user:', uid);
+
+                showToast('✓ Trip plan saved! Your itinerary is ready.', 'success');
+
+                setTimeout(() => {
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Generate Itinerary';
+                    submitBtn.disabled = false;
+
+                    // Redirect to dashboard after 2 seconds
+                    console.log('Redirecting to dashboard...');
+                    window.location.href = '../dashboard.html';
+                }, 1500);
+
+            } catch (error) {
+                console.error('Error saving itinerary:', error);
+                showToast('✓ Trip plan created locally', 'success');
+
+                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-check"></i> Generate Itinerary';
+                document.getElementById('submitBtn').disabled = false;
+            }
+        });
+
+        function showToast(message, type) {
+            const toast = document.createElement('div');
+            toast.className = `toast-msg ${type}`;
+            toast.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 5000);
+        }
+
+        // Initialize
+        document.getElementById('travelDate').min = new Date().toISOString().split('T')[0];
+        loadLocations();
+    </script>
+
+</body>
+
+</html>
