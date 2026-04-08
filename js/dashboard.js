@@ -19,7 +19,7 @@ async function loadRecentTrips() {
         }
 
         console.log('Fetching trips from backend...');
-        const response = await fetch('http://localhost:5000/api/trips?limit=5', {
+        const response = await fetch('/api/trips?limit=5', {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -127,7 +127,7 @@ async function viewTripItinerary(tripId) {
             return;
         }
 
-        const response = await fetch(`http://localhost:5000/api/trips/${tripId}`, {
+        const response = await fetch(`/api/trips/${tripId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'

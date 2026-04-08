@@ -520,7 +520,7 @@
             setLoading(true);
             try {
                 const fd = new FormData(this);
-                const API_BASE = window.API_BASE || 'http://localhost:5000';
+                const API_BASE = window.API_BASE || '';
                 const response = await fetch(`${API_BASE}/api/auth/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
