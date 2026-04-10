@@ -1030,7 +1030,8 @@
                 if (token) {
                     try {
                         console.log('Sending trip to backend...');
-                        const response = await fetch('/api/trips', {
+                        const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:5000' : '');
+                        const response = await fetch(`${API_BASE}/api/trips`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -1068,7 +1069,8 @@
                 } catch(e) {}
 
                 // Save locally — scoped to this user
-                const localTrip = {...tripData, tripId, savedAt: new Date().toISOString()};
+                const localTripId = tripId || ('local_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8));
+                const localTrip = {...tripData, tripId, localTripId, savedAt: new Date().toISOString()};
                 localStorage.setItem('lastTripPlan_' + uid, JSON.stringify(localTrip));
 
                 // Push to this user's trips array so only they see it on the dashboard
@@ -1115,6 +1117,7 @@
         document.getElementById('travelDate').min = new Date().toISOString().split('T')[0];
         loadLocations();
     </script>
+    <script src="../js/hamburger-menu.js"></script>
 
 </body>
 

@@ -151,7 +151,7 @@ class BoisarTourismChatbot {
 
     async getBotResponse(message) {
         try {
-            const API_BASE = window.API_BASE || '';
+            const API_BASE = window.API_BASE || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:5000' : '');
             const res = await fetch(`${API_BASE}/api/chatbot/message`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

@@ -88,6 +88,25 @@
         .tmeta { font-size: .78rem; color: var(--muted); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
         .tmeta span { display: flex; align-items: center; gap: 4px; }
         .tbdg { padding: 3px 10px; border-radius: 99px; font-size: .72rem; font-weight: 600; text-transform: capitalize; flex-shrink: 0; }
+        .trip-cancel-btn {
+            margin-top: 8px;
+            padding: 7px 12px;
+            border: 1px solid #f0c3c3;
+            border-radius: 999px;
+            background: #fff5f5;
+            color: #c0392b;
+            font-size: .78rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all .15s ease;
+        }
+        .trip-cancel-btn:hover {
+            background: #ffe9e9;
+            border-color: #e5a5a5;
+        }
         .sp { background: #e8f0fe; color: #3949ab; } .sd { background: #fff8e1; color: #f57c00; }
         .sc2 { background: #e8f5e9; color: #2e7d32; } .so { background: #fff3e0; color: #e65100; }
         .sx { background: #ffebee; color: #c62828; } .sb { background: #e8f5e9; color: #1b5e20; }
@@ -223,6 +242,7 @@
                         <a href="features/trip-planner.html" class="qa"><div class="qaico"><i class="fas fa-map-marked-alt"></i></div><span>Plan New Trip</span></a>
                         <a href="all-locations.html" class="qa"><div class="qaico"><i class="fas fa-search"></i></div><span>Explore Destinations</span></a>
                         <a href="accommodations.html" class="qa"><div class="qaico"><i class="fas fa-bed"></i></div><span>Book Accommodation</span></a>
+                        <a href="transportation.html" class="qa"><div class="qaico"><i class="fas fa-bus"></i></div><span>Transportation</span></a>
                         <a href="verified-guides.html" class="qa"><div class="qaico"><i class="fas fa-user-tie"></i></div><span>Find a Guide</span></a>
                         <a href="profile.html" class="qa"><div class="qaico"><i class="fas fa-user-edit"></i></div><span>Edit Profile</span></a>
                     </div>
@@ -250,7 +270,7 @@
     </div>
 
     <script>
-        const API = '/api';
+        const API = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:5000/api' : '/api');
         let allTrips = [];
 
         /* AUTH */
@@ -286,6 +306,15 @@
                 }
             } catch(e) {}
             return 'guest';
+        }
+
+        function getTripKey(trip) {
+            if (!trip) return '';
+            if (trip._id) return trip._id;
+            if (trip.tripId) return trip.tripId;
+            if (trip.localTripId) return trip.localTripId;
+            var start = trip.duration && trip.duration.startDate ? trip.duration.startDate : '';
+            return 'local_' + String(trip.title || 'trip') + '_' + String(start).replace(/[^a-zA-Z0-9]/g, '');
         }
 
         async function loadDashboard() {
@@ -339,14 +368,17 @@
             const startDate = (isObj ? dur.startDate : null) || lt.date || new Date().toISOString();
             const days = parseInt(isObj ? dur.days : dur) || 1;
             const endDate = (isObj ? dur.endDate : null) || startDate;
+            const localTripId = lt.localTripId || getTripKey({ title: lt.title, duration: { startDate: startDate } });
             return {
-                _id: lt.tripId || ('local_' + Math.random().toString(36).substr(2, 8)),
+                _id: lt.tripId || localTripId,
                 title: lt.title || (days + '-Day Boisar Adventure'),
                 status: lt.status || 'draft',
                 duration: { days: days, startDate: startDate, endDate: endDate },
                 budget: lt.budget || '',
                 interests: lt.interests || [],
                 itinerary: lt.itinerary || [],
+                tripId: lt.tripId || null,
+                localTripId: localTripId,
                 _local: true
             };
         }
@@ -428,16 +460,74 @@
             var icoCls = isPast ? 'past' : (st === 'ongoing' ? 'ongoing' : 'up');
             var ico = isPast ? 'flag-checkered' : 'map-marked-alt';
             var stClass = {planned:'sp',draft:'sd',completed:'sc2',ongoing:'so',cancelled:'sx',booked:'sb'}[st] || 'sd';
-            return '<div class="tr" onclick="openModal(\'' + trip._id + '\')">' +
+            var tripKey = getTripKey(trip);
+            var cancelBtn = !isPast && st !== 'completed' && st !== 'cancelled'
+                ? '<button type="button" class="trip-cancel-btn" onclick="event.stopPropagation(); cancelTrip(\'' + tripKey + '\')"><i class="fas fa-times"></i> Cancel Trip</button>'
+                : '';
+            return '<div class="tr" onclick="openModal(\'' + tripKey + '\')">' +
                 '<div class="tico ' + icoCls + '"><i class="fas fa-' + ico + '"></i></div>' +
                 '<div class="tdet"><div class="tname">' + (trip.title || 'Boisar Adventure') + '</div>' +
                 '<div class="tmeta">' +
                 '<span><i class="fas fa-calendar"></i> ' + dateStr + '</span>' +
                 '<span><i class="fas fa-sun"></i> ' + days + ' day' + (days != 1 ? 's' : '') + '</span>' +
                 (trip.budget ? '<span><i class="fas fa-wallet"></i> ' + cap(trip.budget) + '</span>' : '') +
-                '</div></div>' +
+                '</div>' + cancelBtn + '</div>' +
                 '<span class="tbdg ' + stClass + '">' + label + '</span>' +
                 '</div>';
+        }
+
+        async function cancelTrip(tripId) {
+            if (!confirm('Cancel this trip? This will permanently remove it.')) {
+                return;
+            }
+
+            const token = localStorage.getItem('authToken');
+            const uid = getUserId();
+            const tripsKey = 'userTrips_' + uid;
+            const lastPlanKey = 'lastTripPlan_' + uid;
+
+            try {
+                if (token && !String(tripId).startsWith('local_')) {
+                    const response = await fetch(API + '/trips/' + tripId, {
+                        method: 'DELETE',
+                        headers: { 'Authorization': 'Bearer ' + token }
+                    });
+
+                    if (!response.ok) {
+                        let message = 'Unable to cancel trip.';
+                        try {
+                            const data = await response.json();
+                            message = data.message || message;
+                        } catch (e) {}
+                        throw new Error(message);
+                    }
+                }
+
+                const trips = JSON.parse(localStorage.getItem(tripsKey) || '[]').filter(function(t) {
+                    var storedKey = t.tripId || t.localTripId || getTripKey(t);
+                    return t.tripId !== tripId && t.localTripId !== tripId && t._id !== tripId && storedKey !== tripId;
+                });
+                localStorage.setItem(tripsKey, JSON.stringify(trips));
+
+                const lastPlanRaw = localStorage.getItem(lastPlanKey);
+                if (lastPlanRaw) {
+                    try {
+                        const lastPlan = JSON.parse(lastPlanRaw);
+                        const storedLastPlanKey = lastPlan.tripId || lastPlan.localTripId || lastPlan._id || getTripKey(lastPlan);
+                        if (storedLastPlanKey === tripId || (lastPlan.tripId && lastPlan.tripId === tripId) || lastPlan._id === tripId) {
+                            localStorage.removeItem(lastPlanKey);
+                        }
+                    } catch (e) {}
+                }
+
+                if (localStorage.getItem('lastTripId') === tripId) {
+                    localStorage.removeItem('lastTripId');
+                }
+
+                await loadDashboard();
+            } catch (error) {
+                alert(error.message || 'Failed to cancel trip.');
+            }
         }
 
         /* LAST CARD */
@@ -557,5 +647,8 @@
             if (document.visibilityState === 'visible') loadDashboard();
         });
     </script>
+    <script src="js/hamburger-menu.js"></script>
 </body>
 </html>
+
+

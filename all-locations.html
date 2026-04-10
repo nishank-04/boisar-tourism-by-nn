@@ -182,6 +182,9 @@
             display: flex;
             flex-direction: column;
             height: 100%;
+            width: 100%;
+            max-width: 380px;
+            justify-self: center;
         }
 
         .location-card:hover {
@@ -592,6 +595,13 @@
         <!-- Filter Section -->
         <div class="filter-section">
             <div class="filter-container">
+                <!-- Name Search -->
+                <div class="filter-group" style="grid-column: 1 / -1;">
+                    <label for="name-search">
+                        <i class="fas fa-search"></i> Search by Name
+                    </label>
+                    <input type="text" id="name-search" class="filter-select" placeholder="Type a location name..." style="width:100%;">
+                </div>
                 <div class="filter-group">
                     <label for="category-filter">
                         <i class="fas fa-filter"></i> Category
@@ -1763,108 +1773,134 @@
     <script>
         // Filter functionality
         const categoryFilter = document.getElementById('category-filter');
-        const priceFilter = document.getElementById('price-filter');
-        const seasonFilter = document.getElementById('season-filter');
-        const ratingFilter = document.getElementById('rating-filter');
-        const resetBtn = document.getElementById('reset-filters');
-        const resultsCount = document.getElementById('results-count');
-        const locationsGrid = document.getElementById('locations-grid');
+        const priceFilter    = document.getElementById('price-filter');
+        const seasonFilter   = document.getElementById('season-filter');
+        const ratingFilter   = document.getElementById('rating-filter');
+        const nameSearch     = document.getElementById('name-search');
+        const resetBtn       = document.getElementById('reset-filters');
+        const resultsCount   = document.getElementById('results-count');
+        const locationsGrid  = document.getElementById('locations-grid');
 
-        // Get all location cards
+        // Get ALL location cards (with or without data-category)
         function getAllLocationCards() {
-            return Array.from(document.querySelectorAll('.location-card[data-category]'));
+            return Array.from(document.querySelectorAll('.location-card'));
         }
 
-        // Apply filters
+        function normalizeSeason(value) {
+            const normalized = (value || '').toLowerCase();
+            if (normalized.includes('year round')) return 'Year Round';
+            if (normalized.includes('jun') || normalized.includes('jul') || normalized.includes('aug') || normalized.includes('sep') || normalized.includes('monsoon')) return 'Monsoon';
+            return 'Winter';
+        }
+
+        function extractCardMeta(card) {
+            const categoryText = (card.dataset.category || card.querySelector('.category')?.textContent || '').trim();
+
+            const detailItems = Array.from(card.querySelectorAll('.detail-item span')).map(el => (el.textContent || '').trim());
+            const calendarValue = detailItems.find(text => /-/.test(text) || /year round/i.test(text)) || card.dataset.season || '';
+            const moneyValue = detailItems.find(text => /free|₹|rs|paid/i.test(text)) || card.dataset.price || '';
+
+            const ratingValue = card.dataset.rating || card.querySelector('.stars')?.textContent || '';
+            const ratingMatch = String(ratingValue).match(/(\d+(?:\.\d+)?)/);
+
+            return {
+                category: categoryText,
+                price: /free/i.test(moneyValue) ? 'Free' : 'Paid',
+                season: normalizeSeason(calendarValue),
+                rating: ratingMatch ? parseFloat(ratingMatch[1]) : 0
+            };
+        }
+
+        // Apply filters + sort matched cards to top
         function applyFilters() {
             const selectedCategory = categoryFilter.value;
-            const selectedPrice = priceFilter.value;
-            const selectedSeason = seasonFilter.value;
-            const selectedRating = parseFloat(ratingFilter.value) || 0;
+            const selectedPrice    = priceFilter.value;
+            const selectedSeason   = seasonFilter.value;
+            const selectedRating   = parseFloat(ratingFilter.value) || 0;
+            const searchName       = nameSearch.value.trim().toLowerCase();
 
-            let visibleCount = 0;
             const allCards = getAllLocationCards();
+            const visible  = [];
+            const hidden   = [];
 
             allCards.forEach(card => {
                 let shouldShow = true;
+                const cardMeta = extractCardMeta(card);
+
+                // Name search
+                if (searchName) {
+                    const title = (card.querySelector('h2') || card.querySelector('h3') || {}).textContent || '';
+                    if (!title.toLowerCase().includes(searchName)) shouldShow = false;
+                }
 
                 // Category filter
-                if (selectedCategory && card.dataset.category !== selectedCategory) {
-                    shouldShow = false;
+                if (shouldShow && selectedCategory) {
+                    if (!cardMeta.category.toLowerCase().includes(selectedCategory.toLowerCase())) shouldShow = false;
                 }
 
                 // Price filter
                 if (shouldShow && selectedPrice) {
-                    const cardPrice = card.dataset.price;
-                    if (selectedPrice === 'Free' && cardPrice !== 'Free') {
-                        shouldShow = false;
-                    }
-                    if (selectedPrice === 'Paid' && cardPrice === 'Free') {
-                        shouldShow = false;
-                    }
+                    if (selectedPrice !== cardMeta.price) shouldShow = false;
                 }
 
                 // Season filter
                 if (shouldShow && selectedSeason) {
-                    const cardSeason = card.dataset.season;
-                    if (selectedSeason === 'Winter' && cardSeason !== 'Winter' && cardSeason !== 'Year Round') {
-                        shouldShow = false;
-                    }
-                    if (selectedSeason === 'Monsoon' && cardSeason !== 'Monsoon' && cardSeason !== 'Year Round') {
-                        shouldShow = false;
-                    }
-                    if (selectedSeason === 'Year Round' && cardSeason !== 'Year Round') {
-                        shouldShow = false;
-                    }
+                    if (selectedSeason === 'Year Round' && cardMeta.season !== 'Year Round') shouldShow = false;
+                    if (selectedSeason === 'Winter' && cardMeta.season !== 'Winter' && cardMeta.season !== 'Year Round') shouldShow = false;
+                    if (selectedSeason === 'Monsoon' && cardMeta.season !== 'Monsoon' && cardMeta.season !== 'Year Round') shouldShow = false;
                 }
 
                 // Rating filter
                 if (shouldShow && selectedRating > 0) {
-                    const cardRating = parseFloat(card.dataset.rating) || 0;
-                    if (cardRating < selectedRating) {
-                        shouldShow = false;
-                    }
+                    if (cardMeta.rating < selectedRating) shouldShow = false;
                 }
 
-                // Show or hide card
                 if (shouldShow) {
                     card.classList.remove('hidden');
-                    visibleCount++;
+                    visible.push(card);
                 } else {
                     card.classList.add('hidden');
+                    hidden.push(card);
                 }
             });
 
-            // Update results count
-            resultsCount.textContent = visibleCount;
+            // Re-order grid: visible cards first, hidden last
+            visible.forEach(c => locationsGrid.appendChild(c));
+            hidden.forEach(c  => locationsGrid.appendChild(c));
+
+            // Scroll to top of grid when filters/search change
+            if (searchName || selectedCategory || selectedPrice || selectedSeason || selectedRating) {
+                locationsGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            resultsCount.textContent = visible.length;
         }
 
-        // Reset filters
+        // Reset
         function resetFilters() {
             categoryFilter.value = '';
-            priceFilter.value = '';
-            seasonFilter.value = '';
-            ratingFilter.value = '';
+            priceFilter.value    = '';
+            seasonFilter.value   = '';
+            ratingFilter.value   = '';
+            nameSearch.value     = '';
             applyFilters();
         }
 
-        // Add event listeners
+        // Event listeners
         categoryFilter.addEventListener('change', applyFilters);
         priceFilter.addEventListener('change', applyFilters);
         seasonFilter.addEventListener('change', applyFilters);
         ratingFilter.addEventListener('change', applyFilters);
+        nameSearch.addEventListener('input', applyFilters);
         resetBtn.addEventListener('click', resetFilters);
 
-        // Show all cards on page load
+        // Init count on load
         window.addEventListener('DOMContentLoaded', () => {
-            const allCards = getAllLocationCards();
-            allCards.forEach(card => {
-                if (!locationsGrid.contains(card)) {
-                    locationsGrid.appendChild(card);
-                }
-            });
+            resultsCount.textContent = getAllLocationCards().length;
         });
     </script>
+    <script src="js/hamburger-menu.js"></script>
 </body>
 
 </html>
+

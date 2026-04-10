@@ -82,6 +82,43 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Database connection handling for Vercel Serverless
+let cachedDb = null;
+
+// Add middleware to ensure DB is connected before processing ANY /api/ route
+app.use(async (req, res, next) => {
+  // If we are hitting an API route, ensure DB connection is ready
+  if (req.path.startsWith('/api')) {
+    if (mongoose.connection.readyState === 1) {
+      return next(); // Already connected
+    }
+    
+    try {
+      if (!cachedDb) {
+        console.log('🔄 Serverless: Initializing new MongoDB connection...');
+        cachedDb = mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/boisar_tourism', {
+          serverSelectionTimeoutMS: 10000,
+          connectTimeoutMS: 10000,
+        }).then(() => {
+          console.log('✅ Serverless: Connected to MongoDB Atlas successfully');
+        });
+      }
+      // Wait for connection to resolve
+      await cachedDb;
+      return next();
+    } catch (error) {
+      console.error('❌ Serverless MongoDB connection error:', error.message);
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Database connection failed. Please check MONGODB_URI or Atlas IP Whitelist.' 
+      });
+    }
+  } else {
+    // Let static files or other routes pass through
+    next();
+  }
+});
+
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
@@ -106,44 +143,7 @@ if (process.env.NODE_ENV === 'production') {
 app.use(notFound);
 app.use(errorHandler);
 
-// Database connection handling for Vercel Serverless
-let cachedDb = null;
 
-// Add middleware to ensure DB is connected before processing ANY /api/ route
-app.use(async (req, res, next) => {
-  // If we are hitting an API route, ensure DB connection is ready
-  if (req.path.startsWith('/api')) {
-    if (mongoose.connection.readyState === 1) {
-      return next(); // Already connected
-    }
-    
-    try {
-      if (!cachedDb) {
-        console.log('🔄 Serverless: Initializing new MongoDB connection...');
-        cachedDb = mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/boisar_tourism', {
-          serverSelectionTimeoutMS: 10000,
-          connectTimeoutMS: 10000,
-        }).then(() => {
-          console.log('✅ Serverless: Connected to MongoDB Atlas successfully');
-        });
-      }
-      // Wait for connection to resolve
-      await cachedDb;
-      return next();
-    } catch (error) {
-      console.error('❌ Serverless MongoDB connection error:', error.message);
-      return res.status(500).json({ 
-        success: false, 
-        message: 'Database connection failed. Please check MONGODB_URI or Atlas IP Whitelist.' 
-      });
-    }
-  } else {
-    // Let static files or other routes pass through
-    next();
-  }
-});
-
-// Start server
 const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);

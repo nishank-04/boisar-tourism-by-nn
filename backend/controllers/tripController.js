@@ -169,11 +169,10 @@ exports.updateTrip = async (req, res, next) => {
 // @access  Private
 exports.deleteTrip = async (req, res, next) => {
   try {
-    const trip = await Trip.findOneAndUpdate(
-      { _id: req.params.id, user: req.user.id, isActive: true },
-      { isActive: false },
-      { new: true }
-    );
+    const trip = await Trip.findOneAndDelete({
+      _id: req.params.id,
+      user: req.user.id
+    });
 
     if (!trip) {
       return res.status(404).json({
