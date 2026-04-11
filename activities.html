@@ -344,7 +344,6 @@
     </footer>
 
     <script>
-    <script src="js/hamburger-menu.js"></script>
         const activities = [
             // Adventure Activities
             {
@@ -651,7 +650,10 @@
         function filterActivities(category) {
             // Update active button
             document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            const activeButton = document.querySelector(`.filter-btn[onclick="filterActivities('${category}')"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
 
             // Render filtered activities
             renderActivities(category);
@@ -665,5 +667,6 @@
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => renderActivities());
     </script>
+    <script src="js/hamburger-menu.js"></script>
 </body>
 </html>
